@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <script src="../includes/common-head.js"></script>
+  <style>
+    .tpl-survey {width: 100%; border-collapse: collapse; border-spacing: 0;}
+    .tpl-survey tbody th {background-color: #f5f5f5; font-size: 14px; font-weight: 600; text-align: center; padding: 14px 20px; border-bottom: 1px solid #ddd; vertical-align: top; white-space: nowrap;}
+    .tpl-survey tbody td {font-size: 14px; color: #333; text-align: left; padding: 14px 20px; border-bottom: 1px solid #ddd; line-height: 2;}
+    .tpl-survey tbody tr:first-child th,
+    .tpl-survey tbody tr:first-child td {border-top: 2px solid #222;}
+    .tpl-survey .req::before {content: '* '; color: #e53935;}
+    .tpl-survey .q-text {font-size: 14px; font-weight: 600; color: #333; margin: 0 0 10px;}
+    .tpl-survey-select {height: 36px; padding: 0 10px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px; font-family: inherit; color: #333; outline: none;}
+    .tpl-survey-select:focus {border-color: #000;}
+    .tpl-survey-txt {height: 36px; padding: 0 10px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px; font-family: inherit; color: #333; outline: none; box-sizing: border-box;}
+    .tpl-survey-txt:focus {border-color: #000;}
+    .tpl-survey-area {width: 100%; height: 100px; padding: 10px 14px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px; font-family: inherit; color: #333; outline: none; box-sizing: border-box; resize: vertical;}
+    .tpl-survey-area:focus {border-color: #000;}
+    .tpl-survey-radio {display: flex; flex-wrap: wrap; gap: 8px 24px;}
+    .tpl-survey-radio label {display: flex; align-items: center; gap: 6px; font-size: 14px; color: #333; cursor: pointer; line-height: 1;}
+    .tpl-survey-submit {padding: 12px 48px; background: var(--prime-color); color: #fff; border: none; border-radius: 6px; font-size: 18px; font-weight: 700; font-family: inherit; cursor: pointer;}
+    .tpl-survey-submit:hover {background: var(--prime-dark);}
+  </style>
+</head>
+<body>
+  <div class="copy-wrap w-1080 w-fluid">
+    <h2 class="fz-28 ta-c mb25">2026 1차 합격 인증 &amp; 설문조사</h2>
+    <form id="frmWrite" method="post" action="./pop_1th_passcert_proc.asp" enctype="multipart/form-data">
+      <table class="tpl-survey">
+        <colgroup>
+          <col width="20%" />
+          <col width="*" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th class="req">과목 및 응시지역</th>
+            <td>
+              <select id="div-1th" name="div_1th" class="tpl-survey-select" onchange="getDiv2th(this.value)">
+                <option value="">응시과목 선택</option>
+                <option value="A">유아</option>
+                <option value="C">중등</option>
+              </select>
+              <select id="div-2th" name="div_2th" class="tpl-survey-select">
+                <option value="">응시과목 선택</option>
+              </select>
+              <select id="area" name="area" class="tpl-survey-select">
+                <option value="">응시지역 선택</option>
+                <option>서울</option><option>경기</option><option>인천</option><option>세종</option>
+                <option>부산</option><option>대전</option><option>대구</option><option>광주</option>
+                <option>울산</option><option>강원</option><option>충북</option><option>충남</option>
+                <option>경북</option><option>경남</option><option>전북</option><option>전남</option>
+                <option>제주</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th class="req">수험번호 입력<br>또는 합격인증 첨부</th>
+            <td>
+              <label><input type="radio" id="s1_1" name="s1" class="s1" value="1"> 수험번호</label>
+              <input type="text" id="s1-code" name="s1_code" class="tpl-survey-txt" maxlength="8" style="width: 160px;"><br>
+              <label><input type="radio" id="s1_2" name="s1" class="s1" value="2"> 합격인증</label>
+              <span style="font-size: 12px; color: #888;">(10MB 이하, jpg/gif 권장)</span><br>
+              <input type="file" id="s1-attach" name="s1_attach" style="font-size: 14px; font-family: inherit;">
+            </td>
+          </tr>
+          <tr>
+            <th class="req">시험 준비<br>병행 여부</th>
+            <td>
+              <div class="tpl-survey-radio">
+                <label><input type="radio" name="s2" class="s2" value="1"> 직장과 병행</label>
+                <label><input type="radio" name="s2" class="s2" value="2"> 학업과 병행</label>
+                <label><input type="radio" name="s2" class="s2" value="3"> 육아와 병행</label>
+                <label><input type="radio" name="s2" class="s2" value="4"> 시험준비에 전념</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="req">임용 시험<br>준비 시작 시기</th>
+            <td>
+              <div class="tpl-survey-radio">
+                <label><input type="radio" name="s3" class="s3" value="1"> 대학교 재학중</label>
+                <label><input type="radio" name="s3" class="s3" value="2"> 대학교 졸업 이후</label>
+                <label><input type="radio" name="s3" class="s3" value="3"> 대학원 재학중</label>
+                <label><input type="radio" name="s3" class="s3" value="4"> 대학원 졸업 이후</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="req">합격까지<br>걸린 기간</th>
+            <td>
+              <div class="tpl-survey-radio">
+                <label><input type="radio" name="s4" class="s4" value="1"> 1년 미만</label>
+                <label><input type="radio" name="s4" class="s4" value="2"> 1년</label>
+                <label><input type="radio" name="s4" class="s4" value="3"> 2년</label>
+                <label><input type="radio" name="s4" class="s4" value="4"> 3년</label>
+                <label><input type="radio" name="s4" class="s4" value="5"> 4년 이상</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="req">Q1</th>
+            <td>
+              <p class="q-text">▶ 시험 전까지 이론서를 반복한 횟수는?</p>
+              <div class="tpl-survey-radio">
+                <label><input type="radio" name="q1" class="q1" value="1"> 1회</label>
+                <label><input type="radio" name="q1" class="q1" value="2"> 2회</label>
+                <label><input type="radio" name="q1" class="q1" value="3"> 3회</label>
+                <label><input type="radio" name="q1" class="q1" value="4"> 4회</label>
+                <label><input type="radio" name="q1" class="q1" value="5"> 5회 이상</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="req">Q2</th>
+            <td>
+              <p class="q-text">▶ 기출 문제를 반복한 횟수는?</p>
+              <div class="tpl-survey-radio">
+                <label><input type="radio" name="q2" class="q2" value="1"> 1회</label>
+                <label><input type="radio" name="q2" class="q2" value="2"> 2회</label>
+                <label><input type="radio" name="q2" class="q2" value="3"> 3회</label>
+                <label><input type="radio" name="q2" class="q2" value="4"> 4회</label>
+                <label><input type="radio" name="q2" class="q2" value="5"> 5회 이상</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="req">Q3</th>
+            <td>
+              <p class="q-text">▶ 임용 1차 공부에서 핵심적으로 활용한 자료는?</p>
+              <div class="tpl-survey-radio" style="flex-direction: column; gap: 8px;">
+                <label><input type="radio" name="q3" class="q3" value="1"> 인강 (전공/교육학/모의고사 풀이 등)</label>
+                <label><input type="radio" name="q3" class="q3" value="2"> 교재 (전공 기본서/기출문제집 등)</label>
+                <label><input type="radio" name="q3" class="q3" value="3"> 스터디 자료 (요약본, 예상문제 등)</label>
+                <label><input type="radio" name="q3" class="q3" value="4"> 자체정리/개인 요약노트</label>
+                <label><input type="radio" name="q3" class="q3" value="5"> 기타</label>
+              </div>
+              <input type="text" id="q3-etc" name="q3_etc" class="tpl-survey-txt" style="width: calc(100% - 20px); margin-top: 6px; margin-left: 20px;">
+            </td>
+          </tr>
+          <tr>
+            <th class="req">Q4</th>
+            <td>
+              <p class="q-text">▶ 합격에 가장 도움이 된 선생님은?</p>
+              <select id="q4-div" name="q4_div" class="tpl-survey-select" onchange="getProf(this.value)" style="width: calc(48% - 5px);">
+                <option value="">과목</option>
+                <option value="A">유아</option><option value="C">유아특수</option>
+                <option value="E">교육학</option><option value="F">국어</option>
+                <option value="G">영어</option><option value="H">수학</option>
+                <option value="I">음악</option><option value="J">미술</option>
+                <option value="K">체육</option><option value="L">일본어</option>
+                <option value="M">한문</option><option value="N">가정</option>
+                <option value="O">전문상담</option><option value="V">영양</option>
+                <option value="P">기술</option><option value="Q">상업</option>
+                <option value="R">역사</option><option value="S">화학</option>
+                <option value="T">지구과학</option><option value="U">보건</option>
+              </select>
+              <select id="q4-prof" name="q4_prof" class="tpl-survey-select" style="width: calc(48% - 5px);">
+                <option value="">선생님</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th class="req">Q5</th>
+            <td>
+              <p class="q-text">▶ 그 선생님이 도움이 되었던 이유는?</p>
+              <textarea id="q5" name="q5" class="tpl-survey-area" placeholder="50자 이상 필수 입력"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th class="req">Q6</th>
+            <td>
+              <p class="q-text">▶ 선생님께 드리는 감사 편지</p>
+              <textarea id="q6" name="q6" class="tpl-survey-area" placeholder="50자 이상 필수 입력"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th class="req">Q7</th>
+            <td>
+              <p class="q-text">▶ 희소/쌤플러스에서 "이런 서비스가 있었으면 좋겠다"고 느낀 점이 있나요?</p>
+              <textarea id="q7" name="q7" class="tpl-survey-area" placeholder="50자 이상 필수 입력"></textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="text-align: center; padding-top: 24px;">
+        <button type="button" class="tpl-survey-submit" onclick="save1Thpasscert()">제출하기</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="tpl-guide w-1080 w-fluid mt30 mb70">
+    <h5 class="notice-badge">NOTICE</h5>
+    <ul>
+      <li>이 템플릿은 2015.12에 제작된 1차 합격 인증 &amp; 설문조사 폼 양식입니다.</li>
+    </ul>
+  </div>
+
+  <script>
+    function getDiv2th(div) {
+      $.ajax({
+        type: 'POST', url: './ajax_div2th.asp', data: { div_1th: div }, dataType: 'json',
+        success: function(res) {
+          var $sel = $('#div-2th').empty().append('<option value="">응시과목 선택</option>');
+          if (res && Array.isArray(res.options)) {
+            res.options.forEach(function(opt) { $sel.append('<option value="' + opt.value + '">' + opt.text + '</option>'); });
+          }
+        },
+        error: function() { alert('서버 통신 중 오류가 발생했습니다.'); }
+      });
+    }
+
+    function getProf(div) {
+      $.ajax({
+        type: 'POST', url: './ajax_prof.asp', data: { div_cd: div }, dataType: 'json',
+        success: function(res) {
+          var $sel = $('#q4-prof').empty().append('<option value="">선생님</option>');
+          if (res && Array.isArray(res.options)) {
+            res.options.forEach(function(opt) { $sel.append('<option value="' + opt.value + '">' + opt.text + '</option>'); });
+          }
+        },
+        error: function() { alert('서버 통신 중 오류가 발생했습니다.'); }
+      });
+    }
+
+    function getTextLength(str) {
+      var len = 0;
+      for (var i = 0; i < str.length; i++) {
+        if (escape(str.charAt(i)).length == 6) len++;
+        len++;
+      }
+      return len;
+    }
+
+    function save1Thpasscert() {
+      if (!$('#div-1th').val()) { alert('응시과목을 선택하세요.'); $('#div-1th').focus(); return; }
+      if (!$('#div-2th').val()) { alert('응시과목을 선택하세요.'); $('#div-2th').focus(); return; }
+      if (!$('#area').val())    { alert('응시지역을 선택하세요.'); $('#area').focus(); return; }
+
+      if (!$('.s1:checked').length) { alert('수험번호 또는 합격인증을 선택해주세요.'); return; }
+      if ($('#s1_1').is(':checked')) {
+        if (!$('#s1-code').val()) { alert('수험번호를 입력해주세요.'); $('#s1-code').focus(); return; }
+        if (!/^[0-9]+$/.test($('#s1-code').val())) { alert('수험번호는 숫자로만 입력해주세요.'); $('#s1-code').focus(); return; }
+      }
+      if ($('#s1_2').is(':checked')) {
+        if (!$('#s1-attach').val()) { alert('합격인증 파일을 첨부해주세요.'); return; }
+        var ext = $('#s1-attach').val().split('.').pop().toLowerCase();
+        if (ext !== 'jpg' && ext !== 'gif') { alert('JPG 또는 GIF 파일만 첨부 가능합니다.'); return; }
+      }
+
+      if (!$('.s2:checked').length) { alert('시험 준비 병행 여부를 선택해주세요.'); return; }
+      if (!$('.s3:checked').length) { alert('임용 시험 준비 시작 시기를 선택해주세요.'); return; }
+      if (!$('.s4:checked').length) { alert('합격까지 걸린 기간을 선택해주세요.'); return; }
+      if (!$('.q1:checked').length) { alert('[Q1]에 대한 답변을 선택해주세요.'); return; }
+      if (!$('.q2:checked').length) { alert('[Q2]에 대한 답변을 선택해주세요.'); return; }
+      if (!$('.q3:checked').length) { alert('[Q3]에 대한 답변을 선택해주세요.'); return; }
+      if ($('.q3:checked').val() === '5' && !$('#q3-etc').val()) { alert('기타 내용을 입력해주세요.'); $('#q3-etc').focus(); return; }
+      if (!$('#q4-div').val())  { alert('[Q4] 과목을 선택해주세요.'); $('#q4-div').focus(); return; }
+      if (!$('#q4-prof').val()) { alert('[Q4] 선생님을 선택해주세요.'); $('#q4-prof').focus(); return; }
+
+      var fields = [{ id: 'q5', label: 'Q5' }, { id: 'q6', label: 'Q6' }, { id: 'q7', label: 'Q7' }];
+      for (var i = 0; i < fields.length; i++) {
+        var val = $('#' + fields[i].id).val();
+        if (!val) { alert('[' + fields[i].label + '] 답변을 입력해주세요.'); $('#' + fields[i].id).focus(); return; }
+        if (getTextLength(val) < 100) { alert('[' + fields[i].label + '] 답변을 50자 이상 입력해주세요.'); $('#' + fields[i].id).focus(); return; }
+      }
+
+      document.getElementById('frmWrite').submit();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <script src="../includes/common-head.js"></script>
+  <style>
+    .tpl-basictable-01 {width: 100%; border-collapse: collapse; border-spacing: 0;}
+    .tpl-basictable-01 thead th {background-color: #FAFAFA; color: #333; font-size: 16px; font-weight: 600; text-align: center; padding: 14px 20px; border-top: 2px solid #333; border-bottom: 1px solid #ddd;}
+    .tpl-basictable-01 tbody td,
+    .tpl-basictable-01 tbody th {font-size: 15px; color: #333; text-align: center; font-weight: normal; padding: 14px 20px; border-bottom: 1px solid #ddd;}
+    .tpl-basictable-01 tbody td.txt {text-align: left;}
+    /* 라인형 */
+    .tpl-basictable-01.is-line thead th {border-left: 1px solid #ddd;}
+    .tpl-basictable-01.is-line thead th:first-child {border-left: none;}
+    .tpl-basictable-01.is-line tbody th,
+    .tpl-basictable-01.is-line tbody td {border-top: 1px solid #ddd; border-left: 1px solid #ddd;}
+    .tpl-basictable-01.is-line tbody th:first-child,
+    .tpl-basictable-01.is-line tbody td:first-child {border-left: none;}
+    /* 스트라이프형 */
+    .tpl-basictable-01.is-stripe thead th {background-color: #222; color: #fff; border-bottom: 1px solid #222;}
+    .tpl-basictable-01.is-stripe tbody tr:nth-child(even) td,
+    .tpl-basictable-01.is-stripe tbody tr:nth-child(even) th {background-color: #f7f7f7;}
+    /* 소제목형 */
+    .tpl-basictable-01.is-subhead thead th {background-color: #222; color: #fff; border-bottom: 1px solid #222;}
+    .tpl-basictable-01.is-subhead tbody th {background-color: #EFEFEF; font-weight: 700;}
+    .tpl-basictable-01.is-subhead tbody td {border-left: 1px solid #ddd;}
+  </style>
+</head>
+<body>
+  <div class="copy-top w-1080">
+    <div class="flex justify-end gap-20">
+      <label><input type="radio" name="tableStyle" value="default" checked onchange="setStyle('default')"> 기본형</label>
+      <label><input type="radio" name="tableStyle" value="line" onchange="setStyle('line')"> 라인형</label>
+      <label><input type="radio" name="tableStyle" value="stripe" onchange="setStyle('stripe')"> 스트라이프형</label>
+      <label><input type="radio" name="tableStyle" value="subhead" onchange="setStyle('subhead')"> 소제목형</label>
+    </div>
+  </div>
+  <div class="copy-wrap w-1080">    
+    <table class="tpl-basictable-01">
+      <colgroup>
+        <col width="15%" />
+        <col width="*" />
+        <col width="20%" />
+        <col width="20%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>강좌명</th>
+          <th>수강 기간</th>
+          <th>수강 상태</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>1</th>
+          <td class="txt">유아교육개론 기본이론반</td>
+          <td>2025.01.01 ~ 2025.02.28</td>
+          <td>수강중</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td class="txt">유아교육각론 심화이론반</td>
+          <td>2025.03.01 ~ 2025.04.30</td>
+          <td>수강중</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td class="txt">기출문제 분석반 (1997~2026)</td>
+          <td>2025.05.01 ~ 2025.06.30</td>
+          <td>수강예정</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td class="txt">문제풀이반</td>
+          <td>2025.07.01 ~ 2025.08.31</td>
+          <td>수강예정</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td class="txt">실전 모의고사반</td>
+          <td>2025.09.01 ~ 2025.11.30</td>
+          <td>수강예정</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tpl-guide w-1080 mt30">
+    <h5 class="notice-badge">NOTICE</h5>
+    <ul>
+      <li>이 템플릿은 샘플 데이터로 구성된 기본 테이블 양식입니다.</li>
+      <li>텍스트, 컬럼 구성, 내용 등 세부 내용은 상황에 맞게 변경 가능하며 모든 요소는 수정하여 사용할 수 있습니다.</li>
+    </ul>
+  </div>
+  <script>
+    function setStyle(type) {
+      var t = document.querySelector('.tpl-basictable-01');
+      t.classList.remove('is-line', 'is-stripe', 'is-subhead');
+      if (type === 'line')    t.classList.add('is-line');
+      if (type === 'stripe')  t.classList.add('is-stripe');
+      if (type === 'subhead') t.classList.add('is-subhead');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <script src="../includes/common-head.js"></script>
+  <style>
+    .curri-wrap .group{display: flex; gap: 8px; margin-top: 16px;}
+    .curri-wrap .group .rgt{flex-grow: 1; display: flex; flex-direction: column; gap: 8px;}
+    .curri-wrap .group .rgt > li{display: flex; gap: 8px; flex-grow: 1;}
+    .curri-wrap .group .box{display: flex; align-items: center; justify-content: center; min-height: 76px; padding: 14px; text-align: center; line-height: 1.5em; border: 1px solid #ddd; border-radius: 5px;}
+    .curri-wrap .group .box.tit-box{width: 200px; min-height: 160px; color: #fff; background-color: var(--prime); border:none; flex-shrink: 0;}
+    .curri-wrap .group:nth-child(1) .tit-box{background-color: var(--c1);}
+    .curri-wrap .group:nth-child(2) .tit-box{background-color: var(--c2);}
+    .curri-wrap .group:nth-child(3) .tit-box{background-color: var(--c3);}
+    .curri-wrap .group:nth-child(4) .tit-box{background-color: var(--c4);}
+    .curri-wrap .group:nth-child(5) .tit-box{background-color: var(--prime);}
+    .curri-wrap .group .box.tit-box h4{font-size: 24px; font-weight: 700; line-height: 1.3em;}
+    .curri-wrap .group .box.tit-box .month{display: inline-block; min-width: 68px; margin-top: 12px; padding: 0 10px; color: #fff; font-size: 16px; line-height: 27px; text-align: center; border: 1px solid #fff; border-radius: 16px;}
+    .curri-wrap .group .box.lecture{width: 200px; color: #000; font-size: 16px; font-weight: 700; background-color: #F6F6F6; flex-shrink: 0;}
+    .curri-wrap .group .box.txt{justify-content: unset; padding-left: 40px; padding-right: 40px; font-size: 14px; text-align: left; flex-grow: 1; word-break: keep-all;}
+  </style>
+</head>
+<body>
+  <div class="copy-top w-1080">
+    <div class="tpl-guide mb50">
+      <h5 class="notice-badge">NOTICE</h5>
+      <ul>
+        <li>월별 커리큘럼을 단계별로 시각화한 박스형 레이아웃입니다.</li>
+        <li>
+          컬러 피커 또는 HEX 코드 직접 입력 후 적용 버튼을 누르면 단계별 색상을 확인할 수 있습니다.<br>
+          (기본 구성은 5그룹이며, 각 그룹의 타이틀 박스 색상은 개별 지정하려면 6번째 그룹부터는 프라임 컬러로 동일하게 표시되므로, <strong>최대 5개까지</strong> 가능합니다.)
+        </li>
+        <li>월 단위로 구성 되어있는 각 그룹의 행은 강좌 수에 따라 조정할 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:8px;">
+      <label style="font-size:13px;">Prime Color</label>
+      <input type="color" id="colorPicker" value="#4551D1">
+      <input type="text" id="colorHex" value="#4551D1" maxlength="7" style="width:80px; height:28px; padding:0 8px; border:1px solid #ddd; border-radius:4px; font-size:13px; font-family:monospace;">
+      <button id="btnApply" style="height:28px; padding:0 12px; background:#333; color:#fff; border:none; border-radius:4px; font-size:13px; cursor:pointer;">적용</button>
+      <span class="fz-12 txc-g50">*6자리 HEX 코드로 입력</span>
+    </div>
+  </div>
+  <div class="copy-wrap w-1080">
+    <div class="curri-wrap">
+      <div class="group">
+        <div class="box tit-box">
+          <div>
+            <h4>기본<br>이론반</h4>
+            <span class="month">1~2월</span>
+          </div>
+        </div>
+        <ul class="rgt">
+          <li>
+            <div class="box lecture">국어교육론<br>기본 이론반</div>
+            <div class="box txt">화법, 작문, 독서 이론 구조화 / 독해 방법 안내 및 제시문 분석 연습 / 화법, 작문, 독서 기출 문항 분석</div>
+          </li>
+          <li>
+            <div class="box lecture">문법<br>기본 이론반</div>
+            <div class="box txt">현대국어문법 이론 정리(음운론, 형태론, 통사론, 의미론, 담화론) / 중세국어 자료 강독(특강) / 현대국어 문법 기출 분석</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="box tit-box">
+          <div>
+            <h4>심화<br>이론반1</h4>
+            <span class="month">3~4월</span>
+          </div>
+        </div>
+        <ul class="rgt">
+          <li>
+            <div class="box lecture">국어교육론<br>심화 이론반1</div>
+            <div class="box txt">교육과정 &amp; 교과서1(화법, 작문) / 독해 방법 안내 및 제시문 분석 연습 / 화법, 작문 기출 문항 분석</div>
+          </li>
+          <li>
+            <div class="box lecture">문법<br>심화 이론반1</div>
+            <div class="box txt">중세국어문법 이론정리(음운론/문자와 표기법, 형태론, 통사론/의미론) / 중세국어문법 기본·심화 이론 이해</div>
+          </li>
+          <li>
+            <div class="box lecture">국어교육론<br>심화 이론반2</div>
+            <div class="box txt">교육과정 &amp; 교과서2(독서, 문학) / 독해 방법 안내 및 제시문 분석 연습 / 독서 기출 문항 분석</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="box tit-box">
+          <div>
+            <h4>심화<br>이론반2</h4>
+            <span class="month">5~6월</span>
+          </div>
+        </div>
+        <ul class="rgt">
+          <li>
+            <div class="box lecture">국어교육론<br>심화 이론반2</div>
+            <div class="box txt">교육과정 &amp; 교과서2(독서, 문학) / 독해 방법 안내 및 제시문 분석 연습 / 독서 기출 문항 분석</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="box tit-box">
+          <div>
+            <h4>문제<br>풀이반</h4>
+            <span class="month">7~8월</span>
+          </div>
+        </div>
+        <ul class="rgt">
+          <li>
+            <div class="box lecture">국어교육론<br>문제풀이</div>
+            <div class="box txt">화법, 작문, 독서, 고전소설 영역별 기출문제 및 변형 문제풀이 / 각 영역별 이론 총정리</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="box tit-box">
+          <div>
+            <h4>모의<br>고사반</h4>
+            <span class="month">9~11월</span>
+          </div>
+        </div>
+        <ul class="rgt">
+          <li>
+            <div class="box lecture">모의고사<br>(연금술)</div>
+            <div class="box txt">전공A/B 대비 실전 문제 풀이 / 출제자의 눈을 바탕으로 문항 출제 / 문학, 문법, 국어교육론 이론 최종 정리</div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+<script>
+  function hexToRgb(hex) {
+    var r = parseInt(hex.slice(1,3),16);
+    var g = parseInt(hex.slice(3,5),16);
+    var b = parseInt(hex.slice(5,7),16);
+    return [r, g, b];
+  }
+
+  function mix(rgb, t) {
+    var r = Math.round(255 + (rgb[0] - 255) * t);
+    var g = Math.round(255 + (rgb[1] - 255) * t);
+    var b = Math.round(255 + (rgb[2] - 255) * t);
+    return '#' + [r,g,b].map(function(v){ return v.toString(16).padStart(2,'0'); }).join('');
+  }
+
+  function applyColor(hex) {
+    if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+    var rgb = hexToRgb(hex);
+    var wrap = document.querySelector('.curri-wrap');
+    wrap.style.setProperty('--prime', hex);
+    wrap.style.setProperty('--c1', mix(rgb, 0.40));
+    wrap.style.setProperty('--c2', mix(rgb, 0.55));
+    wrap.style.setProperty('--c3', mix(rgb, 0.70));
+    wrap.style.setProperty('--c4', mix(rgb, 0.85));
+  }
+
+  var picker = document.getElementById('colorPicker');
+  var hexInput = document.getElementById('colorHex');
+
+  applyColor('#4551D1');
+
+  picker.addEventListener('input', function() {
+    hexInput.value = picker.value;
+    applyColor(picker.value);
+  });
+
+  document.getElementById('btnApply').addEventListener('click', function() {
+    var val = hexInput.value;
+    if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+      picker.value = val;
+      applyColor(val);
+    }
+  });
+</script>  
+</body>
+</html>

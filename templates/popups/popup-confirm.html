@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <script src="../includes/common-head.js"></script>
+  <style>
+    .tpl-modal-confirm-bg {display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 100px); background: rgba(0,0,0,0.3);}
+    .tpl-modal-confirm {background: #fff; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); width: 380px; overflow: hidden;}
+    .tpl-modal-confirm-header {padding: 20px 24px 0; font-size: 16px; font-weight: 700;}
+    .tpl-modal-confirm-body {padding: 16px 24px; font-size: 13px; color: #666; line-height: 1.6;}
+    .tpl-modal-confirm-footer {padding: 16px 24px; display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid #f0f0f0;}
+    .tpl-modal-confirm-btn {padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;}
+    .tpl-modal-confirm-btn-primary {background: var(--prime-color); color: #fff;}
+    .tpl-modal-confirm-btn-secondary {background: #e0e0e0; color: #555;}
+  </style>
+</head>
+<body>
+  <style>
+    body{padding: 0;}
+    .copy-wrap{padding: 0;}
+  </style>
+  <div class="tpl-guide w-1080 w-fluid mt30 mb30">
+    <h5 class="notice-badge">NOTICE</h5>
+    <ul>
+      <li>이 템플릿은 확인/취소 버튼이 포함된 모달 팝업 양식입니다.</li>
+      <li>제목, 본문 텍스트, 버튼 레이블은 상황에 맞게 변경하여 사용할 수 있습니다.</li>
+    </ul>
+  </div>
+  <div class="copy-wrap">
+    <div class="tpl-modal-confirm-bg">
+      <div class="tpl-modal-confirm">
+        <div class="tpl-modal-confirm-header">삭제 확인</div>
+        <div class="tpl-modal-confirm-body">선택한 항목을 삭제하시겠습니까?<br>삭제된 데이터는 복구할 수 없습니다.</div>
+        <div class="tpl-modal-confirm-footer">
+          <button class="tpl-modal-confirm-btn tpl-modal-confirm-btn-secondary">취소</button>
+          <button class="tpl-modal-confirm-btn tpl-modal-confirm-btn-primary">확인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

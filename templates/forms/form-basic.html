@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="tpl-hide-code-btn" content="true">
+  <script src="../includes/common-head.js"></script>
+  <style>
+    /* 코드 블록 UI */
+    .code-block {display: none; margin-top: 0; margin-bottom: 30px; background: #1e1e1e; border-radius: 8px; overflow: hidden;}
+    .code-block.show {display: block;}
+    .code-block-header {display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: #2d2d2d;}
+    .code-block-label {font-size: 12px; color: #aaa;}
+    .code-block-copy {padding: 4px 12px; background: var(--prime-color); color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer;}
+    .code-block-copy:hover {background: var(--prime-dark);}
+    .code-block-copy.copied {background: #555;}
+    .code-block pre {margin: 0; padding: 16px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; color: #d4d4d4; white-space: pre; overflow-x: auto; line-height: 1.6;}
+    .btn-code-view {padding: 7px 14px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer; background: #f0f0f0; color: #555;}
+    .btn-code-view:hover {background: #e0e0e0;}
+    .section-divider {border: none; border-top: 1px solid #eee; margin: 0;}
+  </style>
+</head>
+<body class="pb150">
+
+  <!-- ===== 텍스트 입력 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top">
+      <div class="flex justify-between items-center">
+        <strong class="fz-16">* 텍스트 입력</strong>
+        <button class="btn-code-view" data-target="code-txt">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-txt">
+      <style class="tpl-style">
+        .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
+        .tpl-form-txt {width: 100%; height: 44px; padding: 0 14px; border: 1px solid #dcdcdc; border-radius: 6px; font-size: 14px; font-family: inherit; color: #333; outline: none; box-sizing: border-box;}
+        .tpl-form-txt:focus {border-color: #000;}
+      </style>
+      <div class="form-group">
+        <label class="form-label">이름</label>
+        <input type="text" class="tpl-form-txt" placeholder="이름을 입력하세요">
+      </div>
+    </div>
+    <div class="code-block" id="code-txt">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-form-txt</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ===== 셀렉트 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top pt25">
+      <div class="flex justify-between items-center">
+        <strong class="fz-16">* 셀렉트 박스</strong>
+        <button class="btn-code-view" data-target="code-select">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-select">
+      <style class="tpl-style">
+        .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
+        .tpl-form-select {width: 100%; height: 44px; padding: 0 14px; border: 1px solid #dcdcdc; border-radius: 6px; font-size: 14px; font-family: inherit; color: #333; outline: none; box-sizing: border-box; appearance: none; -webkit-appearance: none; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center;}
+        .tpl-form-select:focus {border-color: #000;}
+      </style>
+      <div class="form-group">
+        <label class="form-label">과목</label>
+        <select class="tpl-form-select">
+          <option value="">선택하세요</option>
+          <option>교육학</option>
+          <option>유아</option>
+          <option>중등</option>         
+        </select>
+      </div>
+    </div>
+    <div class="code-block" id="code-select">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-form-select</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ===== 텍스트에어리어 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top pt25">
+      <div class="flex justify-between items-center">
+        <strong class="fz-16">* 내용 입력</strong>
+        <button class="btn-code-view" data-target="code-area">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-area">
+      <style class="tpl-style">
+        .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
+        .tpl-form-area {width: 100%; height: 100px; padding: 12px 14px; border: 1px solid #dcdcdc; border-radius: 6px; font-size: 14px; font-family: inherit; color: #333; outline: none; box-sizing: border-box; resize: vertical;}
+        .tpl-form-area:focus {border-color: #000;}
+      </style>
+      <div class="form-group">
+        <label class="form-label">비고</label>
+        <textarea class="tpl-form-area" placeholder="내용을 입력하세요"></textarea>
+      </div>
+    </div>
+    <div class="code-block" id="code-area">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-form-area</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ===== 체크박스 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top pt25">
+      <div class="flex justify-between items-center">
+        <strong class="fz-16">* 체크박스</strong>
+        <button class="btn-code-view" data-target="code-check">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-check">
+      <style class="tpl-style">
+        .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
+        .tpl-form-check-group {display: flex; flex-wrap: wrap; gap: 12px 24px;}
+        .tpl-form-check-group label {display: flex; align-items: center; gap: 8px; font-size: 14px; color: #333; cursor: pointer;}
+        .tpl-form-check {appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1.5px solid #dcdcdc; border-radius: 4px; background: #fff; cursor: pointer; flex-shrink: 0;}
+        .tpl-form-check:checked {border-color: var(--prime-color); background: var(--prime-color) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23fff' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center center;}
+        .tpl-form-check:focus {outline: 1px solid #000; outline-offset: 1px;}
+        .tpl-form-check:disabled {border-color: #e0e0e0; background-color: #f5f5f5; cursor: default;}
+        .tpl-form-check:disabled:checked {border-color: #c0c0c0; background-color: #c0c0c0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23fff' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");}
+        .tpl-form-check-group label:has(.tpl-form-check:disabled) {color: #bbb; cursor: default;}
+      </style>
+      <div class="form-group">
+        <label class="form-label">관심 과목</label>
+        <div class="tpl-form-check-group">
+          <label><input type="checkbox" class="tpl-form-check"> 교육학</label>
+          <label><input type="checkbox" class="tpl-form-check"> 유아</label>
+          <label><input type="checkbox" class="tpl-form-check" checked> 중등</label>
+          <label><input type="checkbox" class="tpl-form-check"> 특수</label>
+          <label><input type="checkbox" class="tpl-form-check" disabled> 비활성</label>
+          <label><input type="checkbox" class="tpl-form-check" disabled checked> 비활성(선택됨)</label>
+        </div>
+      </div>
+    </div>
+    <div class="code-block" id="code-check">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-form-check</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ===== 라디오 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top pt25">
+      <div class="flex justify-between items-center">
+        <strong class="fz-16">* 라디오</strong>
+        <button class="btn-code-view" data-target="code-radio">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-radio">
+      <style class="tpl-style">
+        .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
+        .tpl-form-radio-group {display: flex; flex-wrap: wrap; gap: 12px 24px;}
+        .tpl-form-radio-group label {display: flex; align-items: center; gap: 8px; font-size: 14px; color: #333; cursor: pointer;}
+        .tpl-form-radio {appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1.5px solid #dcdcdc; border-radius: 50%; background: #fff; cursor: pointer; flex-shrink: 0;}
+        .tpl-form-radio:checked {border-color: var(--prime-color); background: radial-gradient(circle, var(--prime-color) 43%, #fff 47%);}
+        .tpl-form-radio:focus {outline: 1px solid #000; outline-offset: 1px;}
+        .tpl-form-radio:disabled {border-color: #e0e0e0; background-color: #f5f5f5; cursor: default;}
+        .tpl-form-radio:disabled:checked {border-color: #c0c0c0; background: radial-gradient(circle, #c0c0c0 43%, #f5f5f5 47%);}
+        .tpl-form-radio-group label:has(.tpl-form-radio:disabled) {color: #bbb; cursor: default;}
+      </style>
+      <div class="form-group">
+        <label class="form-label">수강 유형</label>
+        <div class="tpl-form-radio-group">
+          <label><input type="radio" class="tpl-form-radio" name="courseType" checked> 온라인</label>
+          <label><input type="radio" class="tpl-form-radio" name="courseType"> 오프라인</label>
+          <label><input type="radio" class="tpl-form-radio" name="courseType"> 혼합형</label>
+          <label><input type="radio" class="tpl-form-radio" name="courseType" disabled> 비활성</label>
+          <label><input type="radio" class="tpl-form-radio" name="courseType2" disabled checked> 비활성(선택됨)</label>
+        </div>
+      </div>
+    </div>
+    <div class="code-block" id="code-radio">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-form-radio</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
+  <script>
+    var wrapMap = {
+      'code-txt'    : 'wrap-txt',
+      'code-select' : 'wrap-select',
+      'code-area'   : 'wrap-area',
+      'code-check'  : 'wrap-check',
+      'code-radio'  : 'wrap-radio'
+    };
+
+    function trimIndent(html) {
+      var lines  = html.split('\n');
+      var indent = (lines[1] || lines[0]).match(/^(\s*)/)[1].length;
+      return lines.map(function(l) { return l.slice(indent); }).join('\n').trim();
+    }
+
+    // copy-wrap innerHTML 전체를 코드 블록에 채우기
+    Object.keys(wrapMap).forEach(function(id) {
+      var wrap = document.getElementById(wrapMap[id]);
+      var pre  = document.querySelector('#' + id + ' pre');
+      pre.textContent = trimIndent(wrap.innerHTML);
+    });
+
+    // 코드 보기 토글
+    document.querySelectorAll('.btn-code-view').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var block  = document.getElementById(btn.dataset.target);
+        var isShow = block.classList.toggle('show');
+        btn.textContent = isShow ? '코드 닫기' : '코드 보기';
+      });
+    });
+
+    // 코드 복사
+    document.querySelectorAll('.code-block-copy').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var code = btn.closest('.code-block').querySelector('pre').textContent;
+        navigator.clipboard.writeText(code).then(function() {
+          btn.textContent = '복사됨!';
+          btn.classList.add('copied');
+          setTimeout(function() {
+            btn.textContent = '코드 복사';
+            btn.classList.remove('copied');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

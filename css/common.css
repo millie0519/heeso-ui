@@ -1,0 +1,18 @@
+@import './theme.css';
+* {font-family: "Noto Sans KR", sans-serif;}
+body{padding: 32px;}
+.w-1080{width: 1080px; margin: 0 auto;}
+.w-1080.w-fluid{width: 100%; max-width: 1080px;}
+.w-1100{width: 1100px; margin: 0 auto;}
+.w-1100.w-fluid{width: 100%; max-width: 1100px;}
+.w-1200{width: 1200px; margin: 0 auto;}
+.w-1200.w-fluid{width: 100%; max-width: 1200px;}
+.copy-wrap{padding: 30px 0;}
+
+/* 템플릿 안내 문구 */
+.tpl-guide {padding: 12px 16px; background-color: var(--prime-pale); border: 1px solid var(--prime-color); border-radius: 6px; font-size: 13px; color: #444; line-height: 1.7;}
+.tpl-guide .notice-badge {display: inline-flex; align-items: center; gap: 5px; background: var(--prime-color); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .06em; padding: 3px 8px 3px 6px; border-radius: 4px; margin-bottom: 5px;}
+.tpl-guide .notice-badge::before {content: 'i'; display: inline-flex; align-items: center; justify-content: center; width: 13px; height: 13px; border: 1.5px solid #fff; border-radius: 50%; font-size: 9px; font-weight: 700; line-height: 1; flex-shrink: 0;}
+.tpl-guide ul {margin: 0; padding-left: 6px; list-style: none;}
+.tpl-guide ul li {position: relative; margin: 5px 0; padding-left: 10px; line-height: 1.6em; word-break: keep-all;}
+.tpl-guide ul li::before {position: absolute; top: 10px; left: 0; width: 4px; height: 1px; background-color: #444; content: '';}

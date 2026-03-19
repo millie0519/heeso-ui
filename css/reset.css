@@ -1,0 +1,41 @@
+/* ========================================
+   Reset CSS - 전체 템플릿 공통 적용
+   ======================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, div, span, h1, h2, h3, h4, h5, h6,
+p, a, em, strong, table, caption, tbody, tfoot, thead, tr, th, td,
+ul, ol, li, dl, dt, dd, form, fieldset, label, input, button, select, textarea {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol, li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
