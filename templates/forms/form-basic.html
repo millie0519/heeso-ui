@@ -199,13 +199,52 @@
     </div>
   </div>
 
+  <hr class="section-divider">
+
+  <!-- ===== 파일첨부 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top pt25">
+      <div class="flex justify-between items-center">
+        <strong class="fz-16">* 파일첨부</strong>
+        <button class="btn-code-view" data-target="code-file">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-file">
+      <style class="tpl-style">
+        .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
+        .tpl-form-file-wrap {display: flex; align-items: center; border-radius: 6px;}
+        .tpl-form-file-name {flex: 1; height: 44px; line-height: 42px; padding: 0 14px; border: 1px solid #dcdcdc; border-radius: 6px 0 0 6px; font-size: 14px; font-family: inherit; color: #999; background: #fff; box-sizing: border-box; pointer-events: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .tpl-form-file-name.has-file {color: #333;}
+        .tpl-form-file-btn {flex-shrink: 0; height: 44px; padding: 0 18px; border: none; border-radius: 0 6px 6px 0; font-size: 14px; font-family: inherit; font-weight: 600; color: #fff; background: var(--prime-color); cursor: pointer; white-space: nowrap;}
+        .tpl-form-file-btn:hover {background: var(--prime-dark);}
+        .tpl-form-file-input {display: none;}
+      </style>
+      <div class="form-group">
+        <label class="form-label">첨부파일</label>
+        <div class="tpl-form-file-wrap">
+          <span class="tpl-form-file-name" id="fileName">파일을 선택하세요</span>
+          <button type="button" class="tpl-form-file-btn w120" onclick="document.getElementById('fileInput').click()">파일 선택</button>
+          <input type="file" class="tpl-form-file-input" id="fileInput" onchange="var n=this.files[0]?this.files[0].name:'파일을 선택하세요';var el=document.getElementById('fileName');el.textContent=n;el.classList.toggle('has-file',!!this.files[0]);">
+        </div>
+      </div>
+    </div>
+    <div class="code-block" id="code-file">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-form-file</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
   <script>
     var wrapMap = {
       'code-txt'    : 'wrap-txt',
       'code-select' : 'wrap-select',
       'code-area'   : 'wrap-area',
       'code-check'  : 'wrap-check',
-      'code-radio'  : 'wrap-radio'
+      'code-radio'  : 'wrap-radio',
+      'code-file'   : 'wrap-file'
     };
 
     function trimIndent(html) {
