@@ -201,6 +201,47 @@
 
   <hr class="section-divider">
 
+  <!-- ===== 버튼형 체크박스 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top pt25">
+      <div class="flex justify-between items-center">
+        <strong class="fz-16">* 버튼형 체크박스</strong>
+        <button class="btn-code-view" data-target="code-btncheck">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-btncheck">
+      <style class="tpl-style">
+        .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
+        .tpl-form-btn-check-group {display: flex; flex-wrap: wrap; gap: 8px;}
+        .tpl-form-btn-check {display: inline-flex; align-items: center; height: 36px; padding: 0 18px; border: 1.5px solid #dcdcdc; border-radius: 20px; font-size: 14px; font-family: inherit; color: #555; background: #fff; cursor: pointer; user-select: none;}
+        .tpl-form-btn-check input[type="checkbox"] {display: none;}
+        .tpl-form-btn-check:has(input:checked) {border-color: var(--prime-color); color: var(--prime-color); background: color-mix(in srgb, var(--prime-color) 8%, #fff);}
+        .tpl-form-btn-check:has(input:disabled) {border-color: #e0e0e0; color: #bbb; background: #f5f5f5; cursor: default;}
+        .tpl-form-btn-check:has(input:disabled:checked) {border-color: #c8c8c8; color: #aaa; background: #efefef;}
+      </style>
+      <div class="form-group">
+        <label class="form-label">관심 과목</label>
+        <div class="tpl-form-btn-check-group">
+          <label class="tpl-form-btn-check"><input type="checkbox"> 교육학</label>
+          <label class="tpl-form-btn-check"><input type="checkbox"> 유아</label>
+          <label class="tpl-form-btn-check"><input type="checkbox" checked> 중등</label>
+          <label class="tpl-form-btn-check"><input type="checkbox"> 특수</label>
+          <label class="tpl-form-btn-check"><input type="checkbox" disabled> 비활성</label>
+          <label class="tpl-form-btn-check"><input type="checkbox" disabled checked> 비활성(선택됨)</label>
+        </div>
+      </div>
+    </div>
+    <div class="code-block" id="code-btncheck">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-form-btn-check</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
   <!-- ===== 파일첨부 ===== -->
   <div class="w-1080 w-fluid">
     <div class="copy-top pt25">
@@ -243,8 +284,9 @@
       'code-select' : 'wrap-select',
       'code-area'   : 'wrap-area',
       'code-check'  : 'wrap-check',
-      'code-radio'  : 'wrap-radio',
-      'code-file'   : 'wrap-file'
+      'code-radio'    : 'wrap-radio',
+      'code-btncheck' : 'wrap-btncheck',
+      'code-file'     : 'wrap-file'
     };
 
     function trimIndent(html) {
