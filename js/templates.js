@@ -49,12 +49,6 @@ var TEMPLATES = [
     desc     : '카드형 레이아웃의 커리큘럼 테이블'
   },
   {
-    category : 'form',
-    preview  : 'templates/forms/form-survey-1thpass.html',
-    title    : '1차 합격인증 설문조사',
-    desc     : '1차 합격 인증 및 설문조사 폼'
-  },
-  {
     category : 'table',
     preview  : 'templates/tables/time-table-01.html',
     title    : '시간표 01',

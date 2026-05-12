@@ -28,11 +28,14 @@
 </head>
 <body>
   <div class="copy-top w-1080">
-    <div class="flex justify-end gap-20">
+    <div class="flex justify-between items-center">
+    <strong class="fz-18">* 기본 목록 테이블 <code class="code-name">table-basic-01</code></strong>
+    <div class="flex gap-20">
       <label><input type="radio" name="tableStyle" value="default" checked onchange="setStyle('default')"> 기본형</label>
       <label><input type="radio" name="tableStyle" value="line" onchange="setStyle('line')"> 라인형</label>
       <label><input type="radio" name="tableStyle" value="stripe" onchange="setStyle('stripe')"> 스트라이프형</label>
       <label><input type="radio" name="tableStyle" value="subhead" onchange="setStyle('subhead')"> 소제목형</label>
+    </div>
     </div>
   </div>
   <div class="copy-wrap w-1080">    
