@@ -6,6 +6,9 @@
   <style>
     /* 넓은 영역: 4칸 격자. 월 묶음(m-col)은 안에 든 카드 수만큼 칸을 차지하고, 월·카드 높이는 줄마다 맞춰진다 */
     .curri-wrap-03{container-type: inline-size;}
+    .curri-wrap-03, .curri-wrap-03 *{box-sizing: border-box;}
+    .curri-wrap-03 p{margin: 0;}
+    .curri-wrap-03 ul{margin: 0; padding: 0; list-style: none;}
     .curri-wrap-03 .group{display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 16px;}
     .curri-wrap-03 .group .m-col{display: grid; grid-row: span 2; grid-template-columns: subgrid; grid-template-rows: subgrid; gap: 10px 16px;}
     .curri-wrap-03 .group .m-col:has(> :nth-child(3)){grid-column: span 2;}
@@ -18,6 +21,7 @@
     .curri-wrap-03 .group .txt{height: 100%; padding: 30px 25px; background-color: #fff; border: 1px solid #ccbaa5; border-radius: 16px; box-sizing: border-box;}
     .curri-wrap-03 .group .txt .sub-tit{color: #333; font-size: 18px; font-weight: 700; margin-bottom: 20px !important; word-break: keep-all;}
     .curri-wrap-03 .group .txt ul li{position: relative; padding-left: 10px; color: #3e3e3e; font-size: 18px; line-height: 1.3em; margin: 5px 0; word-break: keep-all;}
+    .curri-wrap-03 .group .txt .note{margin-top: 10px; font-size: 12px;}
     .curri-wrap-03 .group .txt ul li::before{display: block; position: absolute; top: 11px; left: 0; width: 2px; height: 2px; border-radius: 50%; background-color: #3e3e3e; content: '';}
     /* 중간 영역: 2칸 격자. 카드 1장인 월은 1칸, 2장 이상인 월은 한 줄 전체 */
     @container (max-width: 900px){
@@ -112,7 +116,7 @@
             <ul>
               <li>
                 1차 대비 문제풀이반은 영역별+광영역 문제로 진행되면서 구조화하는 강의
-                <p class="fz-12 mt10">** 직인강 첨삭 지도</p>
+                <p class="note">** 직인강 첨삭 지도</p>
               </li>
             </ul>
           </div>

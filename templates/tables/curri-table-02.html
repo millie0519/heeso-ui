@@ -4,16 +4,19 @@
   <meta charset="UTF-8">
   <script src="../includes/common-head.js"></script>
   <style>
+    .curri-wrap, .curri-wrap *{box-sizing: border-box;}
+    .curri-wrap h4{margin: 0;}
+    .curri-wrap ul{margin: 0; padding: 0; list-style: none;}
     .curri-wrap .group{display: flex; gap: 8px; margin-top: 16px;}
     .curri-wrap .group .rgt{flex-grow: 1; display: flex; flex-direction: column; gap: 8px;}
     .curri-wrap .group .rgt > li{display: flex; gap: 8px; flex-grow: 1;}
     .curri-wrap .group .box{display: flex; align-items: center; justify-content: center; min-height: 76px; padding: 14px; text-align: center; line-height: 1.5em; border: 1px solid #ddd; border-radius: 5px;}
-    .curri-wrap .group .box.tit-box{width: 200px; min-height: 160px; color: #fff; background-color: var(--prime); border:none; flex-shrink: 0;}
-    .curri-wrap .group:nth-child(1) .tit-box{background-color: var(--c1);}
-    .curri-wrap .group:nth-child(2) .tit-box{background-color: var(--c2);}
-    .curri-wrap .group:nth-child(3) .tit-box{background-color: var(--c3);}
-    .curri-wrap .group:nth-child(4) .tit-box{background-color: var(--c4);}
-    .curri-wrap .group:nth-child(5) .tit-box{background-color: var(--prime);}
+    .curri-wrap .group .box.tit-box{width: 200px; min-height: 160px; color: #fff; background-color: var(--prime, #4551d1); border:none; flex-shrink: 0;}
+    .curri-wrap .group:nth-child(1) .tit-box{background-color: var(--c1, #b5b9ed);}
+    .curri-wrap .group:nth-child(2) .tit-box{background-color: var(--c2, #999fe6);}
+    .curri-wrap .group:nth-child(3) .tit-box{background-color: var(--c3, #7d85df);}
+    .curri-wrap .group:nth-child(4) .tit-box{background-color: var(--c4, #616bd8);}
+    .curri-wrap .group:nth-child(5) .tit-box{background-color: var(--prime, #4551d1);}
     .curri-wrap .group .box.tit-box h4{font-size: 24px; font-weight: 700; line-height: 1.3em;}
     .curri-wrap .group .box.tit-box .month{display: inline-block; min-width: 68px; margin-top: 12px; padding: 0 10px; color: #fff; font-size: 16px; line-height: 27px; text-align: center; border: 1px solid #fff; border-radius: 16px;}
     .curri-wrap .group .box.lecture{width: 200px; color: #000; font-size: 16px; font-weight: 700; background-color: #F6F6F6; flex-shrink: 0;}

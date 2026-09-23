@@ -6,13 +6,13 @@
   <style>
     .tpl-table-scroll {overflow-x: auto;}
     .tpl-timetable-01 {width: 100%; min-width: var(--tpl-table-min, 560px); border-collapse: collapse; table-layout: fixed; border-bottom: 1px solid rgba(0,0,0,.2);}
-    .tpl-timetable-01 thead th {background: var(--prime); color: #fff; font-weight: 500; font-size: 18px; text-align: center; padding: 10px 4px; border-left: 1px solid rgba(0,0,0,.2);}
+    .tpl-timetable-01 thead th {background: var(--prime, #25c373); color: #fff; font-weight: 500; font-size: 18px; text-align: center; padding: 10px 4px; border-left: 1px solid rgba(0,0,0,.2);}
     .tpl-timetable-01 thead th:first-child {border-left: none;}
     .tpl-timetable-01 .day-sat {color: #3862ff !important;}
     .tpl-timetable-01 .day-sun {color: #ff3838 !important;}
     .tpl-timetable-01 td {vertical-align: top; border-left: 1px solid rgba(0,0,0,.2); padding: 0; height: 90px;}
     .tpl-timetable-01 td:first-child {border-left: none;}
-    .tpl-timetable-01 .date-label {display: block; font-size: 15px; height: 22px; line-height: 22px; font-weight: 500; color: #333; background: var(--sub); text-align: center;}
+    .tpl-timetable-01 .date-label {display: block; font-size: 15px; height: 22px; line-height: 22px; font-weight: 500; color: #333; background: var(--sub, #beedd5); text-align: center;}
     /* 시간 목록: 칸 폭 기준. 넓은 칸은 5줄 채우고 다음 열, 140px 미만 칸은 1열 */
     .tpl-timetable-01 .cell-inner {container-type: inline-size;}
     .tpl-timetable-01 .slots {display: grid; grid-template-columns: minmax(0, 1fr); gap: 1px 0; padding: 10px 5px 15px;}
@@ -127,6 +127,14 @@
       // -------------------------------------------------------
       // 3) 렌더링
       // -------------------------------------------------------
+      // 태그 만들기 도우미: el('span', 'slot', '10:00-10:40')
+      function el(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text != null) node.textContent = text;
+        return node;
+      }
+
       function renderCell(date) {
         const key   = toKey(date);
         const label = toLabel(date);
@@ -135,37 +143,36 @@
 
         const isInRange = !(date < CONTENT_START || date > END_DATE);
 
-        const $inner = $('<div class="cell-inner">');
-        const $dateLabel = $('<span class="date-label">').text(isInRange ? label : '');
-        if (cls) $dateLabel.addClass(cls);
-        $inner.append($dateLabel);
+        const td        = el('td');
+        const inner     = el('div', 'cell-inner');
+        const dateLabel = el('span', 'date-label', isInRange ? label : '');
+        if (cls) dateLabel.classList.add(cls);
+        inner.append(dateLabel);
+        td.append(inner);
 
-        if (!isInRange) {
-          return $('<td>').append($inner);
-        }
+        if (!isInRange) return td;
 
         if (slots && slots.length) {
-          const $slots = $('<div class="slots">');
-
-          slots.forEach(s => $slots.append($('<span class="slot">').text(s)));
-          $inner.append($slots);
+          const slotBox = el('div', 'slots');
+          slots.forEach(s => slotBox.append(el('span', 'slot', s)));
+          inner.append(slotBox);
         }
 
-        return $('<td>').append($inner);
+        return td;
       }
 
       function render() {
-        const $tbody = $('#tpl-timetable-01-body');
-        const weeks  = buildWeeks(START_DATE, END_DATE);
+        const tbody = document.getElementById('tpl-timetable-01-body');
+        const weeks = buildWeeks(START_DATE, END_DATE);
 
         weeks.forEach(week => {
-          const $tr = $('<tr>');
-          week.forEach(date => $tr.append(renderCell(date)));
-          $tbody.append($tr);
+          const tr = el('tr');
+          week.forEach(date => tr.append(renderCell(date)));
+          tbody.append(tr);
         });
       }
 
-      onJQueryReady(render);
+      render();
 
       // -------------------------------------------------------
       // 4) 컬러 피커

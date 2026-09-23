@@ -10,8 +10,8 @@
     .code-block.show {display: block;}
     .code-block-header {display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: #2d2d2d;}
     .code-block-label {font-size: 12px; color: #aaa;}
-    .code-block-copy {padding: 4px 12px; background: var(--prime-color); color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer;}
-    .code-block-copy:hover {background: var(--prime-dark);}
+    .code-block-copy {padding: 4px 12px; background: var(--prime-color, #007d4a); color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer;}
+    .code-block-copy:hover {background: var(--prime-dark, #006b3f);}
     .code-block-copy.copied {background: #555;}
     .code-block pre {margin: 0; padding: 16px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; color: #d4d4d4; white-space: pre; overflow-x: auto; line-height: 1.6;}
     .btn-code-view {padding: 7px 14px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer; background: #f0f0f0; color: #555;}
@@ -129,8 +129,8 @@
         .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
         .tpl-form-check-group {display: flex; flex-wrap: wrap; gap: 12px 24px;}
         .tpl-form-check-group label {display: flex; align-items: center; gap: 8px; font-size: 14px; color: #333; cursor: pointer;}
-        .tpl-form-check {appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1.5px solid #dcdcdc; border-radius: 4px; background: #fff; cursor: pointer; flex-shrink: 0;}
-        .tpl-form-check:checked {border-color: var(--prime-color); background: var(--prime-color) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23fff' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center center;}
+        .tpl-form-check {appearance: none; -webkit-appearance: none; margin: 0; width: 18px; height: 18px; border: 1.5px solid #dcdcdc; border-radius: 4px; background: #fff; cursor: pointer; flex-shrink: 0;}
+        .tpl-form-check:checked {border-color: var(--prime-color, #007d4a); background: var(--prime-color, #007d4a) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23fff' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center center;}
         .tpl-form-check:focus {outline: 1px solid #000; outline-offset: 1px;}
         .tpl-form-check:disabled {border-color: #e0e0e0; background-color: #f5f5f5; cursor: default;}
         .tpl-form-check:disabled:checked {border-color: #c0c0c0; background-color: #c0c0c0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23fff' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");}
@@ -172,9 +172,9 @@
         .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
         .tpl-form-check-group {display: flex; flex-wrap: wrap; gap: 12px 24px;}
         .tpl-form-check-group label {display: flex; align-items: center; gap: 8px; font-size: 14px; color: #333; cursor: pointer;}
-        .tpl-form-check2 {appearance: none; -webkit-appearance: none; position: relative; width: 18px; height: 18px; border: 1.5px solid #dcdcdc; border-radius: 4px; background: #fff; cursor: pointer; flex-shrink: 0;}
-        .tpl-form-check2:checked {border-color: var(--prime-color); background: #fff;}
-        .tpl-form-check2:checked::after {content: ''; position: absolute; top: 50%; left: 50%; width: 11px; height: 9px; transform: translate(-50%, -50%); background-color: var(--prime-color); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23000' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23000' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;}
+        .tpl-form-check2 {appearance: none; -webkit-appearance: none; position: relative; margin: 0; width: 18px; height: 18px; border: 1.5px solid #dcdcdc; border-radius: 4px; background: #fff; cursor: pointer; flex-shrink: 0;}
+        .tpl-form-check2:checked {border-color: var(--prime-color, #007d4a); background: #fff;}
+        .tpl-form-check2:checked::after {content: ''; position: absolute; top: 50%; left: 50%; width: 11px; height: 9px; transform: translate(-50%, -50%); background-color: var(--prime-color, #007d4a); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23000' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23000' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;}
         .tpl-form-check2:focus {outline: 1px solid #000; outline-offset: 1px;}
         .tpl-form-check2:disabled {border-color: #e0e0e0; background-color: #f5f5f5; cursor: default;}
         .tpl-form-check2:disabled:checked {border-color: #c0c0c0; background-color: #f5f5f5;}
@@ -217,8 +217,8 @@
         .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
         .tpl-form-radio-group {display: flex; flex-wrap: wrap; gap: 12px 24px;}
         .tpl-form-radio-group label {display: flex; align-items: center; gap: 8px; font-size: 14px; color: #333; cursor: pointer;}
-        .tpl-form-radio {appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1.5px solid #dcdcdc; border-radius: 50%; background: #fff; cursor: pointer; flex-shrink: 0;}
-        .tpl-form-radio:checked {border-color: var(--prime-color); background: radial-gradient(circle, var(--prime-color) 43%, #fff 47%);}
+        .tpl-form-radio {appearance: none; -webkit-appearance: none; margin: 0; width: 18px; height: 18px; border: 1.5px solid #dcdcdc; border-radius: 50%; background: #fff; cursor: pointer; flex-shrink: 0;}
+        .tpl-form-radio:checked {border-color: var(--prime-color, #007d4a); background: radial-gradient(circle, var(--prime-color, #007d4a) 43%, #fff 47%);}
         .tpl-form-radio:focus {outline: 1px solid #000; outline-offset: 1px;}
         .tpl-form-radio:disabled {border-color: #e0e0e0; background-color: #f5f5f5; cursor: default;}
         .tpl-form-radio:disabled:checked {border-color: #c0c0c0; background: radial-gradient(circle, #c0c0c0 43%, #f5f5f5 47%);}
@@ -260,7 +260,7 @@
         .tpl-form-btn-check-group {display: flex; flex-wrap: wrap; gap: 8px;}
         .tpl-form-btn-check {display: inline-flex; align-items: center; height: 36px; padding: 0 18px; border: 1.5px solid #dcdcdc; border-radius: 20px; font-size: 14px; font-family: inherit; color: #555; background: #fff; cursor: pointer; user-select: none;}
         .tpl-form-btn-check input[type="checkbox"] {display: none;}
-        .tpl-form-btn-check:has(input:checked) {border-color: var(--prime-color); color: #fff; background: var(--prime-color); font-weight: 600;}
+        .tpl-form-btn-check:has(input:checked) {border-color: var(--prime-color, #007d4a); color: #fff; background: var(--prime-color, #007d4a); font-weight: 600;}
         .tpl-form-btn-check:has(input:disabled) {border-color: #e0e0e0; color: #bbb; background: #f5f5f5; cursor: default;}
         .tpl-form-btn-check:has(input:disabled:checked) {border-color: #c8c8c8; color: #fff; background: #c8c8c8;}
       </style>
@@ -301,15 +301,15 @@
         .tpl-form-file-wrap {display: flex; align-items: center; border-radius: 6px;}
         .tpl-form-file-name {flex: 1; height: 44px; line-height: 42px; padding: 0 14px; border: 1px solid #dcdcdc; border-radius: 6px 0 0 6px; font-size: 14px; font-family: inherit; color: #999; background: #fff; box-sizing: border-box; pointer-events: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .tpl-form-file-name.has-file {color: #333;}
-        .tpl-form-file-btn {flex-shrink: 0; height: 44px; padding: 0 18px; border: none; border-radius: 0 6px 6px 0; font-size: 14px; font-family: inherit; font-weight: 600; color: #fff; background: var(--prime-color); cursor: pointer; white-space: nowrap;}
-        .tpl-form-file-btn:hover {background: var(--prime-dark);}
+        .tpl-form-file-btn {flex-shrink: 0; width: 120px; height: 44px; padding: 0 18px; border: none; border-radius: 0 6px 6px 0; font-size: 14px; font-family: inherit; font-weight: 600; color: #fff; background: var(--prime-color, #007d4a); cursor: pointer; white-space: nowrap;}
+        .tpl-form-file-btn:hover {background: var(--prime-dark, #006b3f);}
         .tpl-form-file-input {display: none;}
       </style>
       <div class="form-group">
         <label class="form-label">첨부파일</label>
         <div class="tpl-form-file-wrap">
           <span class="tpl-form-file-name" id="fileName">파일을 선택하세요</span>
-          <button type="button" class="tpl-form-file-btn w120" onclick="document.getElementById('fileInput').click()">파일 선택</button>
+          <button type="button" class="tpl-form-file-btn" onclick="document.getElementById('fileInput').click()">파일 선택</button>
           <input type="file" class="tpl-form-file-input" id="fileInput" onchange="var n=this.files[0]?this.files[0].name:'파일을 선택하세요';var el=document.getElementById('fileName');el.textContent=n;el.classList.toggle('has-file',!!this.files[0]);">
         </div>
       </div>

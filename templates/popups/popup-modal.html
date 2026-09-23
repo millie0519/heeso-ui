@@ -10,8 +10,8 @@
     .code-block.show {display: block;}
     .code-block-header {display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: #2d2d2d;}
     .code-block-label {font-size: 12px; color: #aaa;}
-    .code-block-copy {padding: 4px 12px; background: var(--prime-color); color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer;}
-    .code-block-copy:hover {background: var(--prime-dark);}
+    .code-block-copy {padding: 4px 12px; background: var(--prime-color, #007d4a); color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer;}
+    .code-block-copy:hover {background: var(--prime-dark, #006b3f);}
     .code-block-copy.copied {background: #555;}
     .code-block pre {margin: 0; padding: 16px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; color: #d4d4d4; white-space: pre; overflow-x: auto; line-height: 1.6;}
     .btn-code-view {padding: 7px 14px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer; background: #f0f0f0; color: #555;}
@@ -23,7 +23,7 @@
   <div class="tpl-guide w-1080 w-fluid">
     <h5 class="notice-badge">NOTICE</h5>
     <ul>
-      <li>이 템플릿은 버튼으로 열고 X 버튼으로 닫는 모달 팝업 양식입니다. (jQuery 필요)</li>
+      <li>이 템플릿은 버튼으로 열고 X 버튼으로 닫는 모달 팝업 양식입니다.</li>
       <li>팝업 폭은 기본 450px이며, 모달 wrap 태그(<code>tpl-modal-wrap</code> 또는 <code>tpl-modal-wrap-02</code>)에 <code>--tpl-modal-w</code> 변수를 지정해 변경합니다.<br>
         예) 600px로 사용: <code>&lt;div class="tpl-modal-wrap" id="modal-pop-wrap-01" style="--tpl-modal-w: 600px"&gt;</code></li>
       <li>화면이 지정한 폭보다 좁으면 양옆 16px 여백을 두고 자동으로 줄어듭니다.</li>
@@ -46,10 +46,11 @@
         .tpl-modal-wrap .tpl-modal-box{display: none; position: relative; width: 100%; max-width: var(--tpl-modal-w, 450px); padding: 52px 40px 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
         .tpl-modal-wrap .tpl-modal-box.is-open{animation: tplModalSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;}
         @media (max-width: 480px){.tpl-modal-wrap .tpl-modal-box{padding: 52px 24px 28px;}}
-        .tpl-modal-wrap .tpl-modal-box .tpl-btn-x{display: block; position: absolute; top: 20px; right: 20px; width: 25px; height: 25px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1 1l14 14M15 1L1 15' stroke='%23333' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;}
+        .tpl-modal-wrap .tpl-modal-box p{margin: 0;}
+        .tpl-modal-wrap .tpl-modal-box .tpl-btn-x{display: block; text-decoration: none; position: absolute; top: 20px; right: 20px; width: 25px; height: 25px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1 1l14 14M15 1L1 15' stroke='%23333' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;}
         @keyframes tplModalSlideUp{from{opacity:0; transform:translateY(60px);}to{opacity:1; transform:translateY(0);}}
-        .tpl-modal-open-btn{padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; font-family: inherit; color: #fff; background: var(--prime-color); cursor: pointer;}
-        .tpl-modal-open-btn:hover{background: var(--prime-dark);}
+        .tpl-modal-open-btn{padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; font-family: inherit; color: #fff; background: var(--prime-color, #007d4a); cursor: pointer;}
+        .tpl-modal-open-btn:hover{background: var(--prime-dark, #006b3f);}
       </style>
       <button type="button" onclick="modalShow('modal-pop-wrap-01')" class="tpl-modal-open-btn">모달 열기</button>
 
@@ -67,14 +68,18 @@
 
       <script>
         function modalShow(wrapId){
-          var $wrap = $('#' + wrapId);
-          $wrap.show();
-          $wrap.find('[class*="tpl-modal-box"]').show().addClass('is-open');
+          var wrap = document.getElementById(wrapId);
+          var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+          wrap.style.display = 'block';
+          box.style.display  = 'block';
+          box.classList.add('is-open');
         }
         function modalHide(wrapId){
-          var $wrap = $('#' + wrapId);
-          $wrap.hide();
-          $wrap.find('[class*="tpl-modal-box"]').hide().removeClass('is-open');
+          var wrap = document.getElementById(wrapId);
+          var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+          wrap.style.display = 'none';
+          box.style.display  = 'none';
+          box.classList.remove('is-open');
         }
       </script>
     </div>
@@ -104,10 +109,11 @@
         .tpl-modal-wrap-02 .tpl-modal-box-02{display: none; position: relative; width: 100%; max-width: var(--tpl-modal-w, 450px); height: fit-content; padding: 52px 40px 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
         .tpl-modal-wrap-02 .tpl-modal-box-02.is-open{animation: tplModalSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;}
         @media (max-width: 480px){.tpl-modal-wrap-02 .tpl-modal-box-02{padding: 52px 24px 28px;}}
-        .tpl-modal-wrap-02 .tpl-modal-box-02 .tpl-btn-x{display: block; position: absolute; top: 20px; right: 20px; width: 25px; height: 25px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1 1l14 14M15 1L1 15' stroke='%23333' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;}
+        .tpl-modal-wrap-02 .tpl-modal-box-02 p{margin: 0;}
+        .tpl-modal-wrap-02 .tpl-modal-box-02 .tpl-btn-x{display: block; text-decoration: none; position: absolute; top: 20px; right: 20px; width: 25px; height: 25px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1 1l14 14M15 1L1 15' stroke='%23333' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;}
         @keyframes tplModalSlideUp{from{opacity:0; transform:translateY(60px);}to{opacity:1; transform:translateY(0);}}
-        .tpl-modal-open-btn{padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; font-family: inherit; color: #fff; background: var(--prime-color); cursor: pointer;}
-        .tpl-modal-open-btn:hover{background: var(--prime-dark);}
+        .tpl-modal-open-btn{padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; font-family: inherit; color: #fff; background: var(--prime-color, #007d4a); cursor: pointer;}
+        .tpl-modal-open-btn:hover{background: var(--prime-dark, #006b3f);}
       </style>
       <button type="button" onclick="modalShow('modal-pop-wrap-02')" class="tpl-modal-open-btn">모달 열기</button>
 
@@ -137,14 +143,18 @@
 
       <script>
         function modalShow(wrapId){
-          var $wrap = $('#' + wrapId);
-          $wrap.show();
-          $wrap.find('[class*="tpl-modal-box"]').show().addClass('is-open');
+          var wrap = document.getElementById(wrapId);
+          var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+          wrap.style.display = 'block';
+          box.style.display  = 'block';
+          box.classList.add('is-open');
         }
         function modalHide(wrapId){
-          var $wrap = $('#' + wrapId);
-          $wrap.hide();
-          $wrap.find('[class*="tpl-modal-box"]').hide().removeClass('is-open');
+          var wrap = document.getElementById(wrapId);
+          var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+          wrap.style.display = 'none';
+          box.style.display  = 'none';
+          box.classList.remove('is-open');
         }
       </script>
     </div>
