@@ -33,3 +33,4 @@ node scripts/build-snippets.cjs --check  # 문서가 템플릿과 같은지 확�
 - 코드명·제목·안내 문구: `scripts/snippets.config.json`
 - 새 템플릿 추가: 템플릿에 `<code class="code-name">코드명</code>` 뱃지와 `.copy-wrap`을 두고, 설정 파일에 항목 추가
 - 미리보기 전용 코드(컬러 피커 연결 등)는 `@snippet-exclude-start` ~ `@snippet-exclude-end` 주석으로 감싸면 스니펫과 코드 보기에서 빠집니다.
+- 스크립트가 내용을 채우는 영역(예: 시간표 `tbody`)에는 `data-snippet-empty` 속성을 달면, 코드 보기에서 비운 상태로 복사됩니다.
