@@ -54,8 +54,11 @@ function styleBlock(css) {
   return '<style>\n' + indent(dedent(css), '  ') + '\n</style>';
 }
 
+// 미리보기 전용 구간 제거 + data-snippet-empty 표시 제거 (원본 템플릿의 해당 영역은 이미 비어 있음)
 function stripExcluded(text) {
-  return text.replace(/^[^\n]*@snippet-exclude-start[\s\S]*?@snippet-exclude-end[^\n]*\n?/gm, '');
+  return text
+    .replace(/^[^\n]*@snippet-exclude-start[\s\S]*?@snippet-exclude-end[^\n]*\n?/gm, '')
+    .replace(/ data-snippet-empty(="")?/g, '');
 }
 
 function buildSnippet(item) {

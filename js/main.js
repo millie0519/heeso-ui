@@ -107,6 +107,14 @@ $(function () {
       var style      = staticDoc.querySelector('style');
       var iframeDoc  = $frame[0].contentDocument;
       var copyWrap   = iframeDoc ? iframeDoc.querySelector('.copy-wrap') : staticDoc.querySelector('.copy-wrap');
+      // 스크립트가 채우는 영역(data-snippet-empty)은 비운 상태로 복사 (붙여 넣은 뒤 스크립트가 다시 채움)
+      if (copyWrap) {
+        copyWrap = copyWrap.cloneNode(true);
+        copyWrap.querySelectorAll('[data-snippet-empty]').forEach(function (el) {
+          el.innerHTML = '';
+          el.removeAttribute('data-snippet-empty');
+        });
+      }
       var code = '';
       if (style) code += style.outerHTML + '\n\n';
       code += copyWrap ? copyWrap.innerHTML.trim() : html;
