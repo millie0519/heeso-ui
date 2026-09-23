@@ -19,6 +19,12 @@ var TEMPLATES = [
     desc     : '확인/취소 버튼이 포함된 모달 팝업'
   },
   {
+    category : 'popup',
+    preview  : 'templates/popups/popup-modal.html',
+    title    : '모달 팝업',
+    desc     : 'X 버튼으로 닫는 모달 팝업 (ESC·배경 클릭 닫기 옵션)'
+  },
+  {
     category : 'table',
     preview  : 'templates/tables/basic-table-01.html',
     title    : '기본 테이블 01',

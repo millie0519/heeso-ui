@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="tpl-hide-code-btn" content="true">
+  <script src="../includes/common-head.js"></script>
+  <style>
+    /* 코드 블록 UI */
+    .code-block {display: none; margin-top: 0; margin-bottom: 30px; background: #1e1e1e; border-radius: 8px; overflow: hidden;}
+    .code-block.show {display: block;}
+    .code-block-header {display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: #2d2d2d;}
+    .code-block-label {font-size: 12px; color: #aaa;}
+    .code-block-copy {padding: 4px 12px; background: var(--prime-color); color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer;}
+    .code-block-copy:hover {background: var(--prime-dark);}
+    .code-block-copy.copied {background: #555;}
+    .code-block pre {margin: 0; padding: 16px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; color: #d4d4d4; white-space: pre; overflow-x: auto; line-height: 1.6;}
+    .btn-code-view {padding: 7px 14px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer; background: #f0f0f0; color: #555;}
+    .btn-code-view:hover {background: #e0e0e0;}
+    .section-divider {border: none; border-top: 1px solid #eee; margin: 0;}
+  </style>
+</head>
+<body>
+  <style>
+    body{padding: 0;}
+  </style>
+
+  <!-- ===== 기본형 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top pt25">
+      <div class="flex justify-between items-center">
+        <strong class="fz-18">* 기본형 <code class="code-name">popup-modal-01</code></strong>
+        <button class="btn-code-view" data-target="code-modal">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-modal">
+      <style class="tpl-style">
+        .tpl-modal-wrap{display: none; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0,0,0,.7); z-index: 999;}
+        .tpl-modal-wrap .tpl-modal-container{display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;}
+        .tpl-modal-wrap .tpl-modal-box{display: none; position: relative; width: 450px; padding: 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
+        .tpl-modal-wrap .tpl-modal-box.is-open{animation: tplModalSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;}
+        .tpl-modal-wrap .tpl-modal-box .tpl-btn-x{display: block; position: absolute; top: 20px; right: 20px; width: 25px; height: 25px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1 1l14 14M15 1L1 15' stroke='%23333' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;}
+        @keyframes tplModalSlideUp{from{opacity:0; transform:translateY(60px);}to{opacity:1; transform:translateY(0);}}
+        .tpl-modal-open-btn{padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; font-family: inherit; color: #fff; background: var(--prime-color); cursor: pointer;}
+        .tpl-modal-open-btn:hover{background: var(--prime-dark);}
+      </style>
+      <button type="button" onclick="modalShow('modal-pop-wrap-01')" class="tpl-modal-open-btn">모달 열기</button>
+
+      <div class="tpl-modal-wrap" id="modal-pop-wrap-01">
+        <div class="tpl-modal-container">
+          <div class="tpl-modal-box">
+            <a href="javascript:;" onclick="modalHide('modal-pop-wrap-01')" class="tpl-btn-x" aria-label="팝업 닫기"></a>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sollicitudin turpis vitae condimentum molestie. Morbi imperdiet bibendum eros, ac consectetur elit elementum non. Phasellus dictum, arcu non pellentesque ultrices, neque lorem lacinia enim, at mattis enim sapien in dolor. Nullam efficitur pharetra vulputate. Curabitur rhoncus, orci vel lacinia malesuada, lorem leo gravida magna, vitae porttitor diam justo nec arcu. Nunc turpis purus, tempus sed tempor vel, sagittis quis ipsum. Duis nec urna augue.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function modalShow(wrapId){
+          var $wrap = $('#' + wrapId);
+          $wrap.show();
+          $wrap.find('[class*="tpl-modal-box"]').show().addClass('is-open');
+        }
+        function modalHide(wrapId){
+          var $wrap = $('#' + wrapId);
+          $wrap.hide();
+          $wrap.find('[class*="tpl-modal-box"]').hide().removeClass('is-open');
+        }
+      </script>
+    </div>
+    <div class="code-block" id="code-modal">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-modal</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ===== 스크롤형 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top pt25">
+      <div class="flex justify-between items-center">
+        <strong class="fz-18">* 전체 스크롤형 <code class="code-name">popup-modal-02</code></strong>
+        <button class="btn-code-view" data-target="code-modal-02">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-modal-02">
+      <style class="tpl-style">
+        .tpl-modal-wrap-02{display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.7); z-index: 999; overflow-y: auto;}
+        .tpl-modal-wrap-02 .tpl-modal-container-02{display: flex; justify-content: center; min-height: 100%; padding: 60px 0; box-sizing: border-box;}
+        .tpl-modal-wrap-02 .tpl-modal-box-02{display: none; position: relative; width: 450px; height: fit-content; padding: 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
+        .tpl-modal-wrap-02 .tpl-modal-box-02.is-open{animation: tplModalSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;}
+        .tpl-modal-wrap-02 .tpl-modal-box-02 .tpl-btn-x{display: block; position: absolute; top: 20px; right: 20px; width: 25px; height: 25px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1 1l14 14M15 1L1 15' stroke='%23333' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;}
+        @keyframes tplModalSlideUp{from{opacity:0; transform:translateY(60px);}to{opacity:1; transform:translateY(0);}}
+        .tpl-modal-open-btn{padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; font-family: inherit; color: #fff; background: var(--prime-color); cursor: pointer;}
+        .tpl-modal-open-btn:hover{background: var(--prime-dark);}
+      </style>
+      <button type="button" onclick="modalShow('modal-pop-wrap-02')" class="tpl-modal-open-btn">모달 열기</button>
+
+      <div class="tpl-modal-wrap-02" id="modal-pop-wrap-02">
+        <div class="tpl-modal-container-02">
+          <div class="tpl-modal-box-02">
+            <a href="javascript:;" onclick="modalHide('modal-pop-wrap-02')" class="tpl-btn-x" aria-label="팝업 닫기"></a>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sollicitudin turpis vitae condimentum molestie. Morbi imperdiet bibendum eros, ac consectetur elit elementum non. Phasellus dictum, arcu non pellentesque ultrices, neque lorem lacinia enim, at mattis enim sapien in dolor. Nullam efficitur pharetra vulputate. Curabitur rhoncus, orci vel lacinia malesuada, lorem leo gravida magna, vitae porttitor diam justo nec arcu. Nunc turpis purus, tempus sed tempor vel, sagittis quis ipsum. Duis nec urna augue.
+            </p>
+            <br>
+            <p>
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+            </p>
+            <br>
+            <p>
+              Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.
+            </p>
+            <br>
+            <p>
+              At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function modalShow(wrapId){
+          var $wrap = $('#' + wrapId);
+          $wrap.show();
+          $wrap.find('[class*="tpl-modal-box"]').show().addClass('is-open');
+        }
+        function modalHide(wrapId){
+          var $wrap = $('#' + wrapId);
+          $wrap.hide();
+          $wrap.find('[class*="tpl-modal-box"]').hide().removeClass('is-open');
+        }
+      </script>
+    </div>
+    <div class="code-block" id="code-modal-02">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-modal-02</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ===== 닫기 옵션 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top pt25">
+      <div class="flex justify-between items-center">
+        <strong class="fz-18">* 닫기 옵션 <code class="code-name">-esc</code> <code class="code-name">-bg</code></strong>
+        <button class="btn-code-view" data-target="code-modal-opt">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-modal-opt">
+      <!-- tpl-modal-wrap(또는 tpl-modal-wrap-02)에 클래스를 추가해 옵션을 켠다 -->
+      <!-- tpl-close-esc : ESC 키로 닫기 / tpl-close-bg : 배경 클릭으로 닫기 -->
+      <div class="flex gap-8">
+        <button type="button" onclick="modalShow('modal-opt-esc')" class="tpl-modal-open-btn">ESC 닫기</button>
+        <button type="button" onclick="modalShow('modal-opt-bg')" class="tpl-modal-open-btn">배경 클릭 닫기</button>
+        <button type="button" onclick="modalShow('modal-opt-both')" class="tpl-modal-open-btn">ESC + 배경 클릭 닫기</button>
+      </div>
+
+      <div class="tpl-modal-wrap tpl-close-esc" id="modal-opt-esc">
+        <div class="tpl-modal-container">
+          <div class="tpl-modal-box">
+            <a href="javascript:;" onclick="modalHide('modal-opt-esc')" class="tpl-btn-x" aria-label="팝업 닫기"></a>
+            <p>ESC 키 또는 X 버튼으로 닫을 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tpl-modal-wrap tpl-close-bg" id="modal-opt-bg">
+        <div class="tpl-modal-container">
+          <div class="tpl-modal-box">
+            <a href="javascript:;" onclick="modalHide('modal-opt-bg')" class="tpl-btn-x" aria-label="팝업 닫기"></a>
+            <p>배경 클릭 또는 X 버튼으로 닫을 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tpl-modal-wrap tpl-close-esc tpl-close-bg" id="modal-opt-both">
+        <div class="tpl-modal-container">
+          <div class="tpl-modal-box">
+            <a href="javascript:;" onclick="modalHide('modal-opt-both')" class="tpl-btn-x" aria-label="팝업 닫기"></a>
+            <p>ESC 키, 배경 클릭, X 버튼으로 닫을 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // 배경 클릭 닫기 (.tpl-close-bg) — 모달 박스 안쪽 클릭은 무시
+        document.addEventListener('click', function(e){
+          var wrap = e.target.closest('.tpl-close-bg');
+          if (wrap && !e.target.closest('[class*="tpl-modal-box"]')) modalHide(wrap.id);
+        });
+        // ESC 닫기 (.tpl-close-esc) — 열려 있는 모달만 닫기
+        document.addEventListener('keydown', function(e){
+          if (e.key !== 'Escape') return;
+          document.querySelectorAll('.tpl-close-esc').forEach(function(wrap){
+            if (getComputedStyle(wrap).display !== 'none') modalHide(wrap.id);
+          });
+        });
+      </script>
+    </div>
+    <div class="code-block" id="code-modal-opt">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-modal-option</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
+  <script>
+    var wrapMap = {
+      'code-modal'     : 'wrap-modal',
+      'code-modal-02'  : 'wrap-modal-02',
+      'code-modal-opt' : 'wrap-modal-opt'
+    };
+
+    function trimIndent(html) {
+      var lines  = html.split('\n');
+      var indent = (lines[1] || lines[0]).match(/^(\s*)/)[1].length;
+      return lines.map(function(l) { return l.slice(indent); }).join('\n').trim();
+    }
+
+    // copy-wrap innerHTML 전체를 코드 블록에 채우기
+    Object.keys(wrapMap).forEach(function(id) {
+      var wrap = document.getElementById(wrapMap[id]);
+      var pre  = document.querySelector('#' + id + ' pre');
+      pre.textContent = trimIndent(wrap.innerHTML);
+    });
+
+    // 코드 보기 토글
+    document.querySelectorAll('.btn-code-view').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var block  = document.getElementById(btn.dataset.target);
+        var isShow = block.classList.toggle('show');
+        btn.textContent = isShow ? '코드 닫기' : '코드 보기';
+      });
+    });
+
+    // 코드 복사
+    document.querySelectorAll('.code-block-copy').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var code = btn.closest('.code-block').querySelector('pre').textContent;
+        navigator.clipboard.writeText(code).then(function() {
+          btn.textContent = '복사됨!';
+          btn.classList.add('copied');
+          setTimeout(function() {
+            btn.textContent = '코드 복사';
+            btn.classList.remove('copied');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

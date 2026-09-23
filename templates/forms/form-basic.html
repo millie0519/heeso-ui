@@ -159,6 +159,51 @@
 
   <hr class="section-divider">
 
+  <!-- ===== 체크박스 ver.2 ===== -->
+  <div class="w-1080 w-fluid">
+    <div class="copy-top pt25">
+      <div class="flex justify-between items-center">
+        <strong class="fz-18">* 체크박스 ver.2 <code class="code-name">form-check-02</code></strong>
+        <button class="btn-code-view" data-target="code-check2">코드 보기</button>
+      </div>
+    </div>
+    <div class="copy-wrap" id="wrap-check2">
+      <style class="tpl-style">
+        .form-label {display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;}
+        .tpl-form-check-group {display: flex; flex-wrap: wrap; gap: 12px 24px;}
+        .tpl-form-check-group label {display: flex; align-items: center; gap: 8px; font-size: 14px; color: #333; cursor: pointer;}
+        .tpl-form-check2 {appearance: none; -webkit-appearance: none; position: relative; width: 18px; height: 18px; border: 1.5px solid #dcdcdc; border-radius: 4px; background: #fff; cursor: pointer; flex-shrink: 0;}
+        .tpl-form-check2:checked {border-color: var(--prime-color); background: #fff;}
+        .tpl-form-check2:checked::after {content: ''; position: absolute; top: 50%; left: 50%; width: 11px; height: 9px; transform: translate(-50%, -50%); background-color: var(--prime-color); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23000' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3.5L10 1' stroke='%23000' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;}
+        .tpl-form-check2:focus {outline: 1px solid #000; outline-offset: 1px;}
+        .tpl-form-check2:disabled {border-color: #e0e0e0; background-color: #f5f5f5; cursor: default;}
+        .tpl-form-check2:disabled:checked {border-color: #c0c0c0; background-color: #f5f5f5;}
+        .tpl-form-check2:disabled:checked::after {background-color: #c0c0c0;}
+        .tpl-form-check-group label:has(.tpl-form-check2:disabled) {color: #bbb; cursor: default;}
+      </style>
+      <div class="form-group">
+        <label class="form-label">관심 과목</label>
+        <div class="tpl-form-check-group">
+          <label><input type="checkbox" class="tpl-form-check2" checked> 교육학</label>
+          <label><input type="checkbox" class="tpl-form-check2"> 유아</label>
+          <label><input type="checkbox" class="tpl-form-check2"> 중등</label>
+          <label><input type="checkbox" class="tpl-form-check2"> 특수</label>
+          <label><input type="checkbox" class="tpl-form-check2" disabled> 비활성</label>
+          <label><input type="checkbox" class="tpl-form-check2" disabled checked> 비활성(선택됨)</label>
+        </div>
+      </div>
+    </div>
+    <div class="code-block" id="code-check2">
+      <div class="code-block-header">
+        <span class="code-block-label">tpl-form-check2</span>
+        <button class="code-block-copy">코드 복사</button>
+      </div>
+      <pre></pre>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
   <!-- ===== 라디오 ===== -->
   <div class="w-1080 w-fluid">
     <div class="copy-top pt25">
@@ -215,9 +260,9 @@
         .tpl-form-btn-check-group {display: flex; flex-wrap: wrap; gap: 8px;}
         .tpl-form-btn-check {display: inline-flex; align-items: center; height: 36px; padding: 0 18px; border: 1.5px solid #dcdcdc; border-radius: 20px; font-size: 14px; font-family: inherit; color: #555; background: #fff; cursor: pointer; user-select: none;}
         .tpl-form-btn-check input[type="checkbox"] {display: none;}
-        .tpl-form-btn-check:has(input:checked) {border-color: var(--prime-color); color: var(--prime-color); background: color-mix(in srgb, var(--prime-color) 8%, #fff);}
+        .tpl-form-btn-check:has(input:checked) {border-color: var(--prime-color); color: #fff; background: var(--prime-color); font-weight: 600;}
         .tpl-form-btn-check:has(input:disabled) {border-color: #e0e0e0; color: #bbb; background: #f5f5f5; cursor: default;}
-        .tpl-form-btn-check:has(input:disabled:checked) {border-color: #c8c8c8; color: #aaa; background: #efefef;}
+        .tpl-form-btn-check:has(input:disabled:checked) {border-color: #c8c8c8; color: #fff; background: #c8c8c8;}
       </style>
       <div class="form-group">
         <label class="form-label">관심 과목</label>
@@ -284,6 +329,7 @@
       'code-select' : 'wrap-select',
       'code-area'   : 'wrap-area',
       'code-check'  : 'wrap-check',
+      'code-check2' : 'wrap-check2',
       'code-radio'    : 'wrap-radio',
       'code-btncheck' : 'wrap-btncheck',
       'code-file'     : 'wrap-file'
