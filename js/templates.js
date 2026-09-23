@@ -40,7 +40,7 @@ var TEMPLATES = [
     category : 'table',
     preview  : 'templates/tables/curri-table-01.html',
     title    : '커리큘럼 테이블 01',
-    desc     : '목록형 레이아웃의 커리큘럼 테이블 '
+    desc     : '목록형 레이아웃의 커리큘럼 테이블'
   },
   {
     category : 'table',
