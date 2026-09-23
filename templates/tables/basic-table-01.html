@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <script src="../includes/common-head.js"></script>
   <style>
-    .tpl-basictable-01 {width: 100%; border-collapse: collapse; border-spacing: 0;}
+    .tpl-table-scroll {overflow-x: auto;}
+    .tpl-basictable-01 {width: 100%; min-width: var(--tpl-table-min, 640px); border-collapse: collapse; border-spacing: 0;}
     .tpl-basictable-01 thead th {background-color: #FAFAFA; color: #333; font-size: 16px; font-weight: 600; text-align: center; padding: 14px 20px; border-top: 2px solid #333; border-bottom: 1px solid #ddd;}
     .tpl-basictable-01 tbody td,
     .tpl-basictable-01 tbody th {font-size: 15px; color: #333; text-align: center; font-weight: normal; padding: 14px 20px; border-bottom: 1px solid #ddd;}
@@ -27,10 +28,10 @@
   </style>
 </head>
 <body>
-  <div class="copy-top w-1080">
-    <div class="flex justify-between items-center">
+  <div class="copy-top w-1080 w-fluid">
+    <div class="flex flex-wrap justify-between items-center gap-12">
     <strong class="fz-18">* 기본 목록 테이블 <code class="code-name">table-basic-01</code></strong>
-    <div class="flex gap-20">
+    <div class="flex flex-wrap gap-20">
       <label><input type="radio" name="tableStyle" value="default" checked onchange="setStyle('default')"> 기본형</label>
       <label><input type="radio" name="tableStyle" value="line" onchange="setStyle('line')"> 라인형</label>
       <label><input type="radio" name="tableStyle" value="stripe" onchange="setStyle('stripe')"> 스트라이프형</label>
@@ -38,62 +39,68 @@
     </div>
     </div>
   </div>
-  <div class="copy-wrap w-1080">    
-    <table class="tpl-basictable-01">
-      <colgroup>
-        <col width="15%" />
-        <col width="*" />
-        <col width="20%" />
-        <col width="20%" />
-      </colgroup>
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>강좌명</th>
-          <th>수강 기간</th>
-          <th>수강 상태</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>1</th>
-          <td class="txt">유아교육개론 기본이론반</td>
-          <td>2025.01.01 ~ 2025.02.28</td>
-          <td>수강중</td>
-        </tr>
-        <tr>
-          <th>2</th>
-          <td class="txt">유아교육각론 심화이론반</td>
-          <td>2025.03.01 ~ 2025.04.30</td>
-          <td>수강중</td>
-        </tr>
-        <tr>
-          <th>3</th>
-          <td class="txt">기출문제 분석반 (1997~2026)</td>
-          <td>2025.05.01 ~ 2025.06.30</td>
-          <td>수강예정</td>
-        </tr>
-        <tr>
-          <th>4</th>
-          <td class="txt">문제풀이반</td>
-          <td>2025.07.01 ~ 2025.08.31</td>
-          <td>수강예정</td>
-        </tr>
-        <tr>
-          <th>5</th>
-          <td class="txt">실전 모의고사반</td>
-          <td>2025.09.01 ~ 2025.11.30</td>
-          <td>수강예정</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="copy-wrap w-1080 w-fluid">
+    <!-- 표 최소 폭 변경: 아래 태그에 style="--tpl-table-min: 800px" 추가 (기본 640px). 화면이 이보다 좁으면 가로 스크롤 -->
+    <div class="tpl-table-scroll">
+      <table class="tpl-basictable-01">
+        <colgroup>
+          <col width="15%" />
+          <col width="*" />
+          <col width="20%" />
+          <col width="20%" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>강좌명</th>
+            <th>수강 기간</th>
+            <th>수강 상태</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>1</th>
+            <td class="txt">유아교육개론 기본이론반</td>
+            <td>2025.01.01 ~ 2025.02.28</td>
+            <td>수강중</td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td class="txt">유아교육각론 심화이론반</td>
+            <td>2025.03.01 ~ 2025.04.30</td>
+            <td>수강중</td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td class="txt">기출문제 분석반 (1997~2026)</td>
+            <td>2025.05.01 ~ 2025.06.30</td>
+            <td>수강예정</td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td class="txt">문제풀이반</td>
+            <td>2025.07.01 ~ 2025.08.31</td>
+            <td>수강예정</td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td class="txt">실전 모의고사반</td>
+            <td>2025.09.01 ~ 2025.11.30</td>
+            <td>수강예정</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="tpl-guide w-1080 mt30">
+  <div class="tpl-guide w-1080 w-fluid mt30">
     <h5 class="notice-badge">NOTICE</h5>
     <ul>
       <li>이 템플릿은 샘플 데이터로 구성된 기본 테이블 양식입니다.</li>
       <li>텍스트, 컬럼 구성, 내용 등 세부 내용은 상황에 맞게 변경 가능하며 모든 요소는 수정하여 사용할 수 있습니다.</li>
+      <li>표의 최소 폭은 기본 640px이며, 표 태그(<code>tpl-basictable-01</code>)에 <code>--tpl-table-min</code> 변수를 지정해 변경합니다. 컬럼이 많아지면 값을 늘려 주세요.<br>
+        예) <code>&lt;table class="tpl-basictable-01" style="--tpl-table-min: 800px"&gt;</code></li>
+      <li>화면이 최소 폭보다 좁으면 표 영역 안에서만 가로 스크롤됩니다.</li>
     </ul>
   </div>
   <script>

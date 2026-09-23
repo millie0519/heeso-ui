@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <script src="../includes/common-head.js"></script>
   <style>
-    .curri-table table {width:100%; background-color:#fff; border-collapse: collapse; border-spacing:0;}
+    .curri-table {overflow-x: auto;}
+    .curri-table table {width:100%; min-width: var(--tpl-table-min, 640px); background-color:#fff; border-collapse: collapse; border-spacing:0;}
     .curri-table table thead th {background-color:#222; color:#fff; text-align:center; font-size:18px; font-weight:500; padding:24px 0;}
     .curri-table table tbody th {background-color: #fff; font-size: 16px; font-weight: 500; line-height: 1.4em; padding: 15px 20px; border-bottom:1px solid #dcdcdc;}
     .curri-table table tbody td {font-size:16px; color:#333; text-align:center; padding: 15px 20px; line-height: 1.4em; border-bottom:1px solid #dcdcdc;}
@@ -19,16 +20,17 @@
   </style>
 </head>
 <body>
-  <div class="copy-top w-1080">
-    <div class="flex justify-between items-center">
+  <div class="copy-top w-1080 w-fluid">
+    <div class="flex flex-wrap justify-between items-center gap-12">
     <strong class="fz-18">* 커리큘럼 표 <code class="code-name">table-curri-01</code></strong>
-    <div class="flex gap-20">
+    <div class="flex flex-wrap gap-20">
       <label><input type="radio" name="tableType" value="" checked onchange="document.querySelector('.curri-table').classList.remove('line')"> 기본형</label>
       <label><input type="radio" name="tableType" value="line" onchange="document.querySelector('.curri-table').classList.add('line')"> 라인형</label>
     </div>
     </div>
   </div>
-  <div class="copy-wrap w-1080">
+  <div class="copy-wrap w-1080 w-fluid">
+    <!-- 표 최소 폭 변경: 아래 태그에 style="--tpl-table-min: 800px" 추가 (기본 640px). 화면이 이보다 좁으면 가로 스크롤 -->
     <div class="curri-table">
       <table>
         <colgroup>

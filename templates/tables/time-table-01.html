@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <script src="../includes/common-head.js"></script>
   <style>
-    .tpl-timetable-01 {width: 100%; border-collapse: collapse; table-layout: fixed; border-bottom: 1px solid rgba(0,0,0,.2);}
+    .tpl-table-scroll {overflow-x: auto;}
+    .tpl-timetable-01 {width: 100%; min-width: var(--tpl-table-min, 560px); border-collapse: collapse; table-layout: fixed; border-bottom: 1px solid rgba(0,0,0,.2);}
     .tpl-timetable-01 thead th {background: var(--prime); color: #fff; font-weight: 500; font-size: 18px; text-align: center; padding: 10px 4px; border-left: 1px solid rgba(0,0,0,.2);}
     .tpl-timetable-01 thead th:first-child {border-left: none;}
     .tpl-timetable-01 .day-sat {color: #3862ff !important;}
@@ -12,16 +13,21 @@
     .tpl-timetable-01 td {vertical-align: top; border-left: 1px solid rgba(0,0,0,.2); padding: 0; height: 90px;}
     .tpl-timetable-01 td:first-child {border-left: none;}
     .tpl-timetable-01 .date-label {display: block; font-size: 15px; height: 22px; line-height: 22px; font-weight: 500; color: #333; background: var(--sub); text-align: center;}
-    .tpl-timetable-01 .slots {display: grid; grid-template-rows: repeat(5, auto); grid-auto-flow: column; gap: 1px 0; padding: 10px 5px 15px;}
+    /* 시간 목록: 칸 폭 기준. 넓은 칸은 5줄 채우고 다음 열, 140px 미만 칸은 1열 */
+    .tpl-timetable-01 .cell-inner {container-type: inline-size;}
+    .tpl-timetable-01 .slots {display: grid; grid-template-columns: minmax(0, 1fr); gap: 1px 0; padding: 10px 5px 15px;}
+    @container (min-width: 140px) {
+      .tpl-timetable-01 .slots {grid-template-columns: none; grid-template-rows: repeat(5, auto); grid-auto-flow: column;}
+    }
     .tpl-timetable-01 .slot {display: block; font-size: 13px; font-weight: 500; letter-spacing: -0.07em; color: #444; line-height: 1.7; white-space: nowrap;}
     .tpl-timetable-01 .slot::before {content: '·'; margin-right: 2px;}
     .tpl-timetable-01 .empty-cell {min-height: 90px;}
   </style>
 </head>
 <body>
-  <div class="copy-top w-1080">
+  <div class="copy-top w-1080 w-fluid">
     <strong class="fz-18">* 주간 시간표 <code class="code-name">table-time-01</code></strong>
-    <div style="display:flex; align-items:center; gap:8px; margin-top:12px;">
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px;">
       <label style="font-size:13px;">Prime Color</label>
       <input type="color" id="colorPicker" value="#25c373">
       <input type="text" id="colorHex" value="#25c373" maxlength="7" style="width:80px; height:28px; padding:0 8px; border:1px solid #ddd; border-radius:4px; font-size:13px; font-family:monospace;">
@@ -29,21 +35,24 @@
       <span class="fz-12 txc-g50">*6자리 HEX 코드로 입력</span>
     </div>
   </div>
-  <div class="copy-wrap w-1080">
-    <table class="tpl-timetable-01">
-      <thead>
-        <tr>
-          <th>월요일</th>
-          <th>화요일</th>
-          <th>수요일</th>
-          <th>목요일</th>
-          <th>금요일</th>
-          <th class="day-sat">토요일</th>
-          <th class="day-sun">일요일</th>
-        </tr>
-      </thead>
-      <tbody id="tpl-timetable-01-body"></tbody>
-    </table>
+  <div class="copy-wrap w-1080 w-fluid">
+    <!-- 표 최소 폭 변경: 아래 태그에 style="--tpl-table-min: 800px" 추가 (기본 560px). 화면이 이보다 좁으면 가로 스크롤 -->
+    <div class="tpl-table-scroll">
+      <table class="tpl-timetable-01">
+        <thead>
+          <tr>
+            <th>월요일</th>
+            <th>화요일</th>
+            <th>수요일</th>
+            <th>목요일</th>
+            <th>금요일</th>
+            <th class="day-sat">토요일</th>
+            <th class="day-sun">일요일</th>
+          </tr>
+        </thead>
+        <tbody id="tpl-timetable-01-body"></tbody>
+      </table>
+    </div>
     <script>
       // -------------------------------------------------------
       // 1) 데이터 정의

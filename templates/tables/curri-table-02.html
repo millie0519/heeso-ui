@@ -18,10 +18,29 @@
     .curri-wrap .group .box.tit-box .month{display: inline-block; min-width: 68px; margin-top: 12px; padding: 0 10px; color: #fff; font-size: 16px; line-height: 27px; text-align: center; border: 1px solid #fff; border-radius: 16px;}
     .curri-wrap .group .box.lecture{width: 200px; color: #000; font-size: 16px; font-weight: 700; background-color: #F6F6F6; flex-shrink: 0;}
     .curri-wrap .group .box.txt{justify-content: unset; padding-left: 40px; padding-right: 40px; font-size: 14px; text-align: left; flex-grow: 1; word-break: keep-all;}
+    /* 반응형: 화면이 아니라 .curri-wrap이 놓인 영역의 폭 기준 */
+    .curri-wrap{container-type: inline-size;}
+    /* 좁은 영역: 타이틀·강좌명 박스 폭 축소 */
+    @container (max-width: 800px){
+      .curri-wrap .group .box.tit-box{width: 140px;}
+      .curri-wrap .group .box.tit-box h4{font-size: 20px;}
+      .curri-wrap .group .box.lecture{width: 150px; font-size: 15px;}
+      .curri-wrap .group .box.txt{padding-left: 20px; padding-right: 20px;}
+    }
+    /* 모바일 영역: 타이틀은 위쪽 띠, 강좌명·내용은 가로 유지 */
+    @container (max-width: 560px){
+      .curri-wrap .group{flex-direction: column;}
+      .curri-wrap .group .box.tit-box{width: auto; min-height: 0; padding: 14px 16px;}
+      .curri-wrap .group .box.tit-box > div{display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 12px;}
+      .curri-wrap .group .box.tit-box h4 br{display: none;}
+      .curri-wrap .group .box.tit-box .month{margin-top: 0;}
+      .curri-wrap .group .box.lecture{width: 100px; min-height: 0; padding: 12px 8px; font-size: 14px;}
+      .curri-wrap .group .box.txt{min-height: 0; padding: 12px 14px; font-size: 13px;}
+    }
   </style>
 </head>
 <body>
-  <div class="copy-top w-1080">
+  <div class="copy-top w-1080 w-fluid">
     <strong class="fz-18">* 커리큘럼 박스형 <code class="code-name">table-curri-02</code></strong>
     <div class="tpl-guide mb50 mt12">
       <h5 class="notice-badge">NOTICE</h5>
@@ -35,7 +54,7 @@
       </ul>
     </div>
 
-    <div style="display:flex; align-items:center; gap:8px;">
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px;">
       <label style="font-size:13px;">Prime Color</label>
       <input type="color" id="colorPicker" value="#4551D1">
       <input type="text" id="colorHex" value="#4551D1" maxlength="7" style="width:80px; height:28px; padding:0 8px; border:1px solid #ddd; border-radius:4px; font-size:13px; font-family:monospace;">
@@ -43,7 +62,7 @@
       <span class="fz-12 txc-g50">*6자리 HEX 코드로 입력</span>
     </div>
   </div>
-  <div class="copy-wrap w-1080">
+  <div class="copy-wrap w-1080 w-fluid">
     <div class="curri-wrap">
       <div class="group">
         <div class="box tit-box">

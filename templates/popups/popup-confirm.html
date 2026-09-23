@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <script src="../includes/common-head.js"></script>
   <style>
-    .tpl-modal-confirm-bg {display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 100px); background: rgba(0,0,0,0.3);}
-    .tpl-modal-confirm {background: #fff; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); width: 380px; overflow: hidden;}
+    .tpl-modal-confirm-bg {display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 100px); padding: 0 16px; background: rgba(0,0,0,0.3); box-sizing: border-box;}
+    .tpl-modal-confirm {background: #fff; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); width: 100%; max-width: var(--tpl-modal-w, 380px); overflow: hidden;}
     .tpl-modal-confirm-header {padding: 20px 24px 0; font-size: 16px; font-weight: 700;}
     .tpl-modal-confirm-body {padding: 16px 24px; font-size: 13px; color: #666; line-height: 1.6;}
     .tpl-modal-confirm-footer {padding: 16px 24px; display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid #f0f0f0;}
@@ -16,7 +16,6 @@
 </head>
 <body>
   <style>
-    body{padding: 0;}
     .copy-wrap{padding: 0;}
   </style>
   <div class="copy-top w-1080 w-fluid pt25">
@@ -27,10 +26,14 @@
     <ul>
       <li>이 템플릿은 확인/취소 버튼이 포함된 모달 팝업 양식입니다.</li>
       <li>제목, 본문 텍스트, 버튼 레이블은 상황에 맞게 변경하여 사용할 수 있습니다.</li>
+      <li>팝업 폭은 기본 380px이며, 팝업 박스 태그(<code>tpl-modal-confirm</code>)에 <code>--tpl-modal-w</code> 변수를 지정해 변경합니다.<br>
+        예) 420px로 사용: <code>&lt;div class="tpl-modal-confirm" style="--tpl-modal-w: 420px"&gt;</code></li>
+      <li>화면이 지정한 폭보다 좁으면 양옆 16px 여백을 두고 자동으로 줄어듭니다.</li>
     </ul>
   </div>
   <div class="copy-wrap">
     <div class="tpl-modal-confirm-bg">
+      <!-- 팝업 폭 변경: 아래 태그에 style="--tpl-modal-w: 420px" 추가 (기본 380px) -->
       <div class="tpl-modal-confirm">
         <div class="tpl-modal-confirm-header">삭제 확인</div>
         <div class="tpl-modal-confirm-body">선택한 항목을 삭제하시겠습니까?<br>삭제된 데이터는 복구할 수 없습니다.</div>

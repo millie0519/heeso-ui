@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <script src="../includes/common-head.js"></script>
   <style>
-    .tpl-basictable-02 {width: 100%; border-collapse: collapse; border-spacing: 0;}
+    .tpl-table-scroll {overflow-x: auto;}
+    .tpl-basictable-02 {width: 100%; min-width: var(--tpl-table-min, 0); border-collapse: collapse; border-spacing: 0;}
     .tpl-basictable-02 tbody th {background-color: #f5f5f5; font-size: 15px; font-weight: 500; text-align: center; padding: 14px 20px; border-bottom: 1px solid #dcdcdc;}
     .tpl-basictable-02 tbody td {font-size: 15px; color: #333; text-align: left; padding: 14px 20px; border-bottom: 1px solid #dcdcdc;}
     .tpl-basictable-02 tbody tr:first-child th,
@@ -12,38 +13,41 @@
   </style>
 </head>
 <body>
-  <div class="copy-top w-1080 pt25">
+  <div class="copy-top w-1080 w-fluid pt25">
     <strong class="fz-18">* 상세 정보 테이블 <code class="code-name">table-basic-02</code></strong>
   </div>
-  <div class="copy-wrap w-1080">
-    <table class="tpl-basictable-02">
-      <colgroup>
-        <col width="20%" />
-        <col width="*" />
-      </colgroup>
-      <tbody>
-        <tr>
-          <th>이름</th>
-          <td>홍길동</td>
-        </tr>
-        <tr>
-          <th>수강 과목</th>
-          <td>유아교육개론 기본이론반</td>
-        </tr>
-        <tr>
-          <th>수강 기간</th>
-          <td>2025.01.01 ~ 2025.02.28</td>
-        </tr>
-        <tr>
-          <th>수강 상태</th>
-          <td>수강중</td>
-        </tr>
-        <tr>
-          <th>비고</th>
-          <td>-</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="copy-wrap w-1080 w-fluid">
+    <!-- 표 최소 폭 변경: 아래 태그에 style="--tpl-table-min: 800px" 추가 (기본은 최소 폭 없이 화면에 맞춰 줄어듦). 지정하면 화면이 이보다 좁을 때 가로 스크롤 -->
+    <div class="tpl-table-scroll">
+      <table class="tpl-basictable-02">
+        <colgroup>
+          <col width="20%" />
+          <col width="*" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th>이름</th>
+            <td>홍길동</td>
+          </tr>
+          <tr>
+            <th>수강 과목</th>
+            <td>유아교육개론 기본이론반</td>
+          </tr>
+          <tr>
+            <th>수강 기간</th>
+            <td>2025.01.01 ~ 2025.02.28</td>
+          </tr>
+          <tr>
+            <th>수강 상태</th>
+            <td>수강중</td>
+          </tr>
+          <tr>
+            <th>비고</th>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </body>
 </html>

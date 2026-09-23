@@ -20,9 +20,16 @@
   </style>
 </head>
 <body>
-  <style>
-    body{padding: 0;}
-  </style>
+  <div class="tpl-guide w-1080 w-fluid">
+    <h5 class="notice-badge">NOTICE</h5>
+    <ul>
+      <li>이 템플릿은 버튼으로 열고 X 버튼으로 닫는 모달 팝업 양식입니다. (jQuery 필요)</li>
+      <li>팝업 폭은 기본 450px이며, 모달 wrap 태그(<code>tpl-modal-wrap</code> 또는 <code>tpl-modal-wrap-02</code>)에 <code>--tpl-modal-w</code> 변수를 지정해 변경합니다.<br>
+        예) 600px로 사용: <code>&lt;div class="tpl-modal-wrap" id="modal-pop-wrap-01" style="--tpl-modal-w: 600px"&gt;</code></li>
+      <li>화면이 지정한 폭보다 좁으면 양옆 16px 여백을 두고 자동으로 줄어듭니다.</li>
+      <li>ESC·배경 클릭으로 닫으려면 아래 닫기 옵션을 참고하세요.</li>
+    </ul>
+  </div>
 
   <!-- ===== 기본형 ===== -->
   <div class="w-1080 w-fluid">
@@ -35,9 +42,10 @@
     <div class="copy-wrap" id="wrap-modal">
       <style class="tpl-style">
         .tpl-modal-wrap{display: none; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0,0,0,.7); z-index: 999;}
-        .tpl-modal-wrap .tpl-modal-container{display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;}
-        .tpl-modal-wrap .tpl-modal-box{display: none; position: relative; width: 450px; padding: 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
+        .tpl-modal-wrap .tpl-modal-container{display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 0 16px; box-sizing: border-box;}
+        .tpl-modal-wrap .tpl-modal-box{display: none; position: relative; width: 100%; max-width: var(--tpl-modal-w, 450px); padding: 52px 40px 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
         .tpl-modal-wrap .tpl-modal-box.is-open{animation: tplModalSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;}
+        @media (max-width: 480px){.tpl-modal-wrap .tpl-modal-box{padding: 52px 24px 28px;}}
         .tpl-modal-wrap .tpl-modal-box .tpl-btn-x{display: block; position: absolute; top: 20px; right: 20px; width: 25px; height: 25px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1 1l14 14M15 1L1 15' stroke='%23333' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;}
         @keyframes tplModalSlideUp{from{opacity:0; transform:translateY(60px);}to{opacity:1; transform:translateY(0);}}
         .tpl-modal-open-btn{padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; font-family: inherit; color: #fff; background: var(--prime-color); cursor: pointer;}
@@ -45,6 +53,7 @@
       </style>
       <button type="button" onclick="modalShow('modal-pop-wrap-01')" class="tpl-modal-open-btn">모달 열기</button>
 
+      <!-- 팝업 폭 변경: 아래 태그에 style="--tpl-modal-w: 600px" 추가 (기본 450px) -->
       <div class="tpl-modal-wrap" id="modal-pop-wrap-01">
         <div class="tpl-modal-container">
           <div class="tpl-modal-box">
@@ -91,9 +100,10 @@
     <div class="copy-wrap" id="wrap-modal-02">
       <style class="tpl-style">
         .tpl-modal-wrap-02{display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.7); z-index: 999; overflow-y: auto;}
-        .tpl-modal-wrap-02 .tpl-modal-container-02{display: flex; justify-content: center; min-height: 100%; padding: 60px 0; box-sizing: border-box;}
-        .tpl-modal-wrap-02 .tpl-modal-box-02{display: none; position: relative; width: 450px; height: fit-content; padding: 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
+        .tpl-modal-wrap-02 .tpl-modal-container-02{display: flex; justify-content: center; min-height: 100%; padding: 60px 16px; box-sizing: border-box;}
+        .tpl-modal-wrap-02 .tpl-modal-box-02{display: none; position: relative; width: 100%; max-width: var(--tpl-modal-w, 450px); height: fit-content; padding: 52px 40px 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
         .tpl-modal-wrap-02 .tpl-modal-box-02.is-open{animation: tplModalSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;}
+        @media (max-width: 480px){.tpl-modal-wrap-02 .tpl-modal-box-02{padding: 52px 24px 28px;}}
         .tpl-modal-wrap-02 .tpl-modal-box-02 .tpl-btn-x{display: block; position: absolute; top: 20px; right: 20px; width: 25px; height: 25px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1 1l14 14M15 1L1 15' stroke='%23333' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;}
         @keyframes tplModalSlideUp{from{opacity:0; transform:translateY(60px);}to{opacity:1; transform:translateY(0);}}
         .tpl-modal-open-btn{padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; font-family: inherit; color: #fff; background: var(--prime-color); cursor: pointer;}
@@ -101,6 +111,7 @@
       </style>
       <button type="button" onclick="modalShow('modal-pop-wrap-02')" class="tpl-modal-open-btn">모달 열기</button>
 
+      <!-- 팝업 폭 변경: 아래 태그에 style="--tpl-modal-w: 600px" 추가 (기본 450px) -->
       <div class="tpl-modal-wrap-02" id="modal-pop-wrap-02">
         <div class="tpl-modal-container-02">
           <div class="tpl-modal-box-02">

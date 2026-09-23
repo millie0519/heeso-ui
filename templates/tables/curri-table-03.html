@@ -4,124 +4,136 @@
   <meta charset="UTF-8">
   <script src="../includes/common-head.js"></script>
   <style>
-    .curri-wrap-03 .group{display: flex; gap: 16px;}
-    .curri-wrap-03 .group .m-box{flex:0 0 263px;}
-    .curri-wrap-03 .group .m-box .month{
-      display: flex; align-items: center; justify-content: center; height: 70px; margin-bottom: 10px;
-      color: #6f593e; font-size: 22px; font-weight: 700; background-color: #fff5e9; border: 1px solid #d8c6b1; border-radius: 16px;
+    /* 넓은 영역: 4칸 격자. 월 묶음(m-col)은 안에 든 카드 수만큼 칸을 차지하고, 월·카드 높이는 줄마다 맞춰진다 */
+    .curri-wrap-03{container-type: inline-size;}
+    .curri-wrap-03 .group{display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 16px;}
+    .curri-wrap-03 .group .m-col{display: grid; grid-row: span 2; grid-template-columns: subgrid; grid-template-rows: subgrid; gap: 10px 16px;}
+    .curri-wrap-03 .group .m-col:has(> :nth-child(3)){grid-column: span 2;}
+    .curri-wrap-03 .group .m-col:has(> :nth-child(4)){grid-column: span 3;}
+    .curri-wrap-03 .group .m-col:has(> :nth-child(5)){grid-column: span 4;}
+    .curri-wrap-03 .group .month{
+      grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; height: 70px;
+      color: #6f593e; font-size: 22px; font-weight: 700; background-color: #fff5e9; border: 1px solid #d8c6b1; border-radius: 16px; box-sizing: border-box;
     }
-    .curri-wrap-03 .group .m-box .txt{height: 100%; padding: 30px 25px; background-color: #fff; border: 1px solid #ccbaa5; border-radius: 16px; box-sizing: border-box;}
-    .curri-wrap-03 .group .m-box .txt .sub-tit{color: #333; font-size: 18px; font-weight: 700; margin-bottom: 20px !important; word-break: keep-all;}
-    .curri-wrap-03 .group .m-box .txt ul li{position: relative; padding-left: 10px; color: #3e3e3e; font-size: 18px; line-height: 1.3em; margin: 5px 0; word-break: keep-all;}
-    .curri-wrap-03 .group .m-box .txt ul li::before{display: block; position: absolute; top: 11px; left: 0; width: 2px; height: 2px; border-radius: 50%; background-color: #3e3e3e; content: '';}
+    .curri-wrap-03 .group .txt{height: 100%; padding: 30px 25px; background-color: #fff; border: 1px solid #ccbaa5; border-radius: 16px; box-sizing: border-box;}
+    .curri-wrap-03 .group .txt .sub-tit{color: #333; font-size: 18px; font-weight: 700; margin-bottom: 20px !important; word-break: keep-all;}
+    .curri-wrap-03 .group .txt ul li{position: relative; padding-left: 10px; color: #3e3e3e; font-size: 18px; line-height: 1.3em; margin: 5px 0; word-break: keep-all;}
+    .curri-wrap-03 .group .txt ul li::before{display: block; position: absolute; top: 11px; left: 0; width: 2px; height: 2px; border-radius: 50%; background-color: #3e3e3e; content: '';}
+    /* 중간 영역: 2칸 격자. 카드 1장인 월은 1칸, 2장 이상인 월은 한 줄 전체 */
+    @container (max-width: 900px){
+      .curri-wrap-03 .group{grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px;}
+      .curri-wrap-03 .group .m-col{grid-column: span 1; grid-row: auto; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; grid-auto-rows: 1fr;}
+      .curri-wrap-03 .group .m-col:has(> :nth-child(3)),
+      .curri-wrap-03 .group .m-col:has(> :nth-child(4)),
+      .curri-wrap-03 .group .m-col:has(> :nth-child(5)){grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr));}
+      .curri-wrap-03 .group .month{height: 56px; font-size: 20px;}
+      .curri-wrap-03 .group .txt{padding: 24px 20px;}
+      .curri-wrap-03 .group .txt .sub-tit{font-size: 17px; margin-bottom: 14px !important;}
+      .curri-wrap-03 .group .txt ul li{font-size: 16px;}
+    }
+    /* 좁은 영역: 1칸. 월 아래로 카드를 세로로 쌓기 */
+    @container (max-width: 560px){
+      .curri-wrap-03 .group{grid-template-columns: minmax(0, 1fr);}
+      .curri-wrap-03 .group .m-col,
+      .curri-wrap-03 .group .m-col:has(> :nth-child(3)),
+      .curri-wrap-03 .group .m-col:has(> :nth-child(4)),
+      .curri-wrap-03 .group .m-col:has(> :nth-child(5)){grid-column: auto; grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto;}
+      .curri-wrap-03 .group .month{height: 48px; font-size: 18px; border-radius: 12px;}
+      .curri-wrap-03 .group .txt{padding: 20px 18px; border-radius: 12px;}
+      .curri-wrap-03 .group .txt .sub-tit{font-size: 16px; margin-bottom: 10px !important;}
+      .curri-wrap-03 .group .txt ul li{font-size: 15px;}
+      .curri-wrap-03 .group .txt ul li::before{top: 9px;}
+    }
   </style>
 </head>
 <body style="background-color: #ebd8c1;">
-  <div class="copy-top w-1100 pt25">
+  <div class="copy-top w-1100 w-fluid pt25">
     <strong class="fz-18">* 커리큘럼 카드형 <code class="code-name">table-curri-03</code></strong>
   </div>
-  <div class="copy-wrap w-1100">
+  <div class="tpl-guide w-1100 w-fluid mt20">
+    <h5 class="notice-badge">NOTICE</h5>
+    <ul>
+      <li>월 박스(<code>m-col</code>) 하나에 월 제목과 해당 월의 카드들을 함께 넣습니다. 카드 수만큼 자동으로 칸을 차지합니다. (한 줄 최대 4칸)</li>
+      <li>영역 폭이 900px 이하이면 2칸, 560px 이하이면 1칸으로 바뀌며, 좁은 화면에서는 월 제목 아래로 카드가 쌓입니다.</li>
+    </ul>
+  </div>
+  <div class="copy-wrap w-1100 w-fluid">
     <div class="curri-wrap-03">
-      <div class="mb32">
-        <div class="group">
-          <div class="m-box">
-            <div class="month">1~2월</div>
-          </div>
-          <div class="m-box">
-            <div class="month">3~4월</div>
-          </div>
-          <div class="m-box" style="flex-grow: 2;">
-            <div class="month">5~6월</div>
-          </div>
-        </div>
-        <div class="group">
-          <div class="m-box">
-            <div class="txt">
-              <p class="sub-tit">일반이론</p>
-              <ul>
-                <li>풍부한 설명으로 철저한 이해식 이론공부</li>
-                <li>무한 질의 응답과 그룹 스터디 지원</li>
-                <li>풀 컬러 교재 + 특수 자료 제공</li>
-              </ul>
-            </div>
-          </div>
-          <div class="m-box">
-            <div class="txt">
-              <p class="sub-tit">심화이론</p>
-              <ul>
-                <li>영역별 전문화를 실현하여 영역별로 책임지는 강좌</li>
-                <li>서브노트가 필요 없는 올 컬러 심화교재 사용</li>
-              </ul>
-            </div>
-          </div>
-          <div class="m-box">
-            <div class="txt">
-              <p class="sub-tit">필독서 완벽 정리 올인원반</p>
-              <ul>
-                <li>출제 경향에 맞는 필독서와 용어를 모두 분석</li>
-                <li>필독서와 용어사전을 별도 구매할 필요 없이 정리된 컬러자료로 제공</li>
-              </ul>
-            </div>
-          </div>
-          <div class="m-box">
-            <div class="txt">
-              <p class="sub-tit">서술형 첨삭+기출 분석반</p>
-              <ul>
-                <li>합격의 열쇠인 서술문항을 정복하는 강좌</li>
-                <li>문제를 풀어내는 능력을 길러주는 강의</li>
-              </ul>
-            </div>
+      <!-- 월 박스(m-col) 안의 카드(txt) 수만큼 자동으로 칸을 차지합니다. 한 줄 4칸을 넘으면 다음 줄로 넘어갑니다. -->
+      <div class="group">
+        <div class="m-col">
+          <div class="month">1~2월</div>
+          <div class="txt">
+            <p class="sub-tit">일반이론</p>
+            <ul>
+              <li>풍부한 설명으로 철저한 이해식 이론공부</li>
+              <li>무한 질의 응답과 그룹 스터디 지원</li>
+              <li>풀 컬러 교재 + 특수 자료 제공</li>
+            </ul>
           </div>
         </div>
-      </div>
-      <div>
-        <div class="group">
-          <div class="m-box" style="flex-grow: 2;">
-            <div class="month">7~8월</div>
-          </div>
-          <div class="m-box">
-            <div class="month">9~10월</div>
-          </div>
-          <div class="m-box">
-            <div class="month">11월</div>
+        <div class="m-col">
+          <div class="month">3~4월</div>
+          <div class="txt">
+            <p class="sub-tit">심화이론</p>
+            <ul>
+              <li>영역별 전문화를 실현하여 영역별로 책임지는 강좌</li>
+              <li>서브노트가 필요 없는 올 컬러 심화교재 사용</li>
+            </ul>
           </div>
         </div>
-        <div class="group">
-          <div class="m-box">
-            <div class="txt">
-              <p class="sub-tit">최근 18년간 영역별 기출문제 분석반</p>
-              <ul>
-                <li>최근 18년간 영역별로 출제 예상되는 문항을 풀고 기출문제를 심층 분석, 출제의도를 들여다보는 과정</li>
-              </ul>
-            </div>
+        <div class="m-col">
+          <div class="month">5~6월</div>
+          <div class="txt">
+            <p class="sub-tit">필독서 완벽 정리 올인원반</p>
+            <ul>
+              <li>출제 경향에 맞는 필독서와 용어를 모두 분석</li>
+              <li>필독서와 용어사전을 별도 구매할 필요 없이 정리된 컬러자료로 제공</li>
+            </ul>
           </div>
-          <div class="m-box">
-            <div class="txt">
-              <p class="sub-tit">영역별 예상문제 첨삭 문제풀이반</p>
-              <ul>
-                <li>
-                  1차 대비 문제풀이반은 영역별+광영역 문제로 진행되면서 구조화하는 강의
-                  <p class="fz-12 mt10">** 직인강 첨삭 지도</p>
-                </li>
-              </ul>
-            </div>
+          <div class="txt">
+            <p class="sub-tit">서술형 첨삭+기출 분석반</p>
+            <ul>
+              <li>합격의 열쇠인 서술문항을 정복하는 강좌</li>
+              <li>문제를 풀어내는 능력을 길러주는 강의</li>
+            </ul>
           </div>
-          <div class="m-box">
-            <div class="txt">
-              <p class="sub-tit">실전형 첨삭 모의평가반</p>
-              <ul>
-                <li>가장 많은 적중률과 유사 적중을 이뤄낸 실전형 강좌</li>
-                <li>어떠한 문제도 접근이 가능하도록 철저한 대비를 하는 강좌</li>
-              </ul>
-            </div>
+        </div>
+        <div class="m-col">
+          <div class="month">7~8월</div>
+          <div class="txt">
+            <p class="sub-tit">최근 18년간 영역별 기출문제 분석반</p>
+            <ul>
+              <li>최근 18년간 영역별로 출제 예상되는 문항을 풀고 기출문제를 심층 분석, 출제의도를 들여다보는 과정</li>
+            </ul>
           </div>
-          <div class="m-box">
-            <div class="txt">
-              <p class="sub-tit">최종 파이널 특강</p>
-              <ul>
-                <li>문제풀이 위주로만 진행되었던 공부를 넘어 이론 5대 영역 최종정리를 통한 합격 다지기</li>
-              </ul>
-            </div>
+          <div class="txt">
+            <p class="sub-tit">영역별 예상문제 첨삭 문제풀이반</p>
+            <ul>
+              <li>
+                1차 대비 문제풀이반은 영역별+광영역 문제로 진행되면서 구조화하는 강의
+                <p class="fz-12 mt10">** 직인강 첨삭 지도</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="m-col">
+          <div class="month">9~10월</div>
+          <div class="txt">
+            <p class="sub-tit">실전형 첨삭 모의평가반</p>
+            <ul>
+              <li>가장 많은 적중률과 유사 적중을 이뤄낸 실전형 강좌</li>
+              <li>어떠한 문제도 접근이 가능하도록 철저한 대비를 하는 강좌</li>
+            </ul>
+          </div>
+        </div>
+        <div class="m-col">
+          <div class="month">11월</div>
+          <div class="txt">
+            <p class="sub-tit">최종 파이널 특강</p>
+            <ul>
+              <li>문제풀이 위주로만 진행되었던 공부를 넘어 이론 5대 영역 최종정리를 통한 합격 다지기</li>
+            </ul>
           </div>
         </div>
       </div>
