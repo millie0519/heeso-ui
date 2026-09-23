@@ -175,7 +175,7 @@
       render();
 
       // -------------------------------------------------------
-      // 4) 컬러 피커
+      // 4) 색상 (applyColor로 헤더·날짜 색 지정)
       // -------------------------------------------------------
       function hexToRgb(hex) {
         return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
@@ -195,10 +195,11 @@
         table.style.setProperty('--sub', mix(rgb, 0.30));
       }
 
+      applyColor('#25c373');
+
+      // @snippet-exclude-start : 미리보기 페이지의 컬러 피커 연결 (스니펫에는 포함되지 않음)
       var picker   = document.getElementById('colorPicker');
       var hexInput = document.getElementById('colorHex');
-
-      applyColor('#25c373');
 
       picker.addEventListener('input', function () {
         hexInput.value = picker.value;
@@ -212,6 +213,7 @@
           applyColor(val);
         }
       });
+      // @snippet-exclude-end
     </script>
   </div>
 </body>

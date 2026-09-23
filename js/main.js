@@ -110,6 +110,8 @@ $(function () {
       var code = '';
       if (style) code += style.outerHTML + '\n\n';
       code += copyWrap ? copyWrap.innerHTML.trim() : html;
+      // 미리보기 전용 코드(@snippet-exclude-start ~ end)는 복사 코드에서 제외
+      code = code.replace(/^[^\n]*@snippet-exclude-start[\s\S]*?@snippet-exclude-end[^\n]*\n?/gm, '');
       $('#codeModalTitle').text(currentSrc);
       $('#codeModalContent').text(code);
       $('#codeModal').addClass('show');
