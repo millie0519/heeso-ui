@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="../includes/common-head.js"></script>
   <style>
     .curri-wrap, .curri-wrap *{box-sizing: border-box;}
@@ -45,25 +46,26 @@
 <body>
   <div class="copy-top w-1080 w-fluid">
     <strong class="fz-18">* 커리큘럼 박스형 <code class="code-name">table-curri-02</code></strong>
-    <div class="tpl-guide mb50 mt12">
-      <h5 class="notice-badge">NOTICE</h5>
-      <ul>
-        <li>월별 커리큘럼을 단계별로 시각화한 박스형 레이아웃입니다.</li>
-        <li>
-          컬러 피커 또는 HEX 코드 직접 입력 후 적용 버튼을 누르면 단계별 색상을 확인할 수 있습니다.<br>
-          (기본 구성은 5그룹이며, 각 그룹의 타이틀 박스 색상은 개별 지정하려면 6번째 그룹부터는 프라임 컬러로 동일하게 표시되므로, <strong>최대 5개까지</strong> 가능합니다.)
-        </li>
-        <li>월 단위로 구성 되어있는 각 그룹의 행은 강좌 수에 따라 조정할 수 있습니다.</li>
-      </ul>
+  </div>
+  <div class="tpl-guide w-1080 w-fluid">
+    <h5 class="notice-badge">NOTICE</h5>
+    <ul>
+      <li>월별 커리큘럼을 단계별로 시각화한 박스형 레이아웃입니다.</li>
+      <li>
+        컬러 피커 또는 HEX 코드 직접 입력 후 적용 버튼을 누르면 단계별 색상을 확인할 수 있습니다.<br>
+        (기본 구성은 5그룹이며, 각 그룹의 타이틀 박스 색상은 개별 지정하려면 6번째 그룹부터는 프라임 컬러로 동일하게 표시되므로, <strong>최대 5개까지</strong> 가능합니다.)
+      </li>
+      <li>월 단위로 구성 되어있는 각 그룹의 행은 강좌 수에 따라 조정할 수 있습니다.</li>
+    </ul>
+  </div>
+  <div class="tpl-preview-ctrl w-1080 w-fluid">
+    <label class="tpl-preview-ctrl-label" for="colorHex">Prime Color</label>
+    <div class="tpl-color-field">
+      <input type="color" id="colorPicker" value="#4551D1" aria-label="색상 선택">
+      <input type="text" id="colorHex" value="#4551D1" maxlength="7" spellcheck="false" autocomplete="off" aria-describedby="colorHint">
+      <button type="button" id="btnApply">적용</button>
     </div>
-
-    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px;">
-      <label style="font-size:13px;">Prime Color</label>
-      <input type="color" id="colorPicker" value="#4551D1">
-      <input type="text" id="colorHex" value="#4551D1" maxlength="7" style="width:80px; height:28px; padding:0 8px; border:1px solid #ddd; border-radius:4px; font-size:13px; font-family:monospace;">
-      <button id="btnApply" style="height:28px; padding:0 12px; background:#333; color:#fff; border:none; border-radius:4px; font-size:13px; cursor:pointer;">적용</button>
-      <span class="fz-12 txc-g50">*6자리 HEX 코드로 입력</span>
-    </div>
+    <span class="tpl-color-hint" id="colorHint">*6자리 HEX 코드로 입력</span>
   </div>
   <div class="copy-wrap w-1080 w-fluid">
     <div class="curri-wrap">

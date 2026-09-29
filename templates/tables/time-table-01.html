@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="../includes/common-head.js"></script>
   <style>
     .tpl-table-scroll {overflow-x: auto;}
@@ -27,13 +28,15 @@
 <body>
   <div class="copy-top w-1080 w-fluid">
     <strong class="fz-18">* 주간 시간표 <code class="code-name">table-time-01</code></strong>
-    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px;">
-      <label style="font-size:13px;">Prime Color</label>
-      <input type="color" id="colorPicker" value="#25c373">
-      <input type="text" id="colorHex" value="#25c373" maxlength="7" style="width:80px; height:28px; padding:0 8px; border:1px solid #ddd; border-radius:4px; font-size:13px; font-family:monospace;">
-      <button id="btnApply" style="height:28px; padding:0 12px; background:#333; color:#fff; border:none; border-radius:4px; font-size:13px; cursor:pointer;">적용</button>
-      <span class="fz-12 txc-g50">*6자리 HEX 코드로 입력</span>
+  </div>
+  <div class="tpl-preview-ctrl w-1080 w-fluid">
+    <label class="tpl-preview-ctrl-label" for="colorHex">Prime Color</label>
+    <div class="tpl-color-field">
+      <input type="color" id="colorPicker" value="#25c373" aria-label="색상 선택">
+      <input type="text" id="colorHex" value="#25c373" maxlength="7" spellcheck="false" autocomplete="off" aria-describedby="colorHint">
+      <button type="button" id="btnApply">적용</button>
     </div>
+    <span class="tpl-color-hint" id="colorHint">*6자리 HEX 코드로 입력</span>
   </div>
   <div class="copy-wrap w-1080 w-fluid">
     <!-- 표 최소 폭 변경: 아래 태그에 style="--tpl-table-min: 800px" 추가 (기본 560px). 화면이 이보다 좁으면 가로 스크롤 -->

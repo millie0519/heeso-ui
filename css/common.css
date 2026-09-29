@@ -1,21 +1,77 @@
 @import './theme.css';
+/* ========================================
+   템플릿 미리보기 페이지 틀 (스니펫 .copy-wrap 바깥 영역)
+   ======================================== */
 * {font-family: "Noto Sans KR", sans-serif;}
-body{padding: 32px;}
+body{padding: 32px; color: #1f2328;}
+@media (max-width: 600px){ body{padding: 20px 16px;} }
 .w-1080{width: 1080px; margin: 0 auto;}
 .w-1080.w-fluid{width: 100%; max-width: 1080px;}
 .w-1100{width: 1100px; margin: 0 auto;}
 .w-1100.w-fluid{width: 100%; max-width: 1100px;}
 .w-1200{width: 1200px; margin: 0 auto;}
 .w-1200.w-fluid{width: 100%; max-width: 1200px;}
-.copy-wrap{padding: 30px 0;}
-.copy-top{line-height: 100%;}
-.code-name {display: inline-block; padding: 2px 8px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; font-family: 'Consolas', 'Monaco', monospace; color: #666; vertical-align: middle; margin-left: 8px;}
-.code-name::before{font-family: initial; margin-right: 6px; content: '코드명';}
+.copy-wrap{padding: 0 0 40px;}
+
+/* 섹션 제목 줄 : 제목 + 코드명 (+ 코드 보기 버튼) */
+.copy-top{margin-bottom: 20px; line-height: 1.4;}
+.copy-top > .flex{gap: 12px;}
+.copy-top strong.fz-18{display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; min-width: 0; letter-spacing: -0.02em;}
+.copy-top > .flex > strong{flex: 1;}
+
+/* 코드명 뱃지 : 클릭하면 코드명 복사 */
+.code-name {display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: #f3f4f6; border: 1px solid #e2e5e9; border-radius: 5px; font-size: 12px; font-weight: 500; font-family: 'Consolas', 'Monaco', monospace; color: #4a4f57; letter-spacing: 0; vertical-align: middle; white-space: nowrap; cursor: pointer; transition: border-color .2s, background-color .2s, color .2s;}
+.code-name::before{font-family: "Noto Sans KR", sans-serif; font-size: 11px; color: #656a71; margin-right: 6px; content: '코드명';}
+.code-name:hover{border-color: var(--prime-color); background: var(--prime-pale);}
+.code-name:focus-visible{outline: 2px solid var(--prime-color); outline-offset: 2px;}
+.code-name.is-copied{border-color: var(--prime-color); background: var(--prime-pale); color: var(--prime-dark);}
+.code-name.is-copied::before{content: '복사됨'; color: var(--prime-dark); font-weight: 600;}
+
+/* 섹션별 코드 보기 버튼 */
+.btn-code-view {flex-shrink: 0; height: 34px; padding: 0 14px; border: 1px solid #e2e5e9; border-radius: 8px; font-size: 13px; font-weight: 600; font-family: inherit; white-space: nowrap; cursor: pointer; background: #fff; color: #4a4f57; transition: background-color .2s, border-color .2s, color .2s;}
+.btn-code-view:hover {border-color: #cfd4da; background: #f8f9fa; color: #1f2328;}
+.btn-code-view:focus-visible {outline: 2px solid var(--prime-color); outline-offset: 2px;}
+.section-divider {border: none; border-top: 1px solid #eef0f2; margin: 0 0 32px;}
+
+/* 섹션별 코드 블록 (홈 화면 코드 보기와 같은 모양) */
+.code-block {display: none; margin: -16px 0 40px; background: #1e1e1e; border-radius: 12px; overflow: hidden;}
+.code-block.show {display: block;}
+.code-block-header {display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 8px 8px 16px; background: #2d2d2d;}
+.code-block-label {min-width: 0; font-size: 12px; font-family: 'Consolas', 'Monaco', monospace; color: #c8c8c8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.code-block-copy {flex-shrink: 0; height: 30px; padding: 0 14px; background: var(--prime-color, #007d4a); color: #fff; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background-color .2s;}
+.code-block-copy:hover {background: var(--prime-dark, #006b3f);}
+.code-block-copy.copied {background: #555;}
+.code-block-copy:focus-visible {outline: 2px solid #6fd3a4; outline-offset: 2px;}
+.code-block pre {margin: 0; padding: 16px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; color: #d4d4d4; white-space: pre; overflow-x: auto; line-height: 1.6; tab-size: 2; scrollbar-width: thin; scrollbar-color: #555 transparent;}
 
 /* 템플릿 안내 문구 */
-.tpl-guide {padding: 12px 16px; background-color: var(--prime-pale); border: 1px solid var(--prime-color); border-radius: 6px; font-size: 13px; color: #444; line-height: 1.7;}
-.tpl-guide .notice-badge {display: inline-flex; align-items: center; gap: 5px; background: var(--prime-color); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .06em; padding: 3px 8px 3px 6px; border-radius: 4px; margin-bottom: 5px;}
+.tpl-guide {margin-bottom: 24px; padding: 14px 18px; background-color: var(--prime-pale); border: 1px solid var(--prime-color); border-radius: 8px; font-size: 13px; color: #3d4148; line-height: 1.7;}
+.tpl-guide .notice-badge {display: inline-flex; align-items: center; gap: 5px; margin: 0 0 6px; background: var(--prime-color); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .06em; padding: 3px 8px 3px 6px; border-radius: 4px;}
 .tpl-guide .notice-badge::before {content: 'i'; display: inline-flex; align-items: center; justify-content: center; width: 13px; height: 13px; border: 1.5px solid #fff; border-radius: 50%; font-size: 9px; font-weight: 700; line-height: 1; flex-shrink: 0;}
 .tpl-guide ul {margin: 0; padding-left: 6px; list-style: none;}
 .tpl-guide ul li {position: relative; margin: 5px 0; padding-left: 10px; line-height: 1.6em; word-break: keep-all;}
-.tpl-guide ul li::before {position: absolute; top: 10px; left: 0; width: 4px; height: 1px; background-color: #444; content: '';}
+.tpl-guide ul li::before {position: absolute; top: 10px; left: 0; width: 4px; height: 1px; background-color: #3d4148; content: '';}
+.tpl-guide code {padding: 1px 5px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; color: #1f2328; background: rgba(255,255,255,.75); border: 1px solid color-mix(in srgb, var(--prime-color) 22%, transparent); border-radius: 4px; word-break: normal; overflow-wrap: anywhere; -webkit-box-decoration-break: clone; box-decoration-break: clone;}
+@media (max-width: 600px){ .tpl-guide {padding: 12px 14px;} }
+
+/* 미리보기 조작 영역 (스타일 전환 · 색상 지정) — 스니펫에는 포함되지 않음 */
+.tpl-preview-ctrl {display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 24px;}
+.tpl-preview-ctrl-label {font-size: 13px; font-weight: 600; color: #4a4f57;}
+.tpl-seg {display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; background: #f3f4f6; border-radius: 10px;}
+.tpl-seg label {position: relative; display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border-radius: 7px; font-size: 13px; font-weight: 500; color: #4a4f57; cursor: pointer; transition: background-color .2s, color .2s, box-shadow .2s;}
+.tpl-seg label:hover {color: #1f2328;}
+.tpl-seg input {position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none;}
+.tpl-seg label:has(input:checked) {background: #fff; color: var(--prime-dark); font-weight: 700; box-shadow: 0 1px 3px rgba(17,20,24,.12);}
+.tpl-seg label:has(input:focus-visible) {outline: 2px solid var(--prime-color); outline-offset: 1px;}
+.tpl-color-field {display: inline-flex; align-items: center; gap: 6px;}
+.tpl-color-field input[type="color"] {width: 36px; height: 36px; padding: 3px; border: 1px solid #e2e5e9; border-radius: 8px; background: #fff; cursor: pointer;}
+.tpl-color-field input[type="color"]::-webkit-color-swatch-wrapper {padding: 0;}
+.tpl-color-field input[type="color"]::-webkit-color-swatch {border: none; border-radius: 5px;}
+.tpl-color-field input[type="text"] {width: 96px; height: 36px; padding: 0 10px; border: 1px solid #e2e5e9; border-radius: 8px; font-size: 13px; font-family: 'Consolas', 'Monaco', monospace; color: #1f2328; outline: none; transition: border-color .2s, box-shadow .2s;}
+.tpl-color-field input[type="text"]:focus {border-color: var(--prime-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--prime-color) 22%, transparent);}
+.tpl-color-field input[type="text"].is-invalid {border-color: #d93025; box-shadow: 0 0 0 3px rgba(217,48,37,.15);}
+.tpl-color-field button {height: 36px; padding: 0 14px; border: none; border-radius: 8px; background: var(--prime-color); color: #fff; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background-color .2s;}
+.tpl-color-field button:hover {background: var(--prime-dark);}
+.tpl-color-field button:focus-visible, .tpl-color-field input[type="color"]:focus-visible {outline: 2px solid var(--prime-color); outline-offset: 2px;}
+.tpl-color-hint {font-size: 12px; color: #656a71;}
+.tpl-color-hint.is-invalid {color: #c5221f;}

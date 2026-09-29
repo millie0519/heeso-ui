@@ -2,22 +2,9 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="tpl-hide-code-btn" content="true">
   <script src="../includes/common-head.js"></script>
-  <style>
-    /* 코드 블록 UI */
-    .code-block {display: none; margin-top: 0; margin-bottom: 30px; background: #1e1e1e; border-radius: 8px; overflow: hidden;}
-    .code-block.show {display: block;}
-    .code-block-header {display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: #2d2d2d;}
-    .code-block-label {font-size: 12px; color: #aaa;}
-    .code-block-copy {padding: 4px 12px; background: var(--prime-color, #007d4a); color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer;}
-    .code-block-copy:hover {background: var(--prime-dark, #006b3f);}
-    .code-block-copy.copied {background: #555;}
-    .code-block pre {margin: 0; padding: 16px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; color: #d4d4d4; white-space: pre; overflow-x: auto; line-height: 1.6;}
-    .btn-code-view {padding: 7px 14px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: inherit; cursor: pointer; background: #f0f0f0; color: #555;}
-    .btn-code-view:hover {background: #e0e0e0;}
-    .section-divider {border: none; border-top: 1px solid #eee; margin: 0;}
-  </style>
 </head>
 <body>
   <div class="tpl-guide w-1080 w-fluid">
@@ -33,7 +20,7 @@
 
   <!-- ===== 기본형 ===== -->
   <div class="w-1080 w-fluid">
-    <div class="copy-top pt25">
+    <div class="copy-top">
       <div class="flex justify-between items-center">
         <strong class="fz-18">* 기본형 <code class="code-name">popup-modal-01</code></strong>
         <button class="btn-code-view" data-target="code-modal">코드 보기</button>
@@ -96,7 +83,7 @@
 
   <!-- ===== 스크롤형 ===== -->
   <div class="w-1080 w-fluid">
-    <div class="copy-top pt25">
+    <div class="copy-top">
       <div class="flex justify-between items-center">
         <strong class="fz-18">* 전체 스크롤형 <code class="code-name">popup-modal-02</code></strong>
         <button class="btn-code-view" data-target="code-modal-02">코드 보기</button>
@@ -171,7 +158,7 @@
 
   <!-- ===== 닫기 옵션 ===== -->
   <div class="w-1080 w-fluid">
-    <div class="copy-top pt25">
+    <div class="copy-top">
       <div class="flex justify-between items-center">
         <strong class="fz-18">* 닫기 옵션 <code class="code-name">-esc</code> <code class="code-name">-bg</code></strong>
         <button class="btn-code-view" data-target="code-modal-opt">코드 보기</button>
