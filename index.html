@@ -17,16 +17,14 @@
       <img src="https://www.ssamplus.com/images/main2020/logo.png" alt="KG에듀원 희소쌤플러스" width="230" height="30">
       <span class="logo-sub">UI 템플릿</span>
     </h1>
-    <a class="header-link" href="https://github.com/millie0519/heeso-ui/blob/main/snippets/ui-templates.md" target="_blank" rel="noopener">
+    <button type="button" class="header-link" id="btnGuide" aria-haspopup="dialog">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
-        <path d="M4 1.75h5.5L12.25 4.5v9.75H4z" />
-        <path d="M9.25 1.75V4.75h3" />
-        <line x1="6.25" y1="8" x2="10" y2="8" stroke-linecap="round" />
-        <line x1="6.25" y1="10.75" x2="10" y2="10.75" stroke-linecap="round" />
+        <path d="M2.25 3.25h11.5v7.5H7.5l-3 2.5v-2.5H2.25z" />
+        <line x1="5" y1="6" x2="11" y2="6" stroke-linecap="round" />
+        <line x1="5" y1="8.25" x2="9" y2="8.25" stroke-linecap="round" />
       </svg>
-      <span>스니펫 문서</span>
-      <span class="sr-only">(새 탭에서 열림)</span>
-    </a>
+      <span>AI 사용 안내</span>
+    </button>
   </header>
 
   <!-- 메인 컨텐츠 -->
@@ -109,6 +107,127 @@
         </div>
       </div>
       <pre class="code-modal-body" tabindex="0"><code id="codeModalContent"></code></pre>
+    </div>
+  </div>
+
+  <!-- AI 사용 안내 모달 (주소 끝에 #guide를 붙이면 바로 열림) -->
+  <div class="guide-modal" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+    <div class="guide-inner">
+      <div class="guide-header">
+        <div class="guide-heading">
+          <h2 class="guide-title" id="guideTitle">AI로 스니펫 사용하기</h2>
+          <p class="guide-lead">쓰는 AI에 문서를 연결하면 코드명 한마디로 스니펫을 넣을 수 있어요.<br>예) <code>form-radio-01 추가해줘. 항목은 학생/교사/학부모</code></p>
+        </div>
+        <button type="button" class="guide-close" id="guideClose" aria-label="AI 사용 안내 닫기">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="3" x2="17" y2="17" />
+            <line x1="3" y1="17" x2="17" y2="3" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="guide-tabs" role="tablist" aria-label="사용하는 AI">
+        <button type="button" class="guide-tab" role="tab" id="guideTabClaude" aria-controls="guidePanelClaude" aria-selected="true">Claude Code</button>
+        <button type="button" class="guide-tab" role="tab" id="guideTabTools" aria-controls="guidePanelTools" aria-selected="false" tabindex="-1">Cursor·기타 도구</button>
+        <button type="button" class="guide-tab" role="tab" id="guideTabChat" aria-controls="guidePanelChat" aria-selected="false" tabindex="-1">채팅 AI</button>
+      </div>
+
+      <div class="guide-body">
+        <!-- Claude Code : 스킬 설치 -->
+        <section class="guide-panel" role="tabpanel" id="guidePanelClaude" aria-labelledby="guideTabClaude">
+          <ol class="guide-steps">
+            <li>
+              <strong class="guide-step-title">스킬 설치 (한 번만)</strong>
+              <p>터미널에서 아래 명령을 실행하세요. 내 컴퓨터의 모든 프로젝트에서 쓸 수 있어요.</p>
+              <div class="guide-os" role="group" aria-label="운영체제">
+                <button type="button" class="guide-os-btn" data-os="unix" aria-pressed="true">macOS · Linux</button>
+                <button type="button" class="guide-os-btn" data-os="win" aria-pressed="false">Windows<span class="guide-os-extra"> (PowerShell)</span></button>
+              </div>
+              <div class="guide-cmd" data-os-cmd="unix" data-label="터미널">
+                <pre><code>mkdir -p ~/.claude/skills/heeso-ui && \
+  curl -fsSL https://raw.githubusercontent.com/millie0519/heeso-ui/main/skill/SKILL.md \
+  -o ~/.claude/skills/heeso-ui/SKILL.md && \
+  curl -fsSL https://raw.githubusercontent.com/millie0519/heeso-ui/main/snippets/ui-templates.md \
+  -o ~/.claude/skills/heeso-ui/ui-templates.md</code></pre>
+                <button type="button" class="guide-copy" data-copy="cmd">복사</button>
+              </div>
+              <div class="guide-cmd" data-os-cmd="win" data-label="PowerShell" hidden>
+                <pre><code>$d = "$HOME\.claude\skills\heeso-ui"; New-Item -ItemType Directory -Force $d | Out-Null
+Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/millie0519/heeso-ui/main/skill/SKILL.md -OutFile "$d\SKILL.md"
+Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/millie0519/heeso-ui/main/snippets/ui-templates.md -OutFile "$d\ui-templates.md"</code></pre>
+                <button type="button" class="guide-copy" data-copy="cmd">복사</button>
+              </div>
+            </li>
+            <li>
+              <strong class="guide-step-title">코드명으로 요청</strong>
+              <p>Claude Code에서 코드명을 말하면 스킬이 자동으로 켜져 프로젝트 파일에 넣어 줘요. <code>/heeso-ui</code>로 직접 부를 수도 있어요.</p>
+            </li>
+            <li>
+              <strong class="guide-step-title">업데이트</strong>
+              <p>스니펫이 추가·수정되면 같은 명령을 다시 실행하세요. 최신 파일로 덮어써요.</p>
+            </li>
+          </ol>
+        </section>
+
+        <!-- Cursor·기타 도구 : 파일 다운로드 -->
+        <section class="guide-panel" role="tabpanel" id="guidePanelTools" aria-labelledby="guideTabTools" hidden>
+          <ol class="guide-steps">
+            <li>
+              <strong class="guide-step-title">문서 내려받기</strong>
+              <p>스니펫과 적용 규칙이 담긴 파일 하나예요.</p>
+              <a class="btn btn-open guide-action" href="snippets/ui-templates.md" download="ui-templates.md">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 1.75v7.5M3.75 6.25 7 9.5l3.25-3.25M2 12.25h10" />
+                </svg>
+                ui-templates.md 다운로드
+              </a>
+            </li>
+            <li>
+              <strong class="guide-step-title">프로젝트에 넣고 연결</strong>
+              <ul class="guide-list">
+                <li><b>Cursor</b> 프로젝트에 넣고 채팅에서 <code>@ui-templates.md</code>로 참조하거나, <code>.cursor/rules/</code>에 규칙 파일로 등록</li>
+                <li><b>GitHub Copilot</b> 채팅에서 <code>#file:ui-templates.md</code>로 참조</li>
+                <li><b>Claude Code (스킬 대신)</b> <code>CLAUDE.md</code>에 <code>@ui-templates.md</code> 한 줄 추가</li>
+              </ul>
+            </li>
+            <li>
+              <strong class="guide-step-title">업데이트</strong>
+              <p>받은 파일은 그 시점 내용이에요. 아래 업데이트 날짜가 바뀌면 다시 내려받으세요.</p>
+            </li>
+          </ol>
+        </section>
+
+        <!-- 채팅 AI : 전체 복사 -->
+        <section class="guide-panel" role="tabpanel" id="guidePanelChat" aria-labelledby="guideTabChat" hidden>
+          <ol class="guide-steps">
+            <li>
+              <strong class="guide-step-title">문서 전체 복사</strong>
+              <p>ChatGPT, Claude, Gemini 등 쓰는 AI 채팅에 붙여 넣을 문서예요.</p>
+              <button type="button" class="btn btn-open guide-action" data-copy="doc">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="4.25" y="4.25" width="8" height="8" rx="1.5" />
+                  <path d="M9.75 4.25V2.75a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1.5" />
+                </svg>
+                <span class="guide-action-label">문서 전체 복사</span>
+              </button>
+            </li>
+            <li>
+              <strong class="guide-step-title">채팅에 붙여넣기</strong>
+              <p>새 대화에 붙여 넣으면 AI가 "문서를 확인했습니다"라고 답해요.</p>
+            </li>
+            <li>
+              <strong class="guide-step-title">코드명으로 요청</strong>
+              <p>AI가 코드를 보여 주면 복사해서 쓰세요. 내 코드를 함께 붙여 넣으면 그 안에 넣은 결과를 받을 수 있어요.</p>
+            </li>
+          </ol>
+          <p class="guide-note">붙여 넣기가 너무 길다고 나오면, 다운로드한 파일을 채팅에 첨부해도 돼요.</p>
+        </section>
+      </div>
+
+      <div class="guide-footer">
+        <span class="guide-meta" id="guideMeta">문서 정보를 불러오는 중…</span>
+        <a class="guide-source" href="snippets/ui-templates.md" target="_blank" rel="noopener">원문 보기<span class="sr-only"> (새 탭에서 열림)</span></a>
+      </div>
     </div>
   </div>
 

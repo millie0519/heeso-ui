@@ -255,6 +255,131 @@ $(function () {
     }
   });
 
+  // ---- AI 사용 안내 모달 (#guide) ----
+  var $guide        = $('#guideModal');
+  var DOC_URL       = 'snippets/ui-templates.md';
+  var docText       = null;   // 문서 전체 (전체 복사용, 처음 열 때 한 번 불러옴)
+  var guideReturnTo = null;
+
+  function loadDoc() {
+    if (docText !== null) return;
+    fetch(DOC_URL).then(function (res) {
+      if (!res.ok) throw new Error(res.status);
+      return res.text();
+    }).then(function (text) {
+      docText = text;
+      // 문서 머리말의 "업데이트: YYYY-MM-DD · 스니펫 N개"를 그대로 표시
+      var meta = text.match(/업데이트: (\d{4}-\d{2}-\d{2}) · 스니펫 (\d+)개/);
+      var size = '약 ' + Math.round(text.length / 1000) / 10 + '만 자';
+      $('#guideMeta').text(meta
+        ? '문서 업데이트 ' + meta[1].replace(/-/g, '.') + ' · 스니펫 ' + meta[2] + '개 · ' + size
+        : size);
+    }).catch(function () {
+      docText = null;
+      $('#guideMeta').text('문서 정보를 불러오지 못했어요. 원문 보기에서 확인해 주세요.');
+    });
+  }
+
+  function openGuide() {
+    if ($guide.hasClass('show')) return;
+    guideReturnTo = document.activeElement;
+    $guide.addClass('show');
+    loadDoc();
+    $guide.find('.guide-tab[aria-selected="true"]').trigger('focus');
+    if (location.hash !== '#guide') history.replaceState(null, '', '#guide');
+  }
+
+  function closeGuide() {
+    if (!$guide.hasClass('show')) return;
+    $guide.removeClass('show');
+    if (location.hash === '#guide') history.replaceState(null, '', location.pathname + location.search);
+    // 주소(#guide)로 바로 연 경우처럼 돌아갈 곳이 없으면 헤더의 안내 버튼으로
+    var back = guideReturnTo && guideReturnTo !== document.body && document.body.contains(guideReturnTo);
+    (back ? guideReturnTo : document.getElementById('btnGuide')).focus();
+  }
+
+  $('#btnGuide').on('click', openGuide);
+  $('#guideClose').on('click', closeGuide);
+  $guide.on('click', function (e) {
+    if (e.target === this) closeGuide();
+  });
+  if (location.hash === '#guide') openGuide();
+  $(window).on('hashchange', function () {
+    if (location.hash === '#guide') openGuide();
+  });
+
+  // 탭 전환 (좌우 방향키로도 이동)
+  var $guideTabs = $guide.find('.guide-tab');
+
+  function selectGuideTab($tab) {
+    $guideTabs.attr({ 'aria-selected': 'false', tabindex: '-1' });
+    $tab.attr({ 'aria-selected': 'true', tabindex: '0' }).trigger('focus');
+    $guide.find('.guide-panel').prop('hidden', true);
+    $('#' + $tab.attr('aria-controls')).prop('hidden', false);
+    $guide.find('.guide-body').scrollTop(0);
+  }
+
+  $guideTabs.on('click', function () { selectGuideTab($(this)); });
+  $guideTabs.on('keydown', function (e) {
+    var idx = $guideTabs.index(this);
+    if (e.key === 'ArrowRight') selectGuideTab($guideTabs.eq((idx + 1) % $guideTabs.length));
+    else if (e.key === 'ArrowLeft') selectGuideTab($guideTabs.eq((idx - 1 + $guideTabs.length) % $guideTabs.length));
+    else return;
+    e.preventDefault();
+  });
+
+  // 설치 명령 운영체제 선택 (Windows면 처음부터 PowerShell)
+  function selectOs(os) {
+    $guide.find('.guide-os-btn').each(function () {
+      $(this).attr('aria-pressed', String($(this).data('os') === os));
+    });
+    $guide.find('.guide-cmd').each(function () {
+      $(this).prop('hidden', $(this).data('os-cmd') !== os);
+    });
+  }
+
+  $guide.find('.guide-os-btn').on('click', function () { selectOs($(this).data('os')); });
+  if (/Win/i.test(navigator.userAgent)) selectOs('win');
+
+  // 복사 버튼 : 설치 명령 / 문서 전체
+  function flashCopied($btn, ok) {
+    var $label = $btn.find('.guide-action-label');
+    var $target = $label.length ? $label : $btn;
+    var original = $btn.data('label') || $target.text();
+    $btn.data('label', original);
+    $target.text(ok ? '복사됨!' : '복사 실패');
+    $btn.addClass('copied');
+    clearTimeout($btn.data('timer'));
+    $btn.data('timer', setTimeout(function () {
+      $target.text(original);
+      $btn.removeClass('copied');
+    }, 2000));
+  }
+
+  $guide.on('click', '[data-copy]', function () {
+    var $btn = $(this);
+    var text = $btn.data('copy') === 'doc' ? docText : $btn.siblings('pre').text();
+    if (!text) { flashCopied($btn, false); return; }
+    navigator.clipboard.writeText(text).then(
+      function () { flashCopied($btn, true); },
+      function () { flashCopied($btn, false); }
+    );
+  });
+
+  // ESC 닫기 + 모달 안에서만 Tab 이동
+  $(document).on('keydown', function (e) {
+    if (!$guide.hasClass('show')) return;
+    if (e.key === 'Escape') {
+      closeGuide();
+    } else if (e.key === 'Tab') {
+      var $focusable = $guide.find('button, a[href], [tabindex="0"]').filter(':visible').not('[tabindex="-1"]');
+      var first = $focusable[0];
+      var last  = $focusable[$focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+    }
+  });
+
   // ---- 새 탭에서 열기 버튼 ----
   $('#btnOpen').on('click', function () {
     if (!currentSrc) return;
