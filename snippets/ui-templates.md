@@ -2,7 +2,7 @@
 
 > **AI에게:** 사용자가 이 문서를 대화 메시지로 붙여 넣었다면, 내용을 요약하거나 설명하지 말고 "heeso-ui 스니펫 문서를 확인했습니다. 코드명으로 요청해 주세요. (예: form-radio-01 추가해줘)"라고만 답한 뒤 요청을 기다린다. 이후 코드명 요청은 아래 "AI 적용 규칙"을 따른다.
 
-- 업데이트: 2026-10-20 · 스니펫 17개
+- 업데이트: 2026-10-21 · 스니펫 17개
 - 미리보기·사용 안내: https://millie0519.github.io/heeso-ui/
 
 ## 사용 방법
@@ -292,13 +292,13 @@
 
 ## popup-modal-01 — 모달 팝업 (기본형)
 
-> `modalShow(id)`로 열고 `modalHide(id)`로 닫습니다.
+> `modalShow(id)`로 열고 `modalHide(id)`로 닫습니다. 모달이 열려 있는 동안 뒤 페이지 스크롤은 잠깁니다.
 >
 > 폭은 wrap 태그에 `style="--tpl-modal-w: 600px"`처럼 지정합니다. (기본 450px) ESC·배경 클릭 닫기는 아래 "popup-modal 닫기 옵션" 참고.
 
 ```html
 <style>
-  .tpl-modal-wrap{display: none; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0,0,0,.7); z-index: 999;}
+  .tpl-modal-wrap{display: none; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0,0,0,.7); z-index: 999; overscroll-behavior: contain;}
   .tpl-modal-wrap .tpl-modal-container{display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 0 16px; box-sizing: border-box;}
   .tpl-modal-wrap .tpl-modal-box{display: none; position: relative; width: 100%; max-width: var(--tpl-modal-w, 450px); padding: 52px 40px 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
   .tpl-modal-wrap .tpl-modal-box.is-open{animation: tplModalSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;}
@@ -327,16 +327,34 @@
   function modalShow(wrapId){
     var wrap = document.getElementById(wrapId);
     var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+    if (wrap.style.display === 'block') return; // 이미 열려 있음
     wrap.style.display = 'block';
     box.style.display  = 'block';
     box.classList.add('is-open');
+    tplScrollLock(true);
   }
   function modalHide(wrapId){
     var wrap = document.getElementById(wrapId);
     var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+    if (wrap.style.display !== 'block') return; // 이미 닫혀 있음
     wrap.style.display = 'none';
     box.style.display  = 'none';
     box.classList.remove('is-open');
+    tplScrollLock(false);
+  }
+  // 모달이 열려 있는 동안 뒤 페이지 스크롤 잠금 (열린 모달 수를 세어 마지막 모달이 닫힐 때 해제)
+  function tplScrollLock(lock){
+    var html  = document.documentElement;
+    var count = Math.max(0, (Number(html.dataset.tplModalOpen) || 0) + (lock ? 1 : -1));
+    html.dataset.tplModalOpen = count;
+    if (lock && count === 1) {
+      var bar = window.innerWidth - html.clientWidth; // 스크롤바가 사라지며 페이지가 밀리지 않도록 그 폭만큼 보정
+      html.style.overflow = 'hidden';
+      if (bar > 0) html.style.paddingRight = bar + 'px';
+    } else if (!lock && count === 0) {
+      html.style.overflow = '';
+      html.style.paddingRight = '';
+    }
   }
 </script>
 ```
@@ -349,7 +367,7 @@
 
 ```html
 <style>
-  .tpl-modal-wrap-02{display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.7); z-index: 999; overflow-y: auto;}
+  .tpl-modal-wrap-02{display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.7); z-index: 999; overflow-y: auto; overscroll-behavior: contain;}
   .tpl-modal-wrap-02 .tpl-modal-container-02{display: flex; justify-content: center; min-height: 100%; padding: 60px 16px; box-sizing: border-box;}
   .tpl-modal-wrap-02 .tpl-modal-box-02{display: none; position: relative; width: 100%; max-width: var(--tpl-modal-w, 450px); height: fit-content; padding: 52px 40px 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
   .tpl-modal-wrap-02 .tpl-modal-box-02.is-open{animation: tplModalSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;}
@@ -390,16 +408,34 @@
   function modalShow(wrapId){
     var wrap = document.getElementById(wrapId);
     var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+    if (wrap.style.display === 'block') return; // 이미 열려 있음
     wrap.style.display = 'block';
     box.style.display  = 'block';
     box.classList.add('is-open');
+    tplScrollLock(true);
   }
   function modalHide(wrapId){
     var wrap = document.getElementById(wrapId);
     var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+    if (wrap.style.display !== 'block') return; // 이미 닫혀 있음
     wrap.style.display = 'none';
     box.style.display  = 'none';
     box.classList.remove('is-open');
+    tplScrollLock(false);
+  }
+  // 모달이 열려 있는 동안 뒤 페이지 스크롤 잠금 (열린 모달 수를 세어 마지막 모달이 닫힐 때 해제)
+  function tplScrollLock(lock){
+    var html  = document.documentElement;
+    var count = Math.max(0, (Number(html.dataset.tplModalOpen) || 0) + (lock ? 1 : -1));
+    html.dataset.tplModalOpen = count;
+    if (lock && count === 1) {
+      var bar = window.innerWidth - html.clientWidth; // 스크롤바가 사라지며 페이지가 밀리지 않도록 그 폭만큼 보정
+      html.style.overflow = 'hidden';
+      if (bar > 0) html.style.paddingRight = bar + 'px';
+    } else if (!lock && count === 0) {
+      html.style.overflow = '';
+      html.style.paddingRight = '';
+    }
   }
 </script>
 ```
@@ -658,7 +694,7 @@ X 버튼 닫기는 기본입니다. `popup-modal-01`·`02`를 `-esc`, `-bg` 옵�
 
 ## table-curri-02 — 커리큘럼 박스형
 
-> 타이틀 박스 색상은 `applyColor('#HEX')`로 단계별 5색(`--c1`~`--c4`, `--prime`)이 자동 생성됩니다. 6번째 그룹부터는 `--prime` 색으로 표시됩니다.
+> 타이틀 박스 색상은 스크립트 안의 `applyColor('#HEX')` 값으로 단계별 5색(`--c1`~`--c4`, `--prime`)이 자동 생성됩니다. 6번째 그룹부터는 `--prime` 색으로 표시됩니다. 페이지가 열린 뒤 색을 바꿀 때는 `curri02ApplyColor('#HEX')`를 부릅니다.
 >
 > 컨테이너 쿼리로 영역 폭 800px 이하에서 박스 축소, 560px 이하에서 타이틀 띠형 배치로 바뀝니다.
 
@@ -791,34 +827,40 @@ X 버튼 닫기는 기본입니다. `popup-modal-01`·`02`를 `-esc`, `-bg` 옵�
 
 </div>
 <script>
-  // 타이틀 박스 색상: applyColor('#HEX')로 단계별 5색 생성
-  function hexToRgb(hex) {
-    var r = parseInt(hex.slice(1,3),16);
-    var g = parseInt(hex.slice(3,5),16);
-    var b = parseInt(hex.slice(5,7),16);
-    return [r, g, b];
-  }
+  // 다른 스니펫과 함수 이름이 겹치지 않도록 이 안에서만 동작
+  (function () {
+    // 타이틀 박스 색상: 아래 applyColor('#HEX') 값으로 단계별 5색 생성
+    function hexToRgb(hex) {
+      var r = parseInt(hex.slice(1,3),16);
+      var g = parseInt(hex.slice(3,5),16);
+      var b = parseInt(hex.slice(5,7),16);
+      return [r, g, b];
+    }
 
-  function mix(rgb, t) {
-    var r = Math.round(255 + (rgb[0] - 255) * t);
-    var g = Math.round(255 + (rgb[1] - 255) * t);
-    var b = Math.round(255 + (rgb[2] - 255) * t);
-    return '#' + [r,g,b].map(function(v){ return v.toString(16).padStart(2,'0'); }).join('');
-  }
+    function mix(rgb, t) {
+      var r = Math.round(255 + (rgb[0] - 255) * t);
+      var g = Math.round(255 + (rgb[1] - 255) * t);
+      var b = Math.round(255 + (rgb[2] - 255) * t);
+      return '#' + [r,g,b].map(function(v){ return v.toString(16).padStart(2,'0'); }).join('');
+    }
 
-  function applyColor(hex) {
-    if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
-    var rgb = hexToRgb(hex);
-    var wrap = document.querySelector('.curri-wrap');
-    wrap.style.setProperty('--prime', hex);
-    wrap.style.setProperty('--c1', mix(rgb, 0.40));
-    wrap.style.setProperty('--c2', mix(rgb, 0.55));
-    wrap.style.setProperty('--c3', mix(rgb, 0.70));
-    wrap.style.setProperty('--c4', mix(rgb, 0.85));
-  }
+    function applyColor(hex) {
+      if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+      var rgb = hexToRgb(hex);
+      var wrap = document.querySelector('.curri-wrap');
+      wrap.style.setProperty('--prime', hex);
+      wrap.style.setProperty('--c1', mix(rgb, 0.40));
+      wrap.style.setProperty('--c2', mix(rgb, 0.55));
+      wrap.style.setProperty('--c3', mix(rgb, 0.70));
+      wrap.style.setProperty('--c4', mix(rgb, 0.85));
+    }
 
-  applyColor('#4551D1');
+    applyColor('#4551D1');
 
+    // 페이지가 열린 뒤 색을 바꿀 때: curri02ApplyColor('#HEX')
+    window.curri02ApplyColor = applyColor;
+
+  })();
 </script>
 ```
 
@@ -965,7 +1007,7 @@ X 버튼 닫기는 기본입니다. `popup-modal-01`·`02`를 `-esc`, `-bg` 옵�
 
 ## table-time-01 — 주간 시간표
 
-> 날짜 범위와 `schedule` 데이터를 수정해 사용합니다. 색상은 `applyColor('#HEX')`로 지정합니다.
+> 날짜 범위와 `schedule` 데이터를 수정해 사용합니다. 색상은 스크립트 안의 `applyColor('#HEX')` 값으로 지정하고, 페이지가 열린 뒤 바꿀 때는 `time01ApplyColor('#HEX')`를 부릅니다.
 >
 > 최소 폭은 `--tpl-table-min`(기본 560px)이며, 칸 폭이 140px 미만이면 시간 목록이 1열로 바뀝니다.
 
@@ -1008,149 +1050,158 @@ X 버튼 닫기는 기본입니다. `popup-modal-01`·`02`를 `-esc`, `-bg` 옵�
   </table>
 </div>
 <script>
-  // -------------------------------------------------------
-  // 1) 데이터 정의
-  // -------------------------------------------------------
-  const FULL_SLOTS   = ["10:00-10:40","11:00-11:40","12:00-12:40","14:00-14:40","15:00-15:40","17:00-17:40","18:00-18:40","19:00-19:40"];
-  const MORN_SLOTS   = ["10:00-10:40","11:00-11:40","14:00-14:40","15:00-15:40","17:00-17:40"];
-  const MORN_SLOTS2  = ["10:00-10:40","11:00-11:40","12:00-12:40","14:00-14:40","15:00-15:40"];
+  // 다른 스니펫과 함수·변수 이름이 겹치지 않도록 이 안에서만 동작 (한 페이지에 여러 개 넣어도 안전)
+  (function () {
+    // -------------------------------------------------------
+    // 1) 데이터 정의
+    // -------------------------------------------------------
+    // 위 <tbody>의 id와 같게 둔다 (한 페이지에 시간표를 여러 개 넣으면 둘 다 바꾼다)
+    const TBODY_ID = 'tpl-timetable-01-body';
 
-  // 표시할 날짜 범위
-  const START_DATE    = new Date("2024-12-23"); // 첫 주 월요일 (테이블 시작)
-  const END_DATE      = new Date("2025-01-20"); // 마지막 날짜
-  const CONTENT_START = new Date("2024-12-27"); // 날짜 표시 시작일
+    const FULL_SLOTS   = ["10:00-10:40","11:00-11:40","12:00-12:40","14:00-14:40","15:00-15:40","17:00-17:40","18:00-18:40","19:00-19:40"];
+    const MORN_SLOTS   = ["10:00-10:40","11:00-11:40","14:00-14:40","15:00-15:40","17:00-17:40"];
+    const MORN_SLOTS2  = ["10:00-10:40","11:00-11:40","12:00-12:40","14:00-14:40","15:00-15:40"];
 
-  const schedule = {
-    "2024-12-27": FULL_SLOTS,
-    "2024-12-28": MORN_SLOTS,
-    "2024-12-29": FULL_SLOTS,
-    "2024-12-30": FULL_SLOTS,
-    "2024-12-31": FULL_SLOTS,
-    "2025-01-04": MORN_SLOTS,
-    "2025-01-05": FULL_SLOTS,
-    "2025-01-06": FULL_SLOTS,
-    "2025-01-07": FULL_SLOTS,
-    "2025-01-08": FULL_SLOTS,
-    "2025-01-11": MORN_SLOTS2,
-    "2025-01-12": FULL_SLOTS,
-    "2025-01-13": FULL_SLOTS,
-    "2025-01-14": FULL_SLOTS,
-    "2025-01-19": FULL_SLOTS,
-    "2025-01-20": FULL_SLOTS,
-  };
+    // 표시할 날짜 범위
+    const START_DATE    = new Date("2024-12-23"); // 첫 주 월요일 (테이블 시작)
+    const END_DATE      = new Date("2025-01-20"); // 마지막 날짜
+    const CONTENT_START = new Date("2024-12-27"); // 날짜 표시 시작일
 
-  // -------------------------------------------------------
-  // 2) 헬퍼 함수
-  // -------------------------------------------------------
-  function toKey(d) {
-    return d.toISOString().slice(0, 10); // "YYYY-MM-DD"
-  }
+    const schedule = {
+      "2024-12-27": FULL_SLOTS,
+      "2024-12-28": MORN_SLOTS,
+      "2024-12-29": FULL_SLOTS,
+      "2024-12-30": FULL_SLOTS,
+      "2024-12-31": FULL_SLOTS,
+      "2025-01-04": MORN_SLOTS,
+      "2025-01-05": FULL_SLOTS,
+      "2025-01-06": FULL_SLOTS,
+      "2025-01-07": FULL_SLOTS,
+      "2025-01-08": FULL_SLOTS,
+      "2025-01-11": MORN_SLOTS2,
+      "2025-01-12": FULL_SLOTS,
+      "2025-01-13": FULL_SLOTS,
+      "2025-01-14": FULL_SLOTS,
+      "2025-01-19": FULL_SLOTS,
+      "2025-01-20": FULL_SLOTS,
+    };
 
-  function toLabel(d) {
-    return `${d.getMonth() + 1}/${d.getDate()}`; // "12/27"
-  }
+    // -------------------------------------------------------
+    // 2) 헬퍼 함수
+    // -------------------------------------------------------
+    function toKey(d) {
+      return d.toISOString().slice(0, 10); // "YYYY-MM-DD"
+    }
 
-  function getDayClass(d) {
-    const day = d.getDay();
-    if (day === 6) return "day-sat";
-    if (day === 0) return "day-sun";
-    return "";
-  }
+    function toLabel(d) {
+      return `${d.getMonth() + 1}/${d.getDate()}`; // "12/27"
+    }
 
-  // 월요일부터 시작하는 주 배열 생성
-  function buildWeeks(start, end) {
-    const weeks = [];
-    let cur = new Date(start);
+    function getDayClass(d) {
+      const day = d.getDay();
+      if (day === 6) return "day-sat";
+      if (day === 0) return "day-sun";
+      return "";
+    }
 
-    // start가 월요일이 아니면 해당 주 월요일로 맞춤
-    const dow = cur.getDay();
-    const diff = (dow === 0) ? -6 : 1 - dow;
-    cur.setDate(cur.getDate() + diff);
+    // 월요일부터 시작하는 주 배열 생성
+    function buildWeeks(start, end) {
+      const weeks = [];
+      let cur = new Date(start);
 
-    while (cur <= end) {
-      const week = [];
-      for (let i = 0; i < 7; i++) {
-        week.push(new Date(cur));
-        cur.setDate(cur.getDate() + 1);
+      // start가 월요일이 아니면 해당 주 월요일로 맞춤
+      const dow = cur.getDay();
+      const diff = (dow === 0) ? -6 : 1 - dow;
+      cur.setDate(cur.getDate() + diff);
+
+      while (cur <= end) {
+        const week = [];
+        for (let i = 0; i < 7; i++) {
+          week.push(new Date(cur));
+          cur.setDate(cur.getDate() + 1);
+        }
+        weeks.push(week);
       }
-      weeks.push(week);
-    }
-    return weeks;
-  }
-
-  // -------------------------------------------------------
-  // 3) 렌더링
-  // -------------------------------------------------------
-  // 태그 만들기 도우미: el('span', 'slot', '10:00-10:40')
-  function el(tag, className, text) {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    if (text != null) node.textContent = text;
-    return node;
-  }
-
-  function renderCell(date) {
-    const key   = toKey(date);
-    const label = toLabel(date);
-    const cls   = getDayClass(date);
-    const slots = schedule[key];
-
-    const isInRange = !(date < CONTENT_START || date > END_DATE);
-
-    const td        = el('td');
-    const inner     = el('div', 'cell-inner');
-    const dateLabel = el('span', 'date-label', isInRange ? label : '');
-    if (cls) dateLabel.classList.add(cls);
-    inner.append(dateLabel);
-    td.append(inner);
-
-    if (!isInRange) return td;
-
-    if (slots && slots.length) {
-      const slotBox = el('div', 'slots');
-      slots.forEach(s => slotBox.append(el('span', 'slot', s)));
-      inner.append(slotBox);
+      return weeks;
     }
 
-    return td;
-  }
+    // -------------------------------------------------------
+    // 3) 렌더링
+    // -------------------------------------------------------
+    // 태그 만들기 도우미: el('span', 'slot', '10:00-10:40')
+    function el(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text != null) node.textContent = text;
+      return node;
+    }
 
-  function render() {
-    const tbody = document.getElementById('tpl-timetable-01-body');
-    const weeks = buildWeeks(START_DATE, END_DATE);
+    function renderCell(date) {
+      const key   = toKey(date);
+      const label = toLabel(date);
+      const cls   = getDayClass(date);
+      const slots = schedule[key];
 
-    weeks.forEach(week => {
-      const tr = el('tr');
-      week.forEach(date => tr.append(renderCell(date)));
-      tbody.append(tr);
-    });
-  }
+      const isInRange = !(date < CONTENT_START || date > END_DATE);
 
-  render();
+      const td        = el('td');
+      const inner     = el('div', 'cell-inner');
+      const dateLabel = el('span', 'date-label', isInRange ? label : '');
+      if (cls) dateLabel.classList.add(cls);
+      inner.append(dateLabel);
+      td.append(inner);
 
-  // -------------------------------------------------------
-  // 4) 색상 (applyColor로 헤더·날짜 색 지정)
-  // -------------------------------------------------------
-  function hexToRgb(hex) {
-    return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
-  }
+      if (!isInRange) return td;
 
-  function mix(rgb, t) {
-    return '#' + rgb.map(function(v) {
-      return Math.round(255 + (v - 255) * t).toString(16).padStart(2,'0');
-    }).join('');
-  }
+      if (slots && slots.length) {
+        const slotBox = el('div', 'slots');
+        slots.forEach(s => slotBox.append(el('span', 'slot', s)));
+        inner.append(slotBox);
+      }
 
-  function applyColor(hex) {
-    if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
-    var rgb = hexToRgb(hex);
-    var table = document.querySelector('.tpl-timetable-01');
-    table.style.setProperty('--prime', hex);
-    table.style.setProperty('--sub', mix(rgb, 0.30));
-  }
+      return td;
+    }
 
-  applyColor('#25c373');
+    function render() {
+      const tbody = document.getElementById(TBODY_ID);
+      const weeks = buildWeeks(START_DATE, END_DATE);
 
+      weeks.forEach(week => {
+        const tr = el('tr');
+        week.forEach(date => tr.append(renderCell(date)));
+        tbody.append(tr);
+      });
+    }
+
+    render();
+
+    // -------------------------------------------------------
+    // 4) 색상 (아래 applyColor('#HEX') 값으로 헤더·날짜 색 지정)
+    // -------------------------------------------------------
+    function hexToRgb(hex) {
+      return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+    }
+
+    function mix(rgb, t) {
+      return '#' + rgb.map(function(v) {
+        return Math.round(255 + (v - 255) * t).toString(16).padStart(2,'0');
+      }).join('');
+    }
+
+    function applyColor(hex) {
+      if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+      var rgb = hexToRgb(hex);
+      var table = document.getElementById(TBODY_ID).closest('.tpl-timetable-01');
+      table.style.setProperty('--prime', hex);
+      table.style.setProperty('--sub', mix(rgb, 0.30));
+    }
+
+    applyColor('#25c373');
+
+    // 페이지가 열린 뒤 색을 바꿀 때: time01ApplyColor('#HEX')
+    window.time01ApplyColor = applyColor;
+
+  })();
 </script>
 ```
 

@@ -57,166 +57,175 @@
       </table>
     </div>
     <script>
-      // -------------------------------------------------------
-      // 1) 데이터 정의
-      // -------------------------------------------------------
-      const FULL_SLOTS   = ["10:00-10:40","11:00-11:40","12:00-12:40","14:00-14:40","15:00-15:40","17:00-17:40","18:00-18:40","19:00-19:40"];
-      const MORN_SLOTS   = ["10:00-10:40","11:00-11:40","14:00-14:40","15:00-15:40","17:00-17:40"];
-      const MORN_SLOTS2  = ["10:00-10:40","11:00-11:40","12:00-12:40","14:00-14:40","15:00-15:40"];
+      // 다른 스니펫과 함수·변수 이름이 겹치지 않도록 이 안에서만 동작 (한 페이지에 여러 개 넣어도 안전)
+      (function () {
+        // -------------------------------------------------------
+        // 1) 데이터 정의
+        // -------------------------------------------------------
+        // 위 <tbody>의 id와 같게 둔다 (한 페이지에 시간표를 여러 개 넣으면 둘 다 바꾼다)
+        const TBODY_ID = 'tpl-timetable-01-body';
 
-      // 표시할 날짜 범위
-      const START_DATE    = new Date("2024-12-23"); // 첫 주 월요일 (테이블 시작)
-      const END_DATE      = new Date("2025-01-20"); // 마지막 날짜
-      const CONTENT_START = new Date("2024-12-27"); // 날짜 표시 시작일
+        const FULL_SLOTS   = ["10:00-10:40","11:00-11:40","12:00-12:40","14:00-14:40","15:00-15:40","17:00-17:40","18:00-18:40","19:00-19:40"];
+        const MORN_SLOTS   = ["10:00-10:40","11:00-11:40","14:00-14:40","15:00-15:40","17:00-17:40"];
+        const MORN_SLOTS2  = ["10:00-10:40","11:00-11:40","12:00-12:40","14:00-14:40","15:00-15:40"];
 
-      const schedule = {
-        "2024-12-27": FULL_SLOTS,
-        "2024-12-28": MORN_SLOTS,
-        "2024-12-29": FULL_SLOTS,
-        "2024-12-30": FULL_SLOTS,
-        "2024-12-31": FULL_SLOTS,
-        "2025-01-04": MORN_SLOTS,
-        "2025-01-05": FULL_SLOTS,
-        "2025-01-06": FULL_SLOTS,
-        "2025-01-07": FULL_SLOTS,
-        "2025-01-08": FULL_SLOTS,
-        "2025-01-11": MORN_SLOTS2,
-        "2025-01-12": FULL_SLOTS,
-        "2025-01-13": FULL_SLOTS,
-        "2025-01-14": FULL_SLOTS,
-        "2025-01-19": FULL_SLOTS,
-        "2025-01-20": FULL_SLOTS,
-      };      
+        // 표시할 날짜 범위
+        const START_DATE    = new Date("2024-12-23"); // 첫 주 월요일 (테이블 시작)
+        const END_DATE      = new Date("2025-01-20"); // 마지막 날짜
+        const CONTENT_START = new Date("2024-12-27"); // 날짜 표시 시작일
 
-      // -------------------------------------------------------
-      // 2) 헬퍼 함수
-      // -------------------------------------------------------
-      function toKey(d) {
-        return d.toISOString().slice(0, 10); // "YYYY-MM-DD"
-      }
+        const schedule = {
+          "2024-12-27": FULL_SLOTS,
+          "2024-12-28": MORN_SLOTS,
+          "2024-12-29": FULL_SLOTS,
+          "2024-12-30": FULL_SLOTS,
+          "2024-12-31": FULL_SLOTS,
+          "2025-01-04": MORN_SLOTS,
+          "2025-01-05": FULL_SLOTS,
+          "2025-01-06": FULL_SLOTS,
+          "2025-01-07": FULL_SLOTS,
+          "2025-01-08": FULL_SLOTS,
+          "2025-01-11": MORN_SLOTS2,
+          "2025-01-12": FULL_SLOTS,
+          "2025-01-13": FULL_SLOTS,
+          "2025-01-14": FULL_SLOTS,
+          "2025-01-19": FULL_SLOTS,
+          "2025-01-20": FULL_SLOTS,
+        };      
 
-      function toLabel(d) {
-        return `${d.getMonth() + 1}/${d.getDate()}`; // "12/27"
-      }
+        // -------------------------------------------------------
+        // 2) 헬퍼 함수
+        // -------------------------------------------------------
+        function toKey(d) {
+          return d.toISOString().slice(0, 10); // "YYYY-MM-DD"
+        }
 
-      function getDayClass(d) {
-        const day = d.getDay();
-        if (day === 6) return "day-sat";
-        if (day === 0) return "day-sun";
-        return "";
-      }
+        function toLabel(d) {
+          return `${d.getMonth() + 1}/${d.getDate()}`; // "12/27"
+        }
 
-      // 월요일부터 시작하는 주 배열 생성
-      function buildWeeks(start, end) {
-        const weeks = [];
-        let cur = new Date(start);
+        function getDayClass(d) {
+          const day = d.getDay();
+          if (day === 6) return "day-sat";
+          if (day === 0) return "day-sun";
+          return "";
+        }
 
-        // start가 월요일이 아니면 해당 주 월요일로 맞춤
-        const dow = cur.getDay();
-        const diff = (dow === 0) ? -6 : 1 - dow;
-        cur.setDate(cur.getDate() + diff);
+        // 월요일부터 시작하는 주 배열 생성
+        function buildWeeks(start, end) {
+          const weeks = [];
+          let cur = new Date(start);
 
-        while (cur <= end) {
-          const week = [];
-          for (let i = 0; i < 7; i++) {
-            week.push(new Date(cur));
-            cur.setDate(cur.getDate() + 1);
+          // start가 월요일이 아니면 해당 주 월요일로 맞춤
+          const dow = cur.getDay();
+          const diff = (dow === 0) ? -6 : 1 - dow;
+          cur.setDate(cur.getDate() + diff);
+
+          while (cur <= end) {
+            const week = [];
+            for (let i = 0; i < 7; i++) {
+              week.push(new Date(cur));
+              cur.setDate(cur.getDate() + 1);
+            }
+            weeks.push(week);
           }
-          weeks.push(week);
-        }
-        return weeks;
-      }
-
-      // -------------------------------------------------------
-      // 3) 렌더링
-      // -------------------------------------------------------
-      // 태그 만들기 도우미: el('span', 'slot', '10:00-10:40')
-      function el(tag, className, text) {
-        const node = document.createElement(tag);
-        if (className) node.className = className;
-        if (text != null) node.textContent = text;
-        return node;
-      }
-
-      function renderCell(date) {
-        const key   = toKey(date);
-        const label = toLabel(date);
-        const cls   = getDayClass(date);
-        const slots = schedule[key];
-
-        const isInRange = !(date < CONTENT_START || date > END_DATE);
-
-        const td        = el('td');
-        const inner     = el('div', 'cell-inner');
-        const dateLabel = el('span', 'date-label', isInRange ? label : '');
-        if (cls) dateLabel.classList.add(cls);
-        inner.append(dateLabel);
-        td.append(inner);
-
-        if (!isInRange) return td;
-
-        if (slots && slots.length) {
-          const slotBox = el('div', 'slots');
-          slots.forEach(s => slotBox.append(el('span', 'slot', s)));
-          inner.append(slotBox);
+          return weeks;
         }
 
-        return td;
-      }
+        // -------------------------------------------------------
+        // 3) 렌더링
+        // -------------------------------------------------------
+        // 태그 만들기 도우미: el('span', 'slot', '10:00-10:40')
+        function el(tag, className, text) {
+          const node = document.createElement(tag);
+          if (className) node.className = className;
+          if (text != null) node.textContent = text;
+          return node;
+        }
 
-      function render() {
-        const tbody = document.getElementById('tpl-timetable-01-body');
-        const weeks = buildWeeks(START_DATE, END_DATE);
+        function renderCell(date) {
+          const key   = toKey(date);
+          const label = toLabel(date);
+          const cls   = getDayClass(date);
+          const slots = schedule[key];
 
-        weeks.forEach(week => {
-          const tr = el('tr');
-          week.forEach(date => tr.append(renderCell(date)));
-          tbody.append(tr);
+          const isInRange = !(date < CONTENT_START || date > END_DATE);
+
+          const td        = el('td');
+          const inner     = el('div', 'cell-inner');
+          const dateLabel = el('span', 'date-label', isInRange ? label : '');
+          if (cls) dateLabel.classList.add(cls);
+          inner.append(dateLabel);
+          td.append(inner);
+
+          if (!isInRange) return td;
+
+          if (slots && slots.length) {
+            const slotBox = el('div', 'slots');
+            slots.forEach(s => slotBox.append(el('span', 'slot', s)));
+            inner.append(slotBox);
+          }
+
+          return td;
+        }
+
+        function render() {
+          const tbody = document.getElementById(TBODY_ID);
+          const weeks = buildWeeks(START_DATE, END_DATE);
+
+          weeks.forEach(week => {
+            const tr = el('tr');
+            week.forEach(date => tr.append(renderCell(date)));
+            tbody.append(tr);
+          });
+        }
+
+        render();
+
+        // -------------------------------------------------------
+        // 4) 색상 (아래 applyColor('#HEX') 값으로 헤더·날짜 색 지정)
+        // -------------------------------------------------------
+        function hexToRgb(hex) {
+          return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+        }
+
+        function mix(rgb, t) {
+          return '#' + rgb.map(function(v) {
+            return Math.round(255 + (v - 255) * t).toString(16).padStart(2,'0');
+          }).join('');
+        }
+
+        function applyColor(hex) {
+          if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+          var rgb = hexToRgb(hex);
+          var table = document.getElementById(TBODY_ID).closest('.tpl-timetable-01');
+          table.style.setProperty('--prime', hex);
+          table.style.setProperty('--sub', mix(rgb, 0.30));
+        }
+
+        applyColor('#25c373');
+
+        // 페이지가 열린 뒤 색을 바꿀 때: time01ApplyColor('#HEX')
+        window.time01ApplyColor = applyColor;
+
+        // @snippet-exclude-start : 미리보기 페이지의 컬러 피커 연결 (스니펫에는 포함되지 않음)
+        var picker   = document.getElementById('colorPicker');
+        var hexInput = document.getElementById('colorHex');
+
+        picker.addEventListener('input', function () {
+          hexInput.value = picker.value;
+          applyColor(picker.value);
         });
-      }
 
-      render();
-
-      // -------------------------------------------------------
-      // 4) 색상 (applyColor로 헤더·날짜 색 지정)
-      // -------------------------------------------------------
-      function hexToRgb(hex) {
-        return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
-      }
-
-      function mix(rgb, t) {
-        return '#' + rgb.map(function(v) {
-          return Math.round(255 + (v - 255) * t).toString(16).padStart(2,'0');
-        }).join('');
-      }
-
-      function applyColor(hex) {
-        if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
-        var rgb = hexToRgb(hex);
-        var table = document.querySelector('.tpl-timetable-01');
-        table.style.setProperty('--prime', hex);
-        table.style.setProperty('--sub', mix(rgb, 0.30));
-      }
-
-      applyColor('#25c373');
-
-      // @snippet-exclude-start : 미리보기 페이지의 컬러 피커 연결 (스니펫에는 포함되지 않음)
-      var picker   = document.getElementById('colorPicker');
-      var hexInput = document.getElementById('colorHex');
-
-      picker.addEventListener('input', function () {
-        hexInput.value = picker.value;
-        applyColor(picker.value);
-      });
-
-      document.getElementById('btnApply').addEventListener('click', function () {
-        var val = hexInput.value;
-        if (/^#[0-9a-fA-F]{6}$/.test(val)) {
-          picker.value = val;
-          applyColor(val);
-        }
-      });
-      // @snippet-exclude-end
+        document.getElementById('btnApply').addEventListener('click', function () {
+          var val = hexInput.value;
+          if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+            picker.value = val;
+            applyColor(val);
+          }
+        });
+        // @snippet-exclude-end
+      })();
     </script>
   </div>
 </body>

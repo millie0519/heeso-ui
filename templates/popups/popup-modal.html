@@ -14,6 +14,7 @@
       <li>팝업 폭은 기본 450px이며, 모달 wrap 태그(<code>tpl-modal-wrap</code> 또는 <code>tpl-modal-wrap-02</code>)에 <code>--tpl-modal-w</code> 변수를 지정해 변경합니다.<br>
         예) 600px로 사용: <code>&lt;div class="tpl-modal-wrap" id="modal-pop-wrap-01" style="--tpl-modal-w: 600px"&gt;</code></li>
       <li>화면이 지정한 폭보다 좁으면 양옆 16px 여백을 두고 자동으로 줄어듭니다.</li>
+      <li>모달이 열려 있는 동안에는 뒤 페이지가 스크롤되지 않습니다.</li>
       <li>ESC·배경 클릭으로 닫으려면 아래 닫기 옵션을 참고하세요.</li>
     </ul>
   </div>
@@ -28,7 +29,7 @@
     </div>
     <div class="copy-wrap" id="wrap-modal">
       <style class="tpl-style">
-        .tpl-modal-wrap{display: none; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0,0,0,.7); z-index: 999;}
+        .tpl-modal-wrap{display: none; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0,0,0,.7); z-index: 999; overscroll-behavior: contain;}
         .tpl-modal-wrap .tpl-modal-container{display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 0 16px; box-sizing: border-box;}
         .tpl-modal-wrap .tpl-modal-box{display: none; position: relative; width: 100%; max-width: var(--tpl-modal-w, 450px); padding: 52px 40px 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
         .tpl-modal-wrap .tpl-modal-box.is-open{animation: tplModalSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;}
@@ -57,16 +58,34 @@
         function modalShow(wrapId){
           var wrap = document.getElementById(wrapId);
           var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+          if (wrap.style.display === 'block') return; // 이미 열려 있음
           wrap.style.display = 'block';
           box.style.display  = 'block';
           box.classList.add('is-open');
+          tplScrollLock(true);
         }
         function modalHide(wrapId){
           var wrap = document.getElementById(wrapId);
           var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+          if (wrap.style.display !== 'block') return; // 이미 닫혀 있음
           wrap.style.display = 'none';
           box.style.display  = 'none';
           box.classList.remove('is-open');
+          tplScrollLock(false);
+        }
+        // 모달이 열려 있는 동안 뒤 페이지 스크롤 잠금 (열린 모달 수를 세어 마지막 모달이 닫힐 때 해제)
+        function tplScrollLock(lock){
+          var html  = document.documentElement;
+          var count = Math.max(0, (Number(html.dataset.tplModalOpen) || 0) + (lock ? 1 : -1));
+          html.dataset.tplModalOpen = count;
+          if (lock && count === 1) {
+            var bar = window.innerWidth - html.clientWidth; // 스크롤바가 사라지며 페이지가 밀리지 않도록 그 폭만큼 보정
+            html.style.overflow = 'hidden';
+            if (bar > 0) html.style.paddingRight = bar + 'px';
+          } else if (!lock && count === 0) {
+            html.style.overflow = '';
+            html.style.paddingRight = '';
+          }
         }
       </script>
     </div>
@@ -91,7 +110,7 @@
     </div>
     <div class="copy-wrap" id="wrap-modal-02">
       <style class="tpl-style">
-        .tpl-modal-wrap-02{display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.7); z-index: 999; overflow-y: auto;}
+        .tpl-modal-wrap-02{display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.7); z-index: 999; overflow-y: auto; overscroll-behavior: contain;}
         .tpl-modal-wrap-02 .tpl-modal-container-02{display: flex; justify-content: center; min-height: 100%; padding: 60px 16px; box-sizing: border-box;}
         .tpl-modal-wrap-02 .tpl-modal-box-02{display: none; position: relative; width: 100%; max-width: var(--tpl-modal-w, 450px); height: fit-content; padding: 52px 40px 40px; color: #000; background-color: #fff; border-radius: 20px; box-sizing: border-box;}
         .tpl-modal-wrap-02 .tpl-modal-box-02.is-open{animation: tplModalSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;}
@@ -132,16 +151,34 @@
         function modalShow(wrapId){
           var wrap = document.getElementById(wrapId);
           var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+          if (wrap.style.display === 'block') return; // 이미 열려 있음
           wrap.style.display = 'block';
           box.style.display  = 'block';
           box.classList.add('is-open');
+          tplScrollLock(true);
         }
         function modalHide(wrapId){
           var wrap = document.getElementById(wrapId);
           var box  = wrap.querySelector('[class*="tpl-modal-box"]');
+          if (wrap.style.display !== 'block') return; // 이미 닫혀 있음
           wrap.style.display = 'none';
           box.style.display  = 'none';
           box.classList.remove('is-open');
+          tplScrollLock(false);
+        }
+        // 모달이 열려 있는 동안 뒤 페이지 스크롤 잠금 (열린 모달 수를 세어 마지막 모달이 닫힐 때 해제)
+        function tplScrollLock(lock){
+          var html  = document.documentElement;
+          var count = Math.max(0, (Number(html.dataset.tplModalOpen) || 0) + (lock ? 1 : -1));
+          html.dataset.tplModalOpen = count;
+          if (lock && count === 1) {
+            var bar = window.innerWidth - html.clientWidth; // 스크롤바가 사라지며 페이지가 밀리지 않도록 그 폭만큼 보정
+            html.style.overflow = 'hidden';
+            if (bar > 0) html.style.paddingRight = bar + 'px';
+          } else if (!lock && count === 0) {
+            html.style.overflow = '';
+            html.style.paddingRight = '';
+          }
         }
       </script>
     </div>
