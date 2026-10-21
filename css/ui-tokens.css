@@ -1,0 +1,20 @@
+/* ========================================
+   카탈로그 사이트 공용 토큰 (index.html, test.html)
+   템플릿 미리보기 페이지·스니펫에는 영향 없음
+   ======================================== */
+@import './theme.css';
+
+:root {
+  --ui-bg: #f3f4f6;
+  --ui-surface: #fff;
+  --ui-surface-sunken: #f8f9fa;
+  --ui-text: #1f2328;
+  --ui-text-sub: #4a4f57;
+  --ui-text-muted: #656a71;
+  --ui-border: #e2e5e9;
+  --ui-border-soft: #eef0f2;
+  --ui-control-h: 38px;
+  --ui-radius: 8px;
+  --ui-focus: 0 0 0 3px color-mix(in srgb, var(--prime-color) 28%, transparent);
+  --ui-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}

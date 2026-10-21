@@ -9,6 +9,8 @@
 - 문서 보기: [snippets/ui-templates.md](snippets/ui-templates.md)
 - 파일 받기: https://raw.githubusercontent.com/millie0519/heeso-ui/main/snippets/ui-templates.md
 - 사용 안내 (설치 명령·다운로드·전체 복사): https://millie0519.github.io/heeso-ui/#guide
+- AI 연동 테스트 시나리오 (동작 구조·테스트 체크리스트): https://millie0519.github.io/heeso-ui/test.html
+  - 테스트 결과는 `js/test.js` 맨 위 `SCENARIOS`의 `status`·`date`·`result`만 고치면 페이지에 반영됩니다.
 
 ### 도구별 사용 방법
 

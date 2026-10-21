@@ -1,23 +1,8 @@
 /* ========================================
    공통 UI 템플릿 카탈로그 - 목록 + 미리보기
    ======================================== */
-@import './theme.css';
-
-/* 카탈로그 화면 전용 중립색 (템플릿 페이지에는 영향 없음) */
-:root {
-  --ui-bg: #f3f4f6;
-  --ui-surface: #fff;
-  --ui-surface-sunken: #f8f9fa;
-  --ui-text: #1f2328;
-  --ui-text-sub: #4a4f57;
-  --ui-text-muted: #656a71;
-  --ui-border: #e2e5e9;
-  --ui-border-soft: #eef0f2;
-  --ui-control-h: 38px;
-  --ui-radius: 8px;
-  --ui-focus: 0 0 0 3px color-mix(in srgb, var(--prime-color) 28%, transparent);
-  --ui-ease: cubic-bezier(0.22, 1, 0.36, 1);
-}
+/* 색·간격 토큰은 test.html과 함께 쓰는 ui-tokens.css에 있음 */
+@import './ui-tokens.css';
 
 /* Reset & Base */
 *,
@@ -1130,6 +1115,12 @@ pre code {
   font-variant-numeric: tabular-nums;
 }
 
+.guide-links {
+  display: flex;
+  flex-shrink: 0;
+  gap: 14px;
+}
+
 .guide-source {
   flex-shrink: 0;
   font-size: 13px;
@@ -1328,6 +1319,7 @@ pre code {
   }
 
   .guide-footer {
+    flex-wrap: wrap;
     padding: 12px 16px;
   }
 }

@@ -1,0 +1,851 @@
+/* ========================================
+   AI 연동 테스트 시나리오 (test.html)
+   ======================================== */
+@import './ui-tokens.css';
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+code {
+  font-family: 'Consolas', 'Monaco', monospace;
+}
+
+::selection {
+  background: var(--prime-bg-active);
+  color: var(--prime-dark);
+}
+
+:focus-visible {
+  outline: 2px solid var(--prime-color);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* 글 안의 코드 */
+:not(pre) > code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--ui-bg);
+  font-size: 0.9em;
+  color: var(--ui-text);
+  overflow-wrap: anywhere;
+}
+
+/* ---- Header (카탈로그와 같은 모양) ---- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 60px;
+  padding: 8px 24px 0;
+  background: var(--ui-surface);
+  border-bottom: 1px solid var(--ui-border);
+}
+
+/* 로고 이미지는 아래쪽에 글자가 있어 아래 기준 정렬 후 묶음을 올림 (카탈로그와 동일) */
+.logo {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  min-width: 0;
+  text-decoration: none;
+  transform: translateY(-27%);
+}
+
+.logo img {
+  display: block;
+  width: 190px;
+  height: auto;
+}
+
+.logo-sub {
+  padding-left: 14px;
+  border-left: 1px solid var(--ui-border);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.header-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: var(--ui-radius);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ui-text-sub);
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.header-link:hover {
+  background: var(--prime-bg);
+  color: var(--prime-dark);
+}
+
+/* ---- Page ---- */
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+}
+
+.intro-title {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+}
+
+.intro-lead {
+  max-width: 62ch;
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ui-text-sub);
+  word-break: keep-all;
+}
+
+.intro-meta {
+  min-height: 20px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ui-text-muted);
+}
+
+/* 현황 요약 */
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  border: 1px solid var(--ui-border);
+  border-radius: 12px;
+  background: var(--ui-surface);
+  overflow: hidden;
+}
+
+.summary-item {
+  flex: 1 1 120px;
+  padding: 14px 18px;
+  border-right: 1px solid var(--ui-border-soft);
+}
+
+.summary-item:last-child {
+  border-right: none;
+}
+
+.summary dt {
+  font-size: 12px;
+  color: var(--ui-text-muted);
+}
+
+.summary dd {
+  margin-top: 2px;
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.summary-item:nth-child(2) dd {
+  color: var(--prime-dark);
+}
+
+/* ---- Block ---- */
+.block {
+  margin-top: 64px;
+}
+
+.block-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.block-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.block-lead {
+  max-width: 64ch;
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ui-text-sub);
+  word-break: keep-all;
+}
+
+/* ---- 동작 구조 흐름 ---- */
+.flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 24px;
+}
+
+.flow-step {
+  position: relative;
+  padding: 18px 16px;
+  border: 1px solid var(--ui-border);
+  border-radius: 12px;
+  background: var(--ui-surface);
+}
+
+/* 단계 사이 화살표 */
+.flow-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -21px;
+  width: 10px;
+  height: 10px;
+  border-top: 1.5px solid #b4bac2;
+  border-right: 1.5px solid #b4bac2;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.flow-step.is-result {
+  border-color: color-mix(in srgb, var(--prime-color) 40%, transparent);
+  background: var(--prime-bg);
+}
+
+.flow-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--prime-bg-active);
+  color: var(--prime-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.flow-title {
+  display: block;
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.flow-step p,
+.flow-ways li {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ui-text-sub);
+  word-break: keep-all;
+}
+
+.flow-step > code {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 11.5px;
+}
+
+.flow-ways li b {
+  display: block;
+  color: var(--ui-text);
+  font-weight: 600;
+}
+
+.flow-quote {
+  font-weight: 500;
+  color: var(--prime-dark) !important;
+}
+
+/* ---- Claude Code 예시 ---- */
+.example {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 32px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.example-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.example-text p {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ui-text-sub);
+  word-break: keep-all;
+}
+
+.example-text .example-note {
+  font-size: 12.5px;
+  color: var(--ui-text-muted);
+}
+
+.terminal {
+  padding: 20px;
+  border-radius: 12px;
+  background: #1e1e1e;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #d4d4d4;
+  box-shadow: 0 12px 32px rgba(17, 20, 24, 0.14);
+}
+
+.terminal p + p {
+  margin-top: 8px;
+}
+
+.terminal p {
+  overflow-wrap: anywhere;
+}
+
+.t-user {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #333;
+  color: #fff;
+}
+
+.t-prompt {
+  margin-right: 6px;
+  color: #6fd3a4;
+}
+
+.t-tool {
+  display: inline-block;
+  min-width: 46px;
+  margin-right: 6px;
+  color: #6fd3a4;
+  font-weight: 700;
+}
+
+.t-dim {
+  color: #9a9a9a;
+}
+
+.t-done {
+  padding-top: 10px;
+  border-top: 1px solid #333;
+  color: #fff;
+}
+
+/* ---- 상태별 보기 ---- */
+.btn-reset {
+  flex-shrink: 0;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-surface);
+  color: var(--ui-text-sub);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  border-color: #cfd4da;
+  color: var(--ui-text);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--ui-border);
+  border-radius: 16px;
+  background: var(--ui-surface);
+  color: var(--ui-text-sub);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.filter:hover {
+  border-color: var(--prime-color);
+  color: var(--prime-dark);
+}
+
+.filter-count {
+  font-size: 12px;
+  color: var(--ui-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.filter[aria-pressed="true"] {
+  border-color: var(--prime-color);
+  background: var(--prime-color);
+  color: #fff;
+  font-weight: 600;
+}
+
+.filter[aria-pressed="true"] .filter-count {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ---- 시나리오 그룹 ---- */
+.group {
+  margin-top: 36px;
+}
+
+.group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+}
+
+.group-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.group-how {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ui-text-muted);
+  word-break: keep-all;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+
+/* ---- 시나리오 카드 ---- */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--ui-border);
+  border-radius: 12px;
+  background: var(--ui-surface);
+  scroll-margin-top: 80px;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-id {
+  flex-shrink: 0;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: var(--ui-bg);
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ui-text-sub);
+}
+
+.card-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.status {
+  flex-shrink: 0;
+  padding: 3px 9px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status.is-pass  { background: var(--prime-bg-active); color: var(--prime-dark); }
+.status.is-todo  { background: var(--ui-bg); color: var(--ui-text-sub); }
+.status.is-hold  { background: #eaeef5; color: #3d4b63; }
+.status.is-wait  { background: #fbf0dc; color: #7a4d00; }
+.status.is-issue { background: #fdecea; color: #a8261b; }
+
+.card-goal {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ui-text-sub);
+  word-break: keep-all;
+}
+
+.card-result {
+  padding: 10px 12px;
+  border-radius: var(--ui-radius);
+  background: var(--prime-pale);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ui-text);
+  word-break: keep-all;
+}
+
+.card-result b {
+  color: var(--prime-dark);
+}
+
+.card-result code {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.card-prep {
+  counter-reset: prep;
+}
+
+.card-prep li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ui-text-sub);
+  word-break: keep-all;
+  counter-increment: prep;
+}
+
+.card-prep li + li {
+  margin-top: 4px;
+}
+
+.card-prep li::before {
+  content: counter(prep);
+  position: absolute;
+  top: 3px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ui-bg);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ui-text-muted);
+}
+
+/* 요청 문장 */
+.prompt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 12px;
+  border-radius: 10px;
+  background: #1e1e1e;
+}
+
+.prompt-label {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #9a9a9a;
+}
+
+.prompt-text {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+.prompt-copy {
+  flex-shrink: 0;
+  height: 30px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 6px;
+  background: var(--prime-color);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.prompt-copy:hover {
+  background: var(--prime-dark);
+}
+
+.prompt-copy.done {
+  background: #555;
+}
+
+.prompt-copy:focus-visible {
+  outline-color: #6fd3a4;
+}
+
+/* 확인할 것 */
+.checks li + li {
+  margin-top: 6px;
+}
+
+.checks label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ui-text);
+  word-break: keep-all;
+  cursor: pointer;
+}
+
+.checks input {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+  accent-color: var(--prime-color);
+  cursor: pointer;
+}
+
+.checks input:checked + span {
+  color: var(--ui-text-muted);
+  text-decoration: line-through;
+  text-decoration-color: #b4bac2;
+}
+
+.card-tip {
+  margin-top: auto;
+  padding: 10px 12px;
+  border-radius: var(--ui-radius);
+  background: var(--ui-surface-sunken);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ui-text-sub);
+  word-break: keep-all;
+}
+
+/* ---- 결과 기록 ---- */
+.record-list {
+  margin-top: 16px;
+}
+
+.record-list li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ui-text-sub);
+  word-break: keep-all;
+}
+
+.record-list li + li {
+  margin-top: 6px;
+}
+
+.record-list li::before {
+  content: '';
+  position: absolute;
+  top: 11px;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--prime-color);
+}
+
+.record-list b {
+  margin-right: 6px;
+  color: var(--ui-text);
+}
+
+.record-note {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--ui-text-muted);
+  word-break: keep-all;
+}
+
+/* ---- Footer ---- */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+  padding: 24px;
+  border-top: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  font-size: 13px;
+}
+
+.footer a {
+  color: var(--ui-text-sub);
+  text-underline-offset: 3px;
+}
+
+.footer a:hover {
+  color: var(--prime-dark);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 900px) {
+  .flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .flow-step:not(:last-child)::after {
+    display: none;
+  }
+
+  .flow-step.is-result {
+    grid-column: 1 / -1;
+  }
+
+  .example {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 760px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    height: 52px;
+    padding: 8px 12px 0 16px;
+  }
+
+  .logo {
+    gap: 10px;
+  }
+
+  .logo img {
+    width: 140px;
+  }
+
+  .logo-sub {
+    padding-left: 10px;
+    font-size: 13px;
+  }
+
+  .header-link {
+    padding: 0 8px;
+    font-size: 12px;
+  }
+
+  .page {
+    padding: 32px 16px 56px;
+  }
+
+  .intro-title {
+    font-size: 24px;
+  }
+
+  .intro-lead {
+    font-size: 15px;
+  }
+
+  .intro-lead br {
+    display: none;
+  }
+
+  .summary-item {
+    flex-basis: 33%;
+    padding: 12px 14px;
+  }
+
+  .block {
+    margin-top: 48px;
+  }
+
+  .block-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .terminal {
+    padding: 16px;
+    font-size: 12px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .prompt {
+    flex-wrap: wrap;
+  }
+
+  .prompt-text {
+    flex-basis: calc(100% - 60px);
+  }
+}
