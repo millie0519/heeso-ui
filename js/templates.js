@@ -4,7 +4,7 @@
  * - preview  : 미리보기에 로드할 HTML 경로
  * - title    : 템플릿 이름
  * - desc     : 설명
- * - codes    : 템플릿에 든 스니펫 코드명 (scripts/snippets.config.json과 같게 유지, 검색 대상)
+ * - codes    : 미리보기 페이지에 든 템플릿 코드명 (scripts/snippets.config.json과 같게 유지, 검색 대상)
  */
 var TEMPLATES = [
   {

@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * 템플릿 HTML에서 스니펫 문서(.md)를 생성한다.
+ * 미리보기 페이지(templates/*.html)에서 템플릿 문서(.md)를 생성한다.
  *
- *   node scripts/build-snippets.cjs           # 스니펫 문서 생성
+ *   node scripts/build-snippets.cjs           # 템플릿 문서 생성
  *   node scripts/build-snippets.cjs --check   # 문서가 최신인지 확인만 (다르면 exit 1)
  *
  * - 코드명·제목·안내 문구는 scripts/snippets.config.json에서 관리한다.
- * - 스니펫 범위는 각 템플릿의 "코드 보기"와 같다: 코드명 뱃지 다음에 오는 .copy-wrap 안쪽.
+ * - 템플릿 코드 범위는 각 미리보기 페이지의 "코드 보기"와 같다: 코드명 뱃지 다음에 오는 .copy-wrap 안쪽.
  * - .copy-wrap 안에 <style class="tpl-style">이 없으면 <head>의 첫 번째 <style>을 함께 넣는다.
  * - @snippet-exclude-start ~ @snippet-exclude-end 사이 줄은 미리보기 전용으로 보고 제외한다.
  * - 머리말의 {{updated}}는 내용이 바뀔 때만 오늘 날짜로 갱신하고, --check는 날짜 줄을 빼고 비교한다.
@@ -169,5 +169,5 @@ if (process.argv.includes('--check')) {
   fs.mkdirSync(path.dirname(outFile), { recursive: true });
   fs.writeFileSync(outFile, result.replace(DATE_MARK, date));
   var count = config.groups.reduce(function (n, g) { return n + g.items.length; }, 0);
-  console.log('✓ ' + config.output + (unchanged ? ' 변경 없음' : ' 생성') + ' (스니펫 ' + count + '개, 업데이트 ' + date + ')');
+  console.log('✓ ' + config.output + (unchanged ? ' 변경 없음' : ' 생성') + ' (템플릿 ' + count + '개, 업데이트 ' + date + ')');
 }

@@ -268,11 +268,11 @@ $(function () {
       return res.text();
     }).then(function (text) {
       docText = text;
-      // 문서 머리말의 "업데이트: YYYY-MM-DD · 스니펫 N개"를 그대로 표시
-      var meta = text.match(/업데이트: (\d{4}-\d{2}-\d{2}) · 스니펫 (\d+)개/);
+      // 문서 머리말의 "업데이트: YYYY-MM-DD · 템플릿 N개"를 그대로 표시 (예전 문서의 "스니펫 N개"도 읽음)
+      var meta = text.match(/업데이트: (\d{4}-\d{2}-\d{2}) · (?:템플릿|스니펫) (\d+)개/);
       var size = '약 ' + Math.round(text.length / 1000) / 10 + '만 자';
       $('#guideMeta').text(meta
-        ? '문서 업데이트 ' + meta[1].replace(/-/g, '.') + ' · 스니펫 ' + meta[2] + '개 · ' + size
+        ? '문서 업데이트 ' + meta[1].replace(/-/g, '.') + ' · 템플릿 ' + meta[2] + '개 · ' + size
         : size);
     }).catch(function () {
       docText = null;

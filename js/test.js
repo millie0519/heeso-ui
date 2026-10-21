@@ -11,7 +11,7 @@ var GROUPS = [
   { key: 'claude',   title: 'Claude Code 스킬',       how: '사이트 AI 사용 안내(`#guide`) → "Claude Code" 탭의 설치 명령을 한 번 실행' },
   { key: 'chat',     title: '채팅 AI',                how: 'AI 사용 안내 → "채팅 AI" 탭의 "문서 전체 복사" → ChatGPT·Claude·Gemini 등 새 대화에 붙여넣기' },
   { key: 'tools',    title: 'Cursor · Copilot',       how: 'AI 사용 안내 → "Cursor·기타 도구" 탭에서 `ui-templates.md`를 내려받아 프로젝트 폴더에 넣기' },
-  { key: 'editor',   title: '공지사항 에디터 (Jodit)', how: '관리자 화면의 공지사항 글쓰기 에디터에 스니펫 HTML을 붙여 넣기' },
+  { key: 'editor',   title: '공지사항 에디터 (Jodit)', how: '관리자 화면의 공지사항 글쓰기 에디터에 템플릿 HTML을 붙여 넣기' },
   { key: 'newcomer', title: '처음 받는 사람',          how: '설치되지 않은 PC나 팀원에게 `#guide` 링크만 전달' }
 ];
 
@@ -19,7 +19,7 @@ var SCENARIOS = [
   {
     id: 'S1', group: 'claude', title: '스킬 이름으로 직접 호출',
     status: 'pass', date: '2026-10-20', result: '다른 프로젝트에서 `/heeso-ui`로 `table-time-01`을 넣어 성공',
-    goal: '설치한 스킬을 이름으로 불렀을 때 스니펫이 그대로 들어가는지',
+    goal: '설치한 스킬을 이름으로 불렀을 때 템플릿이 그대로 들어가는지',
     prompt: '/heeso-ui table-time-01 추가해줘',
     checks: [
       '대화에 `Skill heeso-ui` 줄이 보임',
@@ -57,9 +57,9 @@ var SCENARIOS = [
     ]
   },
   {
-    id: 'S4', group: 'claude', title: '같은 스니펫 두 번 넣기',
+    id: 'S4', group: 'claude', title: '같은 템플릿 두 번 넣기',
     status: 'pass', date: '2026-10-21', result: 'id 변경, 공통 코드 중복 없이 두 모달 각각 동작',
-    goal: '같은 스니펫을 또 넣을 때 id와 공통 코드가 겹치지 않는지',
+    goal: '같은 템플릿을 또 넣을 때 id와 공통 코드가 겹치지 않는지',
     prep: ['S3를 마친 같은 파일에서 이어서 요청합니다.'],
     prompt: 'popup-modal-01 하나 더 추가해줘',
     checks: [
@@ -90,9 +90,9 @@ var SCENARIOS = [
     ]
   },
   {
-    id: 'S7', group: 'claude', title: '여러 스니펫을 한 페이지에',
-    status: 'pass', date: '2026-10-21', result: '처음 색은 정상이지만 `applyColor`가 나중 스니펫 것으로 덮어써짐을 확인 → 스크립트를 각자 범위로 분리하고 `curri02ApplyColor`·`time01ApplyColor`로 구분해 수정 (자동 테스트로 각자 색 변경, 시간표 두 번 넣기 확인)',
-    goal: '서로 다른 스니펫을 한 페이지에 넣었을 때 충돌이 없는지',
+    id: 'S7', group: 'claude', title: '여러 템플릿을 한 페이지에',
+    status: 'pass', date: '2026-10-21', result: '처음 색은 정상이지만 `applyColor`가 나중 템플릿 것으로 덮어써짐을 확인 → 스크립트를 각자 범위로 분리하고 `curri02ApplyColor`·`time01ApplyColor`로 구분해 수정 (자동 테스트로 각자 색 변경, 시간표 두 번 넣기 확인)',
+    goal: '서로 다른 템플릿을 한 페이지에 넣었을 때 충돌이 없는지',
     prompt: 'table-curri-02랑 table-time-01 같은 페이지에 넣어줘',
     checks: [
       '두 표의 색이 각각 정상으로 보임',
@@ -118,7 +118,7 @@ var SCENARIOS = [
     status: 'pass', date: '2026-10-21', result: '요약 없이 확인 답변 후 요청 대기',
     goal: '긴 문서를 붙여 넣어도 요약하지 않고 요청을 기다리는지',
     checks: [
-      '요약 없이 "heeso-ui 스니펫 문서를 확인했습니다…"라고만 답함',
+      '요약 없이 "heeso-ui 템플릿 문서를 확인했습니다…"라고만 답함',
       '"너무 길다"는 오류가 나지 않음 (나면 쓴 AI와 요금제를 기록)'
     ]
   },
@@ -129,25 +129,25 @@ var SCENARIOS = [
     prep: ['C1을 마친 같은 대화에서 이어서 요청합니다.'],
     prompt: 'table-basic-01 스트라이프형으로, 컬럼은 번호/제목/작성일',
     checks: [
-      '요청한 스니펫 코드만 출력 (문서 내용이나 다른 스니펫을 다시 출력하지 않음)',
+      '요청한 템플릿 코드만 출력 (문서 내용이나 다른 템플릿을 다시 출력하지 않음)',
       '출력된 코드를 HTML 파일에 붙이면 그대로 동작'
     ]
   },
   {
     id: 'D1', group: 'tools', title: '내려받은 문서로 요청',
-    status: 'pass', date: '2026-10-21', result: '두 스니펫 모두 동작',
-    goal: '내려받은 문서를 참조해 스니펫 두 개를 함께 넣는지',
+    status: 'pass', date: '2026-10-21', result: '두 템플릿 모두 동작',
+    goal: '내려받은 문서를 참조해 템플릿 두 개를 함께 넣는지',
     prep: ['Cursor는 채팅에서 `@ui-templates.md`, Copilot은 `#file:ui-templates.md`로 참조합니다.'],
     prompt: 'form-check-01이랑 form-file-01 넣어줘',
     checks: [
-      '두 스니펫이 모두 동작 (체크 시 초록, 파일 선택 시 파일명 표시)',
+      '두 템플릿이 모두 동작 (체크 시 초록, 파일 선택 시 파일명 표시)',
       '스타일·클래스는 그대로'
     ]
   },
   {
     id: 'J1', group: 'editor', title: 'Jodit 기본 설정 검증',
     status: 'pass', date: '2026-10-16', result: 'Jodit 4.18.2 기본 설정: 소스 모드와 "원본 유지" 붙여넣기 모두 `<style>`·`class` 유지, `<script>`·`onclick`만 삭제',
-    goal: '에디터가 스니펫의 스타일과 클래스를 남기는지 (기본 설정 기준)',
+    goal: '에디터가 템플릿의 스타일과 클래스를 남기는지 (기본 설정 기준)',
     checks: [
       '소스 모드(`<>`)로 넣어도 `<style>`과 `class`가 남음',
       'Ctrl+V 후 "원본 유지"를 골라도 남음',
@@ -174,7 +174,7 @@ var SCENARIOS = [
     goal: '설명 없이 `#guide` 링크만 받아도 설치부터 요청까지 할 수 있는지',
     checks: [
       '안내만 보고 설치 또는 연결을 끝냄',
-      '코드명 요청으로 스니펫을 넣는 데 성공',
+      '코드명 요청으로 템플릿을 넣는 데 성공',
       '막힌 지점이 있으면 그 단계와 이유를 기록'
     ]
   }
@@ -356,14 +356,14 @@ var STATUS = {
     });
   });
 
-  // ---- 스니펫 문서 정보 (머리말의 업데이트 날짜·스니펫 수) ----
+  // ---- 템플릿 문서 정보 (머리말의 업데이트 날짜·템플릿 수, 예전 문서의 "스니펫 N개"도 읽음) ----
   fetch('snippets/ui-templates.md').then(function (res) {
     if (!res.ok) throw new Error(res.status);
     return res.text();
   }).then(function (text) {
-    var m = text.match(/업데이트: (\d{4}-\d{2}-\d{2}) · 스니펫 (\d+)개/);
+    var m = text.match(/업데이트: (\d{4}-\d{2}-\d{2}) · (?:템플릿|스니펫) (\d+)개/);
     document.getElementById('docMeta').textContent = m
-      ? '스니펫 문서 ' + m[1].replace(/-/g, '.') + ' 업데이트 · 코드명 ' + m[2] + '개'
+      ? '템플릿 문서 ' + m[1].replace(/-/g, '.') + ' 업데이트 · 코드명 ' + m[2] + '개'
       : '';
   }).catch(function () {
     document.getElementById('docMeta').textContent = '';

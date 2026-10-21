@@ -12,7 +12,7 @@
     document.head.appendChild(link);
   });
 
-  // ---- 미리보기 페이지 공통 동작 (스니펫 코드에는 포함되지 않음) ----
+  // ---- 미리보기 페이지 공통 동작 (템플릿 코드에는 포함되지 않음) ----
   document.addEventListener('DOMContentLoaded', function () {
 
     // 코드명 뱃지 클릭 → 코드명 복사

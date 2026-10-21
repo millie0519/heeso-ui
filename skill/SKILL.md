@@ -1,17 +1,17 @@
 ---
 name: heeso-ui
-description: heeso-ui UI 스니펫(폼·팝업·테이블·커리큘럼·시간표)을 코드명으로 프로젝트에 넣는다. 사용자가 form-txt-01, form-radio-01, popup-modal-01, table-basic-01, table-curri-02, table-time-01처럼 form-·popup-·table-로 시작하는 코드명을 말하거나, "heeso-ui", "희소 스니펫", "UI 템플릿 스니펫"을 언급하거나, -esc·-bg 같은 팝업 닫기 옵션을 요청할 때 사용한다.
+description: heeso-ui UI 템플릿(폼·팝업·테이블·커리큘럼·시간표)을 코드명으로 프로젝트에 넣는다. 사용자가 form-txt-01, form-radio-01, popup-modal-01, table-basic-01, table-curri-02, table-time-01처럼 form-·popup-·table-로 시작하는 코드명을 말하거나, "heeso-ui", "희소 템플릿", "UI 템플릿", "스니펫"을 언급하거나, -esc·-bg 같은 팝업 닫기 옵션을 요청할 때 사용한다.
 user-invocable: true
 ---
 
-# heeso-ui 스니펫 적용
+# heeso-ui 템플릿 적용
 
-스니펫 원문과 적용 규칙은 이 파일과 같은 폴더의 `ui-templates.md`에 있다. 코드는 이 문서에서만 가져온다. 기억이나 추측으로 코드를 만들지 않는다.
+템플릿 코드 원문과 적용 규칙은 이 파일과 같은 폴더의 `ui-templates.md`에 있다. 코드는 이 문서에서만 가져온다. 기억이나 추측으로 코드를 만들지 않는다.
 
 ## 순서
 
 1. **규칙 읽기**: `ui-templates.md`의 `## AI 적용 규칙`과 `## 공통 사항` 섹션을 읽는다. (처음 한 번)
-2. **스니펫 찾기**: 요청한 코드명마다 `## <코드명> — ` 으로 시작하는 제목을 찾아, 그 제목부터 다음 `---` 줄 앞까지만 읽는다. 문서 전체를 읽지 않는다.
+2. **템플릿 찾기**: 요청한 코드명마다 `## <코드명> — ` 으로 시작하는 제목을 찾아, 그 제목부터 다음 `---` 줄 앞까지만 읽는다. 문서 전체를 읽지 않는다.
    - 예: `form-radio-01` → `## form-radio-01 — 라디오 버튼` 섹션
    - `popup-modal-01`·`02`에 `-esc`·`-bg`를 함께 요청하면 `## popup-modal 닫기 옵션` 섹션도 읽는다.
    - 코드명을 찾지 못하면 코드를 지어내지 말고, `## 코드명 목록`에서 비슷한 코드명을 찾아 사용자에게 묻는다.
