@@ -1,5 +1,5 @@
 # 공통UI
-👉 https://millie0519.github.io/heeso-ui/
+👉 https://heeso-ui.vercel.app/
 
 ## 스니펫 문서 (`snippets/ui-templates.md`)
 
@@ -7,9 +7,9 @@
 스니펫은 단독으로 동작하며 jQuery나 별도 CSS가 필요 없습니다.
 
 - 문서 보기: [snippets/ui-templates.md](snippets/ui-templates.md)
-- 파일 받기: https://raw.githubusercontent.com/millie0519/heeso-ui/main/snippets/ui-templates.md
-- 사용 안내 (설치 명령·다운로드·전체 복사): https://millie0519.github.io/heeso-ui/#guide
-- AI 연동 테스트 시나리오 (동작 구조·테스트 체크리스트): https://millie0519.github.io/heeso-ui/test.html
+- 파일 받기: https://heeso-ui.vercel.app/snippets/ui-templates.md
+- 사용 안내 (설치 명령·다운로드·전체 복사): https://heeso-ui.vercel.app/#guide
+- AI 연동 테스트 시나리오 (동작 구조·테스트 체크리스트): https://heeso-ui.vercel.app/test.html
   - 테스트 결과는 `js/test.js` 맨 위 `SCENARIOS`의 `status`·`date`·`result`만 고치면 페이지에 반영됩니다.
 
 ### 도구별 사용 방법
@@ -32,9 +32,9 @@
 
   ```bash
   mkdir -p ~/.claude/skills/heeso-ui && \
-    curl -fsSL https://raw.githubusercontent.com/millie0519/heeso-ui/main/skill/SKILL.md \
+    curl -fsSL https://heeso-ui.vercel.app/skill/SKILL.md \
     -o ~/.claude/skills/heeso-ui/SKILL.md && \
-    curl -fsSL https://raw.githubusercontent.com/millie0519/heeso-ui/main/snippets/ui-templates.md \
+    curl -fsSL https://heeso-ui.vercel.app/snippets/ui-templates.md \
     -o ~/.claude/skills/heeso-ui/ui-templates.md
   ```
 
@@ -42,8 +42,8 @@
 
   ```powershell
   $d = "$HOME\.claude\skills\heeso-ui"; New-Item -ItemType Directory -Force $d | Out-Null
-  Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/millie0519/heeso-ui/main/skill/SKILL.md -OutFile "$d\SKILL.md"
-  Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/millie0519/heeso-ui/main/snippets/ui-templates.md -OutFile "$d\ui-templates.md"
+  Invoke-WebRequest -UseBasicParsing https://heeso-ui.vercel.app/skill/SKILL.md -OutFile "$d\SKILL.md"
+  Invoke-WebRequest -UseBasicParsing https://heeso-ui.vercel.app/snippets/ui-templates.md -OutFile "$d\ui-templates.md"
   ```
 
 설치 명령을 바꿀 때는 사이트 사용 안내(`index.html`의 `#guideModal`)와 이 README를 함께 고칩니다.

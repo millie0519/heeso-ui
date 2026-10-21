@@ -145,16 +145,16 @@
               </div>
               <div class="guide-cmd" data-os-cmd="unix" data-label="터미널">
                 <pre><code>mkdir -p ~/.claude/skills/heeso-ui && \
-  curl -fsSL https://raw.githubusercontent.com/millie0519/heeso-ui/main/skill/SKILL.md \
+  curl -fsSL https://heeso-ui.vercel.app/skill/SKILL.md \
   -o ~/.claude/skills/heeso-ui/SKILL.md && \
-  curl -fsSL https://raw.githubusercontent.com/millie0519/heeso-ui/main/snippets/ui-templates.md \
+  curl -fsSL https://heeso-ui.vercel.app/snippets/ui-templates.md \
   -o ~/.claude/skills/heeso-ui/ui-templates.md</code></pre>
                 <button type="button" class="guide-copy" data-copy="cmd">복사</button>
               </div>
               <div class="guide-cmd" data-os-cmd="win" data-label="PowerShell" hidden>
                 <pre><code>$d = "$HOME\.claude\skills\heeso-ui"; New-Item -ItemType Directory -Force $d | Out-Null
-Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/millie0519/heeso-ui/main/skill/SKILL.md -OutFile "$d\SKILL.md"
-Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/millie0519/heeso-ui/main/snippets/ui-templates.md -OutFile "$d\ui-templates.md"</code></pre>
+Invoke-WebRequest -UseBasicParsing https://heeso-ui.vercel.app/skill/SKILL.md -OutFile "$d\SKILL.md"
+Invoke-WebRequest -UseBasicParsing https://heeso-ui.vercel.app/snippets/ui-templates.md -OutFile "$d\ui-templates.md"</code></pre>
                 <button type="button" class="guide-copy" data-copy="cmd">복사</button>
               </div>
             </li>
